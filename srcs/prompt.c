@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/23 14:50:11 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/23 19:43:49 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	show_prompt(t_prompt *prompt)
 		message = update_message(prompt->directory);
 		prompt->line = readline(message);
 		save_line(prompt->line);
+		parser_input(prompt->line);
 		// Provavelmente esse loop vai ser  o principal e todo o projeto
 		// será executado a partir daqui. Por isso é interessante deixar ele
 		// com poquissimas tarefas.

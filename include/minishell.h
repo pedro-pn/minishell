@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/23 13:59:12 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/23 19:52:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ void	show_prompt(t_prompt *prompt);
 void	save_line(char *line);
 void	prompt_init(t_prompt *prompt);
 char	*update_message(char *dir);
+
+int		parser_input(char *line);
+char	**get_input(char *line);
 
 #endif
