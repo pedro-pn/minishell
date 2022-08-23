@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/23 14:15:36 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:50:11 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,9 @@ void	show_prompt(t_prompt *prompt)
 /* Saves input received from prompt*/
 void	save_line(char *line)
 {
-	int	index;
-
-	index = 0;
-	if (!line)
+	if (!line || *line == ' ')
 		return ;
-	while (line[index]) // Foi a maneira mais simples que achei de não salvar linhas vazias
-	{					// pode conter bug, não foi testado o suficiente
-		if (line[index] != ' ')
-		{
-			add_history(line);
-			return ;
-		}
-		index++;
-	}
+	add_history(line);
 }
 
 /* Initializes prompt struct variables*/
