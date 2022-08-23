@@ -1,4 +1,4 @@
-SOURCES =	main.c
+SOURCES =	main.c prompt.c
 NAME = minishell
 LIBFT = libft/libft.a
 SRCS_PATH = srcs
@@ -23,10 +23,10 @@ bonus: ${BONUS}
 ${OBJS_PATH}/%.o: ${SRCS_PATH}/%.c
 					@ mkdir -p ${OBJS_PATH}
 					@ echo "Compiling: $<"
-					@ ${CC} ${FLAGS} -c $< -o $@ -lreadline -I libft/include/ -I include/
+					@ ${CC} ${FLAGS} -c $< -o $@ -I libft/include/ -I include/
 
 ${NAME}: ${LIBFT} ${OBJS}
-			@ ${CC} ${FLAGS} ${OBJS} ${LIBFT} -o ${NAME}
+			@ ${CC} ${FLAGS} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
 			@ echo "${GREEN}${NAME} successfully compiled!${NC}"
 
 ${LIBFT}: 
