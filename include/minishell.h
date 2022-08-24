@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/24 14:10:32 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:06:42 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <fcntl.h>
 
 typedef struct s_prompt
 {
@@ -35,6 +36,7 @@ typedef struct s_cmd
 	char	*path;
 	char	*in_file;
 	char	*out_file;
+	char	*delimiter;
 	int		mode;
 	int		here_doc;
 }			t_cmd;
@@ -50,7 +52,7 @@ char		*update_message(char *dir);
 // parser
 t_list		*parser_input(char *line);
 t_list	*create_input_list(char	*line);
-void		cmd_init(t_cmd *cmd);
+t_cmd	*cmd_init(void);
 
 // token
 char		**get_input(char *line);

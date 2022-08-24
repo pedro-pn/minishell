@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/24 13:47:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:58:14 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,6 @@ void	save_line(char *line)
 		}
 		line++;
 	}
-}
-
-/* Initializes prompt struct variables*/
-void	prompt_init(t_prompt *prompt)
-{
-	prompt->line = NULL;
-	prompt->directory = getcwd(NULL, 0);
 }
 
 /* Returns the message to display in prompt*/

@@ -6,13 +6,14 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 19:51:03 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/23 19:53:05 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:07:31 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	clean_quotes(char *argv, int c);
+static void	handle_io(char *line);
 static int	verify_quotes(char *line);
 static int	verify_quotes_2(char **line);
 
@@ -26,6 +27,7 @@ char	**get_input(char *line)
 		return (NULL); // se a condição for verdadeira, há aspas simples ou dupla aberta;
 	clean_quotes(line, 39);
 	clean_quotes(line, 34);
+	handle_io(line);
 	input = ft_split(line, ' ');
 	index_input = -1;
 	while (index_input++, input[index_input])
@@ -95,6 +97,22 @@ static void	clean_quotes(char *line, int c)
 			if (line[index] == ' ')
 				line[index] = 1;
 		}
+		index++;
+	}
+}
+
+/* Replaces the spaces after input/output characters with a control character*/
+static void handle_io(char *line)
+{
+	int	index;
+
+	index = 0;
+	while (line[index])
+	{
+		if (line[index] == '>' && line[index + 1] == ' ')
+			line[index + 1] = 1;
+		else if (line[index] == '<' && line[index + 1] == ' ')
+			line[index + 1] = 1;
 		index++;
 	}
 }
