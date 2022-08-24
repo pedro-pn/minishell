@@ -1,4 +1,4 @@
-SOURCES =	main.c prompt.c parser.c token.c
+SOURCES =	main.c prompt.c parser.c token.c signals.c
 NAME = minishell
 LIBFT = libft/libft.a
 SRCS_PATH = srcs

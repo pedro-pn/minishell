@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/23 19:43:49 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/23 21:25:15 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	show_prompt(t_prompt *prompt)
 	{
 		message = update_message(prompt->directory);
 		prompt->line = readline(message);
+		if (!prompt->line)
+		{
+			ft_putendl_fd("exit", 1); // ctl D handler
+			break ;
+		}
 		save_line(prompt->line);
 		parser_input(prompt->line);
 		// Provavelmente esse loop vai ser  o principal e todo o projeto
@@ -33,9 +38,17 @@ void	show_prompt(t_prompt *prompt)
 /* Saves input received from prompt*/
 void	save_line(char *line)
 {
-	if (!line || *line == ' ')
+	if (!line)
 		return ;
-	add_history(line);
+	while (*line)
+	{
+		if (*line != ' ')
+		{
+			add_history(line);
+			return ;
+		}
+		line++;
+	}
 }
 
 /* Initializes prompt struct variables*/
