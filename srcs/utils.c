@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/23 11:12:46 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 15:41:14 by frosa-ma         ###   ########.fr       */
+/*   Created: 2022/08/25 15:07:36 by frosa-ma          #+#    #+#             */
+/*   Updated: 2022/08/25 15:10:25 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char **argv, char **envp)
+// Funcao faz parte da minha libft, usada pra liberar o array de strings
+// gerado pela funcao ft_split
+void	free_split(char **tab)
 {
-	t_prompt	prompt;
-	t_data		data;
+	int	i;
 
-	// Essa estrutura muito provavelmente vai ficar dentro
-	// de outra estrutura maior, pois caso o usuario mude
-	// o diretório de trabalho, basta atualizá-la.
-	signals_setup();
-	data_init(&data, envp);
-	prompt_init(&prompt);
-	show_prompt(&prompt);
-	return (0);
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
 }

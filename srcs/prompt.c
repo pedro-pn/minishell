@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/24 18:58:14 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:25:56 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ void	show_prompt(t_prompt *prompt)
 			break ;
 		}
 		save_line(prompt->line);
+		validate_pipes(prompt);
+		printf("%s\n", prompt->line);
+
 		parser_input(prompt->line);
-		free(prompt->line);
+
+		// free(prompt->line);
+
 		// Provavelmente esse loop vai ser  o principal e todo o projeto
 		// será executado a partir daqui. Por isso é interessante deixar ele
 		// com poquissimas tarefas.

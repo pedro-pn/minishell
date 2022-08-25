@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/24 18:06:42 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:35:55 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <fcntl.h>
+
+typedef struct s_data
+{
+	char	**env;
+	char	**builtins;
+	int		bk_stdin;
+	int		bk_stdout;
+	int		bk_stderr;
+	int		old_status;
+}		t_data;
 
 typedef struct s_prompt
 {
@@ -42,6 +52,9 @@ typedef struct s_cmd
 }			t_cmd;
 
 //int		g_exit_code;
+
+// init
+void	data_init(t_data *data, char **ep);
 
 // prompt
 void		show_prompt(t_prompt *prompt);
@@ -63,5 +76,11 @@ void		signals_setup(void);
 // clean program
 void	clean_array(void **array);
 void	clean_cmd_lines(void *content);
+
+// pipe_parser
+void	validate_pipes(t_prompt *prompt);
+
+// utils
+void	free_split(char **matrix);
 
 #endif
