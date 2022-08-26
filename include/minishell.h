@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 13:22:51 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/26 19:11:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,10 @@ t_list	*get_lst_from_array(char **arr);
 t_list	*ft_lstremove(t_list **lst, char *value);
 t_list	*ft_lstfind(t_list *lst, char *value);
 char	*ft_lstfind_value(t_list *lst, char *value);
+
+// Built-ins
+
+void	export(t_cmd *cmd, t_list **env);
 
 // Debbug - delete later
 void	print_content(char **array);

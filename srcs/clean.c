@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:25:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 11:40:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 14:08:07 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	clean_s_cmd(void *content)
 
 	cmd = (t_cmd *)content;
 	clean_array((void **)cmd->cmd);
-	free(cmd->cmd);
 	free(cmd->in_file);
 	free(cmd->out_file);
 	free(cmd->path);
-	cmd->cmd = NULL;
 	cmd->in_file = NULL;
 	cmd->out_file = NULL;
-	cmd->path = NULL;	
+	cmd->path = NULL;
+	free(cmd);
+	cmd = NULL;
 }
 
 /* Cleans struct s_prompt - except the directory*/

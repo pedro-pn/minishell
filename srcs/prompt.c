@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 13:21:51 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/26 19:25:21 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ void	show_prompt(t_data *data)
 		validate_pipes(data);
 		validate_redirections(data);
 		save_line(data->prompt.line);
-		// printf("%s\n", data->prompt.line);
-		// printf("%d\n", data->cmd_count);
 		exec_data = parser_input(data->prompt.line);
 
-		print_content(((t_cmd *)exec_data->content)->cmd);
-
+		// teste da função export
+		//export((t_cmd *)exec_data->content, &(data->lst_env));
+		//ft_lstdisplay(data->lst_env);
+		ft_lstclear(&exec_data, clean_s_cmd);
+		clean_prompt(&data->prompt);
 		// reset_data(data);
 	}
 }
