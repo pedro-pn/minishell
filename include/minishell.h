@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 15:35:55 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:20:09 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <fcntl.h>
+# define META_C "><"
 
 typedef struct s_data
 {
@@ -66,6 +67,7 @@ char		*update_message(char *dir);
 t_list		*parser_input(char *line);
 t_list	*create_input_list(char	*line);
 t_cmd	*cmd_init(void);
+void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
 
 // token
 char		**get_input(char *line);
@@ -83,4 +85,6 @@ void	validate_pipes(t_prompt *prompt);
 // utils
 void	free_split(char **matrix);
 
+// Debbug - delete later
+void	print_content(char **array);
 #endif

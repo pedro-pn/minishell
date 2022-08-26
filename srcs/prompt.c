@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 15:25:56 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:36:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	show_prompt(t_prompt *prompt)
 {
 	char	*message;
-	//t_list	*exec_data;
+	t_list	*exec_data;
 
 	while (1)
 	{
@@ -29,9 +29,10 @@ void	show_prompt(t_prompt *prompt)
 		}
 		save_line(prompt->line);
 		validate_pipes(prompt);
-		printf("%s\n", prompt->line);
+		exec_data = parser_input(prompt->line);
+		//print_content(((t_cmd *)exec_data->content)->cmd);
+		//printf("%s\n", prompt->line);
 
-		parser_input(prompt->line);
 
 		// free(prompt->line);
 

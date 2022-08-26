@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/24 19:16:13 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:42:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list	*parser_input(char *line)
 	/* Aqui virão as próximas funções de parsing (validar comando, atribuição
 	de variáveis, here_doc, infile, etc...)*/
 	ft_lstclear(&cmd_lines, clean_cmd_lines);
-	return (0);
+	return (exec_data);
 }
 
 t_list	*get_exec_data(t_list *cmd_lines)
@@ -46,6 +46,7 @@ t_list	*get_exec_data(t_list *cmd_lines)
 		exec_cmds = cmd_init();
 		get_infile(content , &exec_cmds);
 		get_outfile(content, &exec_cmds);
+		get_cmd(content, &exec_cmds);
 		ft_lstadd_back(&exec_data, ft_lstnew(exec_cmds));
 		cmd_lines = cmd_lines->next;
 	}
