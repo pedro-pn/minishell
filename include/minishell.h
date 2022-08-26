@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 20:20:09 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:27:19 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 typedef struct s_prompt
 {
 	char	*directory;
+	char	*message;
 	char	*line;
 }			t_prompt;
 
@@ -78,6 +79,8 @@ void		signals_setup(void);
 // clean program
 void	clean_array(void **array);
 void	clean_cmd_lines(void *content);
+void	clean_s_cmd(void *content);
+void	clean_prompt(t_prompt *prompt);
 
 // pipe_parser
 void	validate_pipes(t_prompt *prompt);

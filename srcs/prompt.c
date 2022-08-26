@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 23:36:17 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:29:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,31 @@
 /* Displays prompt on terminal*/
 void	show_prompt(t_prompt *prompt)
 {
-	char	*message;
 	t_list	*exec_data;
 
 	while (1)
 	{
-		message = update_message(prompt->directory);
-		prompt->line = readline(message);
+		prompt->message = update_message(prompt->directory);
+		prompt->line = readline(prompt->message);
 		if (!prompt->line)
 		{
+			clean_prompt(prompt);
 			ft_putendl_fd("exit", 1); // ctl D handler
 			break ;
 		}
 		save_line(prompt->line);
 		validate_pipes(prompt);
 		exec_data = parser_input(prompt->line);
+		clean_prompt(prompt);
+
 		//print_content(((t_cmd *)exec_data->content)->cmd);
 		//printf("%s\n", prompt->line);
 
 
-		// free(prompt->line);
 
 		// Provavelmente esse loop vai ser  o principal e todo o projeto
 		// será executado a partir daqui. Por isso é interessante deixar ele
 		// com poquissimas tarefas.
-		free(message);
 	}
 }
 

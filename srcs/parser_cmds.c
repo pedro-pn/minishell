@@ -6,15 +6,17 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:12:56 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 23:37:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 11:46:25 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_cmd_len(char **cmd_line);
-char	*format_cmd(char *cmd);
+static int	get_cmd_len(char **cmd_line);
+static char	*format_cmd(char *cmd);
 
+/* Gets the cmd line with its arguments and adds it to the t_cmd structure
+as a char ** array*/
 void	get_cmd(char **cmd_line, t_cmd **exec_cmds)
 {
 	int	index;
@@ -37,7 +39,9 @@ void	get_cmd(char **cmd_line, t_cmd **exec_cmds)
 	}
 }
 
-int	get_cmd_len(char **cmd_line)
+/* Counts the number of commands given by the user, excluding input/output files
+*/
+static int	get_cmd_len(char **cmd_line)
 {
 	int counter;
 	int	index;
@@ -54,7 +58,8 @@ int	get_cmd_len(char **cmd_line)
 	return (counter);
 }
 
-char	*format_cmd(char *cmd)
+/* Formats the command properly to avoid input/output file markers*/ 
+static char	*format_cmd(char *cmd)
 {
 	int	index;
 	int	quote_s;

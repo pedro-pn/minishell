@@ -6,16 +6,16 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/25 20:42:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 11:43:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	print_content(char **array);
-t_list	*get_exec_data(t_list *cmd_lines);
-void	get_infile(char **cmd_line, t_cmd **exec_cmds);
-void	get_outfile(char **cmd_line, t_cmd **exec_cmds);
+static t_list	*get_exec_data(t_list *cmd_lines);
+static void	get_infile(char **cmd_line, t_cmd **exec_cmds);
+static void	get_outfile(char **cmd_line, t_cmd **exec_cmds);
 
 /* Validates the input*/
 t_list	*parser_input(char *line)
@@ -33,7 +33,8 @@ t_list	*parser_input(char *line)
 	return (exec_data);
 }
 
-t_list	*get_exec_data(t_list *cmd_lines)
+/* Creates the linked list with the user entry properly formatted to execution*/
+static t_list	*get_exec_data(t_list *cmd_lines)
 {
 	char	**content;
 	t_list	*exec_data;
@@ -53,7 +54,8 @@ t_list	*get_exec_data(t_list *cmd_lines)
 	return (exec_data);
 }
 
-void	get_infile(char **cmd_line, t_cmd **exec_cmds)
+/* Get input files in the user input, signalized by '<' or '<<'*/
+static void	get_infile(char **cmd_line, t_cmd **exec_cmds)
 {
 	char	*in_address;
 	int		index;
@@ -82,7 +84,8 @@ void	get_infile(char **cmd_line, t_cmd **exec_cmds)
 	}
 }
 
-void	get_outfile(char **cmd_line, t_cmd **exec_cmds)
+/* Get output files in the user input, signalized by '>' or '>>'*/
+static void	get_outfile(char **cmd_line, t_cmd **exec_cmds)
 {
 	char	*in_address;
 	int		index;
@@ -113,6 +116,7 @@ t_list	*create_input_list(char	*line)
 {
 	char	**inputs;
 	t_list	*cmd_lines;
+	void	*content;
 	int		index;
 
 	cmd_lines = NULL;
@@ -122,10 +126,16 @@ t_list	*create_input_list(char	*line)
 	index = -1;
 	while (index++, inputs[index])
 	{
-		ft_lstadd_back(&cmd_lines, ft_lstnew(get_input(inputs[index])));
-		free(inputs[index]);
+		content = get_input(inputs[index]);
+		if (!content)
+		{
+			ft_lstclear(&cmd_lines, clean_s_cmd);
+			ft_putendl_fd("Invalid syntax", 1);
+			break ;
+		}
+		ft_lstadd_back(&cmd_lines, ft_lstnew(content));
 	}
-	free(inputs);
+	clean_array((void **) inputs);
 	return (cmd_lines);
 }
 

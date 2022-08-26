@@ -45,3 +45,6 @@ re: fclean all
 
 norma:
 		norminette ${SRCS} include/
+
+val: ${NAME}
+	valgrind --suppressions=./local.supp --leak-check=full ./minishell

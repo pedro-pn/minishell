@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:49:59 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/25 15:26:01 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/26 11:32:49 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ char	*parse_pipes(char *str)
 	}
 
 	parsed = (char **)get_parsed_pipe_args(args); // {"ls |", " ls |", " ls|"}
-	free_split(args);
+	clean_array((void **)args);
 
 	str = (char *)get_parsed_str(parsed); // "ls | ls | ls"
-	free_split(parsed);
+	clean_array((void **)parsed);
 	return (str);
 }
 

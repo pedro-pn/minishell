@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:25:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/24 14:09:02 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 11:40:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,30 @@ durante a execução*/
 void	clean_cmd_lines(void *content)
 {
 	clean_array(((void **) content));
+}
+
+/* Cleans the struct s_cmd*/
+void	clean_s_cmd(void *content)
+{
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *)content;
+	clean_array((void **)cmd->cmd);
+	free(cmd->cmd);
+	free(cmd->in_file);
+	free(cmd->out_file);
+	free(cmd->path);
+	cmd->cmd = NULL;
+	cmd->in_file = NULL;
+	cmd->out_file = NULL;
+	cmd->path = NULL;	
+}
+
+/* Cleans struct s_prompt - except the directory*/
+void	clean_prompt(t_prompt *prompt)
+{
+	free(prompt->line);
+	free(prompt->message);
+	prompt->line = NULL;
+	prompt->message = NULL;
 }
