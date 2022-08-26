@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/24 11:29:49 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:10:17 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	//g_exit_code = 130;
+	//g_status = 130;
 }
 
 /* Set sigactions to properly invoke its handler */

@@ -3,43 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 00:29:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:21:51 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	reset_data(t_data *data)
+{
+	free(data->prompt.line);
+	free(data->prompt.message);
+	data->is_pipe_empty = 0;
+	data->cmd_count = 0;
+}
+
 /* Displays prompt on terminal*/
-void	show_prompt(t_prompt *prompt)
+void	show_prompt(t_data *data)
 {
 	t_list	*exec_data;
 
 	while (1)
 	{
-		prompt->message = update_message(prompt->directory);
-		prompt->line = readline(prompt->message);
-		if (!prompt->line)
+		data->prompt.message = update_message(data->prompt.directory);
+		data->prompt.line = readline(data->prompt.message);
+		if (!data->prompt.line)
 		{
-			clean_prompt(prompt);
-			ft_putendl_fd("exit", 1); // ctl D handler
+			clean_prompt(&data->prompt);
+			ft_putendl_fd("exit", 1);
 			break ;
 		}
-		save_line(prompt->line);
-		validate_pipes(prompt);
-		exec_data = parser_input(prompt->line);
-		clean_prompt(prompt);
+		validate_pipes(data);
+		validate_redirections(data);
+		save_line(data->prompt.line);
+		// printf("%s\n", data->prompt.line);
+		// printf("%d\n", data->cmd_count);
+		exec_data = parser_input(data->prompt.line);
 
-		//print_content(((t_cmd *)exec_data->content)->cmd);
-		//printf("%s\n", prompt->line);
+		print_content(((t_cmd *)exec_data->content)->cmd);
 
-
-
-		// Provavelmente esse loop vai ser  o principal e todo o projeto
-		// será executado a partir daqui. Por isso é interessante deixar ele
-		// com poquissimas tarefas.
+		// reset_data(data);
 	}
 }
 

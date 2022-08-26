@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 00:27:19 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:22:51 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,10 @@
 # include <fcntl.h>
 # define META_C "><"
 
-typedef struct s_data
-{
-	char	**env;
-	char	**builtins;
-	int		bk_stdin;
-	int		bk_stdout;
-	int		bk_stderr;
-	int		old_status;
-}		t_data;
+# define ERR_PIPE "-minishell: syntax error near unexpected token `|'"
+# define ERR_NEWL "-minishell: syntax error near unexpected token `newline'"
+
+//int		g_status;
 
 typedef struct s_prompt
 {
@@ -53,15 +48,24 @@ typedef struct s_cmd
 	int		here_doc;
 }			t_cmd;
 
-//int		g_exit_code;
+typedef struct s_data
+{
+	t_list		*lst_env;
+	char		**arr_env;
+	char		**builtins;
+	int			cmd_count;
+	int			is_pipe_empty;
+	t_prompt	prompt;
+}		t_data;
+
 
 // init
-void	data_init(t_data *data, char **ep);
+void	init_prompt(t_prompt *prompt);
+void	init_data(t_data *data, char **ep);
 
 // prompt
-void		show_prompt(t_prompt *prompt);
+void		show_prompt(t_data *data);
 void		save_line(char *line);
-void		prompt_init(t_prompt *prompt);
 char		*update_message(char *dir);
 
 // parser
@@ -82,12 +86,23 @@ void	clean_cmd_lines(void *content);
 void	clean_s_cmd(void *content);
 void	clean_prompt(t_prompt *prompt);
 
-// pipe_parser
-void	validate_pipes(t_prompt *prompt);
+// validate pipes
+void	validate_pipes(t_data *data);
+
+// validate redirections
+void	validate_redirections(t_data *data);
 
 // utils
-void	free_split(char **matrix);
+void	ft_arrdisplay(char **a);
+void	ft_lstdisplay(t_list *lst);
+void	raise_error(char *msg, int errn);
+char	**get_array_from_lst(t_list *lst);
+t_list	*get_lst_from_array(char **arr);
+t_list	*ft_lstremove(t_list **lst, char *value);
+t_list	*ft_lstfind(t_list *lst, char *value);
+char	*ft_lstfind_value(t_list *lst, char *value);
 
 // Debbug - delete later
 void	print_content(char **array);
+
 #endif
