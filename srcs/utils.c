@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:25:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/26 12:27:51 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/26 19:22:37 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_lstdisplay(t_list *lst)
 {
 	if (!lst)
 		return ;
-	ft_lstdisplay(lst->next);
+	if (lst->next)
+		ft_lstdisplay(lst->next);
 	printf("%s\n", (char *)lst->content);
 }
 
@@ -93,10 +94,17 @@ t_list	*ft_lstremove(t_list **lst, char *value)
 //    lstfind(lst, "PATH")  ->  node("PATH=/bin/:/usr/bin:...")
 t_list	*ft_lstfind(t_list *lst, char *value)
 {
+	char	*temp;
+
 	while (lst)
 	{
-		if (!ft_strncmp((char *)lst->content, value, ft_strlen(value)))
+		temp = ft_strjoin(value, "=");
+		if (!ft_strncmp((char *)lst->content, temp, ft_strlen(temp)))
+		{
+			free(temp);
 			return (lst);
+		}
+		free(temp);
 		lst = lst->next;
 	}
 	return (NULL);
