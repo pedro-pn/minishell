@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/29 11:10:50 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:20:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <fcntl.h>
+
 # define META_C "><"
+# define PATH_MAX 4096
 
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'"
@@ -65,8 +67,8 @@ void	init_data(t_data *data, char **ep);
 
 // prompt
 void		show_prompt(t_data *data);
-void		save_line(char *line);
-char		*update_message(char *dir);
+void		save_history(char *line);
+char		*update_prompt_msg(t_data *data);
 
 // parser
 t_list		*parser_input(char *line);
@@ -102,10 +104,16 @@ void	ft_lstremove(t_list **lst, char *value);
 t_list	*ft_lstfind(t_list *lst, char *value);
 char	*ft_lstfind_value(t_list *lst, char *value);
 
-// Built-ins
+char	*get_key(char *str);
+char	*get_value(char *str);
 
-void	export(t_cmd *cmd, t_list **env);
-void	unset(t_cmd *cmd, t_list **env);
+// Built-ins
+void	__echo(char **args);
+void	__cd(char **args, t_data *data);
+void	__pwd(char **args);
+void	__env(char **args, t_data *data);
+void	__export(char **args, t_data *data);
+void	__unset(char **args, t_data *data);
 
 // Debbug - delete later
 void	print_content(char **array);

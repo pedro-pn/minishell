@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 13:04:57 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/28 21:19:18 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,13 @@ static void	update_stdio_fds(void)
 
 void	init_data(t_data *data, char **ep)
 {
-	const char	*builtins = "echo cd pwd env export unset exit";
+	// const char	*builtins = "echo cd pwd env export unset exit";
 
-	data->builtins = (char **)ft_split(builtins, ' ');
+	// data->builtins = (char **)ft_split(builtins, ' ');
 	data->lst_env = (t_list *)get_lst_from_array(ep);
-	data->arr_env = (char **)get_array_from_lst(data->lst_env);
 	update_SHLVL(data);
 	update_stdio_fds();
 
-	// data->line = NULL;
 	data->cmd_count = 0;
 	data->is_pipe_empty = 0;
 	init_prompt(&data->prompt);
@@ -77,24 +75,23 @@ void	init_data(t_data *data, char **ep)
 
 static void	update_SHLVL(t_data *data)
 {
-	char	*str;
-	char	*p;
-	int		value;
-	int 	i;
+	t_list	*node;
+	char	*key;
+	char	*value;
+	char	*new_value;
+	char	*pk;
+	char	*pv;
 
-	i = -1;
-	while (data->arr_env[++i])
-	{
-		if (!ft_strncmp(data->arr_env[i], "SHLVL", 5))
-		{
-			str = ft_strrchr(data->arr_env[i], '=') + 1;
-			value = ft_atoi(str) + 1;
-			free(data->arr_env[i]);
-			p = ft_itoa(value);
-			data->arr_env[i] = ft_strjoin("SHLVL=", p);
-			free(p);
-		}
-	}
-	ft_lstclear(&data->lst_env, free);
-	data->lst_env = get_lst_from_array(data->arr_env);
+	node = ft_lstfind(data->lst_env, "SHLVL");
+	key = get_key((char *)node->content);
+	value = get_value((char *)node->content);
+	new_value = ft_itoa(ft_atoi(value) + 1);
+	pk = ft_strjoin(key, "=");
+	free(node->content);
+	free(key);
+	pv = ft_strjoin(pk, new_value);
+	free(pk);
+	free(new_value);
+	node->content = ft_strdup(pv);
+	free(pv);
 }
