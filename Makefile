@@ -1,5 +1,5 @@
 SOURCES =	main.c prompt.c parser.c token.c signals.c clean.c init.c utils.c \
-			parser_cmds.c validate_pipes.c validate_redirections.c built_in.c
+			parser_cmds.c validate_pipes.c validate_redirections.c built_in.c builtins.c
 
 NAME = minishell
 LIBFT = libft/libft.a

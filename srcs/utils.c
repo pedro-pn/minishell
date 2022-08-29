@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:25:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/26 19:22:37 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/29 04:04:24 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	ft_lstdisplay(t_list *lst)
 {
 	if (!lst)
 		return ;
+	printf("%s\n", (char *)lst->content);
 	if (lst->next)
 		ft_lstdisplay(lst->next);
-	printf("%s\n", (char *)lst->content);
 }
 
 void	raise_error(char *msg, int errn)
@@ -94,17 +94,10 @@ t_list	*ft_lstremove(t_list **lst, char *value)
 //    lstfind(lst, "PATH")  ->  node("PATH=/bin/:/usr/bin:...")
 t_list	*ft_lstfind(t_list *lst, char *value)
 {
-	char	*temp;
-
 	while (lst)
 	{
-		temp = ft_strjoin(value, "=");
-		if (!ft_strncmp((char *)lst->content, temp, ft_strlen(temp)))
-		{
-			free(temp);
+		if (!ft_strncmp((char *)lst->content, value, ft_strlen(value)))
 			return (lst);
-		}
-		free(temp);
 		lst = lst->next;
 	}
 	return (NULL);
@@ -134,6 +127,40 @@ t_list	*get_lst_from_array(char **arr)
 		return (NULL);
 	lst = NULL;
 	while (*arr)
-		ft_lstadd_front(&lst, ft_lstnew(ft_strdup(*arr++)));
+		ft_lstadd_back(&lst, ft_lstnew(ft_strdup(*arr++)));
 	return (lst);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+char	*get_key(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '=' && str[i])
+		i++;
+	if (!str[i])
+		return (NULL);
+	return (ft_substr(str, 0, i));
+}
+
+char	*get_value(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '=' && str[i])
+		i++;
+	if (!str[i])
+		return (NULL);
+	return (ft_strdup(str + i + 1));
 }
