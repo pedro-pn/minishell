@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/29 04:17:14 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/29 13:05:04 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,27 @@ void	__env(char **args, t_data *data)
 }
 
 
-void	validate_keyvalue(char *arg)
-{
-	int	i;
+// void	validate_keyvalue(char **args)
+// {
+// 	int	i;
 	
-	i = -1;
-	while (arg[++i])
-	{
-		if (arg[i] == ' ' && arg[i + 1] == '=')
-		{
-			raise_error("'=", 2);
-			exit(1);
-		}
-		if (arg[i] == '=' && arg[i + 1] == ' ')
-		{
-			raise_error("='", 2);
-			exit(1);
-		}
-	}
-}
+// 	i = 0;
+// 	while (args[i])
+// 		i++;
+// 	if (i == 1)
+// 		return ;
+// 	i = 0;
+// 	if (ft_strchr(*args++, ' '))
+// 	{
+// 		raise_error("'=", 2);
+// 		exit(1);
+// 	}
+// 	if (ft_strchr(*args++, ' '))
+// 	{
+// 		raise_error("='", 2);
+// 		exit(1);
+// 	}
+// }
 char	*get_keyvalue(char *arg)
 {
 	char	*ptr_key;
@@ -118,12 +120,10 @@ char	*get_keyvalue(char *arg)
 	char	*key;
 	char	*key_value;
 
-	validate_keyvalue(arg);
 
 	ptr_key = get_key(arg);
 	trimmed_key = ft_strtrim(ptr_key, " ");
 	free(ptr_key);
-
 	ptr_value = get_value(arg);
 	value = ft_strtrim(ptr_value, " ");
 	free(ptr_value);
@@ -143,9 +143,9 @@ void	__export(char **args, t_data *data)
 	char	*key;
 	char	*value;
 
+	// validate_keyvalue(args + 1);
 	if (!ft_strchr(args[1], '='))   // export -x foo
 		return ;                    
-
 	key = get_key(args[1]);
 	value = ft_strchr(args[1], '=') + 1; // export -x foo=""
 	if (!*value)
@@ -174,4 +174,19 @@ void	__export(char **args, t_data *data)
 	key_value = get_keyvalue(args[1]);
 	node->content = ft_strdup(key_value);
 	free(key_value);
+}
+
+void	__unset(char **args, t_data *data)
+{
+	t_list	*node;
+	int		index;
+
+	index = 0;
+	while (index++, args[index])
+	{
+		node = ft_lstfind(data->lst_env, args[index]);
+		if (!node)
+			continue ;
+		ft_lstremove(&data->lst_env, args[index]);
+	}
 }

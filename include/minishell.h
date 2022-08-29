@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/29 02:24:54 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/29 12:44:25 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void	ft_lstdisplay(t_list *lst);
 void	raise_error(char *msg, int errn);
 char	**get_array_from_lst(t_list *lst);
 t_list	*get_lst_from_array(char **arr);
-t_list	*ft_lstremove(t_list **lst, char *value);
+// t_list	*ft_lstremove(t_list **lst, char *value);
+void	ft_lstremove(t_list **lst, char *value);
 t_list	*ft_lstfind(t_list *lst, char *value);
 char	*ft_lstfind_value(t_list *lst, char *value);
 
@@ -114,6 +115,7 @@ void	__cd(char **args, t_data *data);
 void	__pwd(char **args);
 void	__env(char **args, t_data *data);
 void	__export(char **args, t_data *data);
+void	__unset(char **args, t_data *data);
 // void	export(t_cmd *cmd, t_list **env);
 
 // Debbug - delete later

@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/29 02:25:52 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/29 13:07:13 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	show_prompt(t_data *data)
 		validate_pipes(data);
 		validate_redirections(data);
 		save_history(data->prompt.line);
-		// exec_data = parser_input(data->prompt.line);
+		exec_data = parser_input(data->prompt.line);
 
 		char	**args = ft_split(data->prompt.line, ' ');
 		if (!args[0])
@@ -53,10 +53,12 @@ void	show_prompt(t_data *data)
 			__env(args, data);
 		if (!ft_strcmp(args[0], "export"))
 			__export(args, data);
-		// if (!ft_strcmp(args[0], "unset"))
-		// 	__unset(args);
+		if (!ft_strcmp(args[0], "unset"))
+			__unset(args, data);
 		if (!ft_strcmp(args[0], "exit"))
 			exit(0);
+		if (!ft_strcmp(args[0], "clear"))
+			system("clear"); // so por hora
 
 		
 		clean_array((void **)args);

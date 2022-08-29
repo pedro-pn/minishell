@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:25:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/29 04:04:24 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/29 12:35:50 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	raise_error(char *msg, int errn)
 	// g_status = errn;
 }
 
-// Gera uma array de strings a partir de uma lista
 char	**get_array_from_lst(t_list *lst)
 {
 	char	**arr;
@@ -55,43 +54,58 @@ char	**get_array_from_lst(t_list *lst)
 	return (arr);
 }
 
-// Remove e retorna um node da lista com base no seu valor
-//   lstsize(lst) -> 10 
-//   lstremove(lst, "PATH")  ->  node("PATH")
-//   lstsize(lst) -> 9 
-t_list	*ft_lstremove(t_list **lst, char *value)
+void	ft_lstremove(t_list **lst, char *value)
 {
-	t_list	*elem;
-	t_list	*curr;
-
-	if (!ft_lstfind(*lst, value))
-		return (NULL);
-	elem = NULL;
-	curr = *lst;
-	if (curr && !ft_strncmp((char *)curr->content, value, ft_strlen(value)))
+	t_list	*var_node;
+	t_list	*temp;
+	
+	temp = *lst;
+	var_node = ft_lstfind(*lst, value);
+	if (!var_node)
+		return ;
+	if (temp == var_node)
 	{
-		elem = curr;
-		*lst = elem->next;
-		elem->next = NULL;
-		return (elem);
+		*lst = (*lst)->next;
+		ft_lstdelone(var_node, free);
+		return ;
 	}
-	while (curr && curr->next)
-	{
-		if (!ft_strncmp((char *)curr->next->content, value, ft_strlen(value)))
-		{
-			elem = curr->next;
-			curr->next = curr->next->next;
-			elem->next = NULL;
-			return (elem);
-		}
-		curr = curr->next;
-	}
-	return (NULL);
+	while (temp->next != var_node)
+		temp = temp->next;
+	temp->next = temp->next->next;
+	ft_lstdelone(var_node, free);
 }
 
-// retorna um pointer para o elemento da lista com base no seu valor
-//    lstfind(lst, "SHLVL")  ->  node("SHLVL=1")
-//    lstfind(lst, "PATH")  ->  node("PATH=/bin/:/usr/bin:...")
+// t_list	*ft_lstremove(t_list **lst, char *value)
+// {
+// 	t_list	*elem;
+// 	t_list	*curr;
+
+// 	if (!ft_lstfind(*lst, value))
+// 		return (NULL);
+// 	elem = NULL;
+// 	curr = *lst;
+// 	if (curr && !ft_strncmp((char *)curr->content, value, ft_strlen(value)))
+// 	{
+// 		elem = curr;
+// 		*lst = elem->next;
+// 		elem->next = NULL;
+// 		return (elem);
+// 	}
+// 	while (curr && curr->next)
+// 	{
+// 		if (!ft_strncmp((char *)curr->next->content, value, ft_strlen(value)))
+// 		{
+// 			elem = curr->next;
+// 			curr->next = curr->next->next;
+// 			elem->next = NULL;
+// 			return (elem);
+// 		}
+// 		curr = curr->next;
+// 	}
+// 	return (NULL);
+// }
+
+
 t_list	*ft_lstfind(t_list *lst, char *value)
 {
 	while (lst)
@@ -103,9 +117,6 @@ t_list	*ft_lstfind(t_list *lst, char *value)
 	return (NULL);
 }
 
-// retorna uma string a partir do conteudo de um node
-//    "SHLVL=1"  ->  "1"
-//    "PATH=/bin/:/usr/bin/..."  ->  "/bin/:/usr/bin/..."
 char	*ft_lstfind_value(t_list *lst, char *value)
 {
 	t_list	*node;
@@ -118,7 +129,6 @@ char	*ft_lstfind_value(t_list *lst, char *value)
 	return (str);
 }
 
-// Gera uma lista a partir de um array de strings
 t_list	*get_lst_from_array(char **arr)
 {
 	t_list	*lst;
