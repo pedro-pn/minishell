@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 15:44:43 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 19:19:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/29 11:51:08 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,22 @@ void	export(t_cmd *cmd, t_list **env)
 			continue ;
 		}
 		ft_lstadd_back(env, ft_lstnew(ft_strdup((cmd->cmd)[index])));
+	}
+}
+
+void	unset(t_cmd *cmd, t_list **env)
+{
+	t_list	*var;
+	char	**var_key;
+	int		index;
+
+	index = 0;
+	while (index++, (cmd->cmd)[index])
+	{
+		var = ft_lstfind(*env, (cmd->cmd)[index]);
+		if (!var)
+			continue ;
+		ft_printf("uepa\n");
+		ft_lstremove(env, (cmd->cmd)[index]);
 	}
 }

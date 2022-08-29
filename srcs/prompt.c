@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 19:25:21 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/29 12:14:18 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ void	show_prompt(t_data *data)
 		save_line(data->prompt.line);
 		exec_data = parser_input(data->prompt.line);
 
-		// teste da função export
-		//export((t_cmd *)exec_data->content, &(data->lst_env));
-		//ft_lstdisplay(data->lst_env);
+		// teste da função export e unset
+		export((t_cmd *)exec_data->content, &(data->lst_env));
+		if (!ft_strcmp((((t_cmd *)exec_data->content)->cmd)[0], "unset"))
+			unset((t_cmd *)exec_data->content, &(data->lst_env));
+		ft_lstdisplay(data->lst_env);
 		ft_lstclear(&exec_data, clean_s_cmd);
 		clean_prompt(&data->prompt);
 		// reset_data(data);

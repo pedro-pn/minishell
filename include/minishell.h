@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 19:11:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/29 11:10:50 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,14 @@ void	ft_lstdisplay(t_list *lst);
 void	raise_error(char *msg, int errn);
 char	**get_array_from_lst(t_list *lst);
 t_list	*get_lst_from_array(char **arr);
-t_list	*ft_lstremove(t_list **lst, char *value);
+void	ft_lstremove(t_list **lst, char *value);
 t_list	*ft_lstfind(t_list *lst, char *value);
 char	*ft_lstfind_value(t_list *lst, char *value);
 
 // Built-ins
 
 void	export(t_cmd *cmd, t_list **env);
+void	unset(t_cmd *cmd, t_list **env);
 
 // Debbug - delete later
 void	print_content(char **array);
