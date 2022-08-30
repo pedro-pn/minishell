@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/29 13:05:04 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/30 00:12:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_export_error(t_data *data, char *arg);
+static void	ft_export_display(t_data *data);
 
 void	__echo(char **args)
 {
@@ -135,58 +138,86 @@ char	*get_keyvalue(char *arg)
 	return (key_value);
 }
 
+/* Adds or update a variable in env linked list*/
 void	__export(char **args, t_data *data)
 {
-	t_list	*node;
-	char	*key_value;
-	char	*arg;
-	char	*key;
-	char	*value;
+	t_list	*var;
+	char	**var_key;
+	int		index;
 
-	// validate_keyvalue(args + 1);
-	if (!ft_strchr(args[1], '='))   // export -x foo
-		return ;                    
-	key = get_key(args[1]);
-	value = ft_strchr(args[1], '=') + 1; // export -x foo=""
-	if (!*value)
+	index = 0;
+	if (args[1] == NULL)
+		ft_export_display(data);
+	while (index++, args[index])
 	{
-		node = ft_lstfind(data->lst_env, key);
-		if (!node)
-			ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(args[1])));
-		else
+		if (check_export_error(data, args[index]))
+			continue ;
+		var_key = ft_split(args[index], '=');
+		var = ft_lstfind(data->lst_env, var_key[0]);
+		if (ft_lstfind_2(data->empty_vars, var_key[0]))
+			ft_lstremove_2(&data->empty_vars, var_key[0]);
+		clean_array((void **) var_key);
+		if (var)
 		{
-			free(node->content);
-			node->content = ft_strdup(args[1]);
+			free(var->content);
+			var->content = ft_strdup(args[index]);
+			continue ;
 		}
-		free(key);
-		return ;
+		ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(args[index])));
 	}
-	node = ft_lstfind(data->lst_env, key);
-	if (!node)
-	{
-		key_value = get_keyvalue(args[1]);
-		ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(key_value)));
-		free(key_value);
-		return ;
-	}
-	node = ft_lstfind(data->lst_env, key);
-	free(node->content);
-	key_value = get_keyvalue(args[1]);
-	node->content = ft_strdup(key_value);
-	free(key_value);
 }
 
+/* Removes environment variables from a linked list*/
 void	__unset(char **args, t_data *data)
 {
 	t_list	*node;
+	t_list	*empty_node;
 	int		index;
 
 	index = 0;
 	while (index++, args[index])
 	{
 		node = ft_lstfind(data->lst_env, args[index]);
+		empty_node = ft_lstfind_2(data->empty_vars, args[index]);
+		if (empty_node)
+			ft_lstremove_2(&data->empty_vars, args[index]);
 		if (!node)
 			continue ;
 		ft_lstremove(&data->lst_env, args[index]);
 	}
+}
+
+static int	check_export_error(t_data *data, char *arg)
+{
+	if (!ft_strchr(arg, '='))
+	{
+		if (!ft_lstfind_2(data->empty_vars, arg) 
+			&& !ft_lstfind(data->lst_env, arg))
+			ft_lstadd_back(&data->empty_vars, ft_lstnew(ft_strdup(arg)));
+		return (1);
+	}
+	if (arg[0] == '=')
+	{
+		ft_printf("minishell: export: '%s': not a valid identifier\n", arg);
+		return (1);
+	}
+	return (0);
+}
+
+static void	ft_export_display(t_data *data)
+{
+	t_list	*export_env;
+	t_list	*temp;
+
+	if (!data->lst_env)
+		return ;
+	export_env = ft_lstmap(data->lst_env, get_declared_vars, free);
+	ft_lstdisplay(export_env);
+	temp = data->empty_vars;
+	while (temp)
+	{
+		ft_printf("declare -x %s\n", (char *)temp->content);
+		temp = temp->next;
+	}
+	ft_lstclear(&export_env, free);
 }

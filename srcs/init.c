@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/28 21:19:18 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:34:44 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	init_data(t_data *data, char **ep)
 
 	// data->builtins = (char **)ft_split(builtins, ' ');
 	data->lst_env = (t_list *)get_lst_from_array(ep);
+	data->empty_vars = NULL;
 	update_SHLVL(data);
 	update_stdio_fds();
 

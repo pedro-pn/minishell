@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/29 16:42:01 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/30 00:13:55 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static void	reset_data(t_data *data)
 /* Displays prompt on terminal*/
 void	show_prompt(t_data *data)
 {
-	t_list	*exec_data;
-
 	while (1)
 	{
 		data->prompt.message = update_prompt_msg(data);
@@ -38,7 +36,7 @@ void	show_prompt(t_data *data)
 		validate_pipes(data);
 		validate_redirections(data);
 		save_history(data->prompt.line);
-		exec_data = parser_input(data->prompt.line);
+		data->exec_data = parser_input(data->prompt.line);
 
 		char	**args = ft_split(data->prompt.line, ' ');
 		if (!args[0])
@@ -62,10 +60,7 @@ void	show_prompt(t_data *data)
 
 		clean_array((void **)args);
 
-		// teste da função export
-		// export((t_cmd *)exec_data->content, &(data->lst_env));
-		// ft_lstdisplay(data->lst_env);
-		ft_lstclear(&exec_data, clean_s_cmd);
+		ft_lstclear(&(data->exec_data), clean_s_cmd);
 		clean_prompt(&data->prompt);
 		reset_data(data);
 
@@ -95,7 +90,7 @@ char	*get_prompt(void)
 	char	*temp;
 
 	user = ft_strjoin(getenv("USER"), "@");
-	temp = ft_strjoin(user, getenv("NAME"));
+	temp = ft_strjoin(user, getenv("USERNAME"));
 	free(user);
 	prompt = ft_strjoin(temp, ": ");
 	free(temp);

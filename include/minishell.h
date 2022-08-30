@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/29 16:20:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/30 00:09:42 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	t_list		*lst_env;
+	t_list		*exec_data;
+	t_list		*empty_vars;
 	char		**arr_env;
 	char		**builtins;
 	int			cmd_count;
 	int			is_pipe_empty;
 	t_prompt	prompt;
-}		t_data;
+}			t_data;
 
 
 // init
@@ -103,9 +105,12 @@ t_list	*get_lst_from_array(char **arr);
 void	ft_lstremove(t_list **lst, char *value);
 t_list	*ft_lstfind(t_list *lst, char *value);
 char	*ft_lstfind_value(t_list *lst, char *value);
+void	ft_lstremove_2(t_list **lst, char *value);
 
 char	*get_key(char *str);
 char	*get_value(char *str);
+void	*get_declared_vars(void *content);
+t_list	*ft_lstfind_2(t_list *lst, char *value);
 
 // Built-ins
 void	__echo(char **args);
