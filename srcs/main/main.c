@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:46 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 13:06:58 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/08/30 14:21:44 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	t_data		data;
+	t_data	data;
 
 	signals_setup();
 	init_data(&data, envp);

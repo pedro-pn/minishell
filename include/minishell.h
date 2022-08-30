@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/30 00:09:42 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/30 14:36:30 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ typedef struct s_cmd
 	int		here_doc;
 }			t_cmd;
 
+typedef struct s_process
+{
+	int	**pipes;
+	int	*pids;
+	int	processes_n;
+}			t_process;
+
 typedef struct s_data
 {
 	t_list		*lst_env;
@@ -60,6 +67,7 @@ typedef struct s_data
 	int			cmd_count;
 	int			is_pipe_empty;
 	t_prompt	prompt;
+	t_process	procs;
 }			t_data;
 
 
