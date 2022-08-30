@@ -6,7 +6,9 @@ LIBFT = libft/libft.a
 SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = ${addprefix ${SRCS_PATH}/, ${SOURCES}}
-OBJS = ${addprefix ${OBJS_PATH}/, ${SOURCES:.c=.o}}
+OBJS = ${addprefix ${OBJS_PATH}/, ${notdir ${SOURCES:.c=.o}}}
+VPATH :=	${SRCS_PATH} ${SRCS_PATH}/built_in ${SRCS_PATH}/clean \ 
+			${SRCS_PATH}/main ${SRCS_PATH}/parser ${SRCS_PATH}/utils
 CC = gcc
 FLAGS =  -Werror -Wextra -Wall
 
@@ -22,7 +24,7 @@ all: ${NAME}
 
 bonus: ${BONUS}
 
-${OBJS_PATH}/%.o: ${SRCS_PATH}/%.c
+${OBJS_PATH}/%.o: %.c
 					@ mkdir -p ${OBJS_PATH}
 					@ echo "Compiling: $<"
 					@ ${CC} -c $< -o $@ -I libft/include/ -I include/
@@ -35,12 +37,12 @@ ${LIBFT}:
 		@ make -C libft/ --no-print-directory
 
 clean:
-		@ rm -rf ${OBJS_PATH} ${BOBJS_PATH}
+		@ rm -rf ${OBJS_PATH}
 		@ echo "${L_CYAN}Objects deleted!${NC}"
 
 fclean: clean
 		@ make fclean -C libft/ --no-print-directory
-		@ rm -rf ${NAME} ${BONUS}
+		@ rm -rf ${NAME}
 		@ echo "${L_BLUE}push_swap deleted!${NC}"
 	
 re: fclean all
@@ -50,3 +52,5 @@ norma:
 
 val: ${NAME}
 	valgrind --suppressions=./local.supp --leak-check=full ./minishell
+
+.PHONY: clean re all fclean
