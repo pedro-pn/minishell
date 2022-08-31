@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 11:43:41 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:42:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static void	get_infile(char **cmd_line, t_cmd **exec_cmds)
 			if (*in_address == '<')
 			{
 				(*exec_cmds)->here_doc = 1;
-				(*exec_cmds)->mode = O_RDONLY;
 				in_address++;
 			}
+			(*exec_cmds)->mode_in = O_RDONLY;
 			if (*in_address == ' ')
 				in_address++;
 			if ((*exec_cmds)->here_doc == 1)
@@ -97,12 +97,13 @@ static void	get_outfile(char **cmd_line, t_cmd **exec_cmds)
 		if (in_address)
 		{
 			in_address++;
-			(*exec_cmds)->mode = O_TRUNC | O_CREAT | O_WRONLY; // acho que o ideal é já abrir/criar o arquivo
-			if (*in_address == '>')	// se executar no bash "echo teste > a > b" ele cria ambos os arquivos
-			{						// a e b,  porém só escreve "teste" no arquivo b.
-				(*exec_cmds)->mode = O_APPEND | O_CREAT | O_WRONLY; // idem
+			if (*in_address == '>')
+			{
+				(*exec_cmds)->mode_out = O_APPEND | O_CREAT | O_WRONLY;
 				in_address++;
 			}
+			else
+				(*exec_cmds)->mode_out = O_CREAT | O_WRONLY | O_TRUNC;
 			if (*in_address == ' ')
 				in_address++;
 			(*exec_cmds)->out_file = ft_strdup(in_address);

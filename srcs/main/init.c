@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/29 20:34:44 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:10:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_cmd	*cmd_init(void)
 	cmd->in_file = NULL;
 	cmd->out_file = NULL;
 	cmd->delimiter = NULL;
-	cmd->mode = 0;
+	cmd->mode_in = 0;
+	cmd->mode_out = 0;
 	cmd->here_doc = 0;
 	return (cmd);
 }

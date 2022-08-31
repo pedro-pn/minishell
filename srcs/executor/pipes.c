@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:44:03 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/30 14:48:36 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:10:57 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,36 @@ int	open_pipes(t_data *data)
 	index = 0;
 	while (data->procs.pipes[index])
 	{
-		pipe(data->procs.pipes[index]) == -1;
+		pipe(data->procs.pipes[index]);
 		index++;
 	}
 	return (0);
+}
+
+void	close_child_pipes(int **pipes, int process)
+{
+	int	index;
+
+	index = 0;
+	while (pipes[index])
+	{
+		if (index != process)
+			close(pipes[index][0]);
+		if (index != process + 1)
+			close(pipes[index][1]);
+		index++;
+	}
+}
+
+void	close_main_pipes(int **pipes)
+{
+	int	index;
+
+	index = 0;
+	while (pipes[index])
+	{
+		close(pipes[index][0]);
+		close(pipes[index][1]);
+		index++;
+	}
 }

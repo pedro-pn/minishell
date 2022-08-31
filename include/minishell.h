@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/30 14:36:30 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:09:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <dirent.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -46,7 +47,9 @@ typedef struct s_cmd
 	char	*in_file;
 	char	*out_file;
 	char	*delimiter;
-	int		mode;
+	int		here_pipe[2];
+	int		mode_in;
+	int		mode_out;
 	int		here_doc;
 }			t_cmd;
 
@@ -127,6 +130,26 @@ void	__pwd(char **args);
 void	__env(char **args, t_data *data);
 void	__export(char **args, t_data *data);
 void	__unset(char **args, t_data *data);
+
+// executor
+
+int	executor(t_data *data);
+void	exec_init(t_data *data);
+int	*get_pids(t_data *data);
+void	_exec(t_data *data, t_list *exec_data) ;
+void	exec_child(t_data *data, t_cmd *exec, int process);
+int	get_path(t_data *data, char **cmd, char **path);
+int	get_given_path(t_data *data, char **cmd, char **path);
+int	check_path(char **bin_paths, char *cmd, char **path);
+int	wait_processes(t_data *data, int processes_n);
+int	**get_pipes(t_data *data);
+int	open_pipes(t_data *data);
+void	close_child_pipes(int **pipes, int process);
+void	close_main_pipes(int **pipes);
+void	check_infile(int *pipe, t_cmd *exec);
+void	get_here_doc(t_cmd *exec);
+void	check_outfile(t_data *data, t_cmd *exec, int process);
+
 
 // Debbug - delete later
 void	print_content(char **array);

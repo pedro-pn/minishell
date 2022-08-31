@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/30 00:13:55 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:52:19 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	show_prompt(t_data *data)
 			exit(0);
 		if (!ft_strcmp(args[0], "clear"))
 			system("clear"); // so por hora
-
+		executor(data);
 		clean_array((void **)args);
 
 		ft_lstclear(&(data->exec_data), clean_s_cmd);
