@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:25:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/26 14:08:07 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/01 06:12:44 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	clean_s_cmd(void *content)
 void	clean_prompt(t_prompt *prompt)
 {
 	free(prompt->line);
+	free(prompt->tb_line);
 	free(prompt->message);
 	prompt->line = NULL;
+	prompt->tb_line = NULL;
 	prompt->message = NULL;
 }

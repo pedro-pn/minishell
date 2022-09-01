@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/31 12:52:19 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/01 07:43:28 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 static void	reset_data(t_data *data)
 {
-	free(data->prompt.line);
-	free(data->prompt.message);
+	ft_lstclear(&(data->exec_data), clean_s_cmd);
+	clean_prompt(&data->prompt);
 	data->is_pipe_empty = 0;
 	data->cmd_count = 0;
+	data->invalid_syntax = 0;
+	data->missing_cmd = 0;
 }
 
-/* Displays prompt on terminal*/
 void	show_prompt(t_data *data)
 {
+	char	**args;
+
 	while (1)
 	{
 		data->prompt.message = update_prompt_msg(data);
@@ -35,35 +38,43 @@ void	show_prompt(t_data *data)
 		}
 		validate_pipes(data);
 		validate_redirections(data);
-		save_history(data->prompt.line);
+
+		if (data->is_pipe_empty)
+			save_history(data->prompt.tb_line);
+		else
+			save_history(data->prompt.line);
+
 		data->exec_data = parser_input(data->prompt.line);
 
-		char	**args = ft_split(data->prompt.line, ' ');
+		// ===== builtins stuff
+		args = ft_split(data->prompt.line, ' ');
 		if (!args[0])
+		{
+			clean_array((void **)args);
+			ft_lstclear(&(data->exec_data), clean_s_cmd);
+			clean_prompt(&data->prompt);
+			reset_data(data);
 			continue ;
-		if (!ft_strcmp(args[0], "echo"))
-			__echo(args);
-		if (!ft_strcmp(args[0], "cd"))
-			__cd(args, data);
-		if (!ft_strcmp(args[0], "pwd"))
-			__pwd(args);
-		if (!ft_strcmp(args[0], "env"))
-			__env(args, data);
-		if (!ft_strcmp(args[0], "export"))
-			__export(args, data);
-		if (!ft_strcmp(args[0], "unset"))
-			__unset(args, data);
-		if (!ft_strcmp(args[0], "exit"))
-			exit(0);
-		if (!ft_strcmp(args[0], "clear"))
-			system("clear"); // so por hora
-		executor(data);
+		}
+		if (!data->invalid_syntax)
+		{
+			if (is_builtin(args[0]))
+			{
+				if (!data->missing_cmd)
+					builtin_executor(args, data);
+			}
+			else
+			{
+				if (!data->missing_cmd)
+					executor(data);
+			}
+		}
 		clean_array((void **)args);
+		// =====
 
 		ft_lstclear(&(data->exec_data), clean_s_cmd);
 		clean_prompt(&data->prompt);
 		reset_data(data);
-
 	}
 }
 
@@ -90,7 +101,7 @@ char	*get_prompt(void)
 	char	*temp;
 
 	user = ft_strjoin(getenv("USER"), "@");
-	temp = ft_strjoin(user, getenv("USERNAME"));
+	temp = ft_strjoin(user, getenv("NAME"));
 	free(user);
 	prompt = ft_strjoin(temp, ": ");
 	free(temp);

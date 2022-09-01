@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/31 14:42:46 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/01 08:13:21 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_content(char **array);
+void			print_content(char **array);
 static t_list	*get_exec_data(t_list *cmd_lines);
-static void	get_infile(char **cmd_line, t_cmd **exec_cmds);
-static void	get_outfile(char **cmd_line, t_cmd **exec_cmds);
+static void		get_infile(char **cmd_line, t_cmd **exec_cmds);
+static void		get_outfile(char **cmd_line, t_cmd **exec_cmds);
 
 /* Validates the input*/
 t_list	*parser_input(char *line)

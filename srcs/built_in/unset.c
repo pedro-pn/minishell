@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/23 11:12:46 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 07:47:32 by frosa-ma         ###   ########.fr       */
+/*   Created: 2022/09/01 05:43:46 by frosa-ma          #+#    #+#             */
+/*   Updated: 2022/09/01 05:44:00 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char **argv, char **envp)
+void	__unset(char **args, t_data *data)
 {
-	t_data	data;
+	t_list	*node;
+	t_list	*empty_node;
+	int		index;
 
-	signals_setup();
-	init_data(&data, envp);
-	show_prompt(&data);
-	return (0);
-	// return (g_status);
+	index = 0;
+	while (index++, args[index])
+	{
+		node = ft_lstfind(data->lst_env, args[index]);
+		empty_node = ft_lstfind_2(data->empty_vars, args[index]);
+		if (empty_node)
+			ft_lstremove_2(&data->empty_vars, args[index]);
+		if (!node)
+			continue ;
+		ft_lstremove(&data->lst_env, args[index]);
+	}
+	// g_status = 0;
 }

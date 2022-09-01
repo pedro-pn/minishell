@@ -30,17 +30,17 @@ NC = \033[0m
 all: ${NAME}
 
 ${OBJS_PATH}/%.o:	${SRCS_PATH}/%.c
-					@ mkdir -p objs
-					@ echo "Compiling: $<"
-					@ ${CC} ${FLAGS} -I include/ -c -o $@ $<
+	@ mkdir -p objs
+	@ echo "Compiling: $<"
+	@ ${CC} ${FLAGS} -I include/ -c -o $@ $<
 
 ${NAME}: ${OBJS}
-		@ ar -rcs ${NAME} ${OBJS}
-		@ echo "${L_GREEN}Libft successfully compiled!${NC}"
+	@ ar -rcs ${NAME} ${OBJS}
+	@ echo "${L_GREEN}Libft successfully compiled!${NC}"
 
 clean: 
-		@ rm -rf ${OBJS_PATH}
-		@ echo "${L_CYAN}Objects deleted!${NC}"
+	@ rm -rf ${OBJS_PATH}
+	@ echo "${L_CYAN}Objects deleted!${NC}"
 
 fclean: clean
 		@ rm -f ${NAME}

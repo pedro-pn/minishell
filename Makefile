@@ -1,6 +1,7 @@
 SOURCES =	main.c prompt.c parser.c token.c signals.c clean.c init.c utils.c \
 			parser_cmds.c validate_pipes.c validate_redirections.c builtins.c \
 			executor.c files.c pipes.c path.c exec_utils.c
+SOURCES +=	cd.c echo.c env.c export.c pwd.c unset.c
 
 NAME = minishell
 LIBFT = libft/libft.a
@@ -27,25 +28,25 @@ all: ${NAME}
 bonus: ${BONUS}
 
 ${OBJS_PATH}/%.o: %.c
-					@ mkdir -p ${OBJS_PATH}
-					@ echo "Compiling: $<"
-					@ ${CC} -c $< -o $@ -I libft/include/ -I include/
+	@ mkdir -p ${OBJS_PATH}
+	@ echo "Compiling: $<"
+	@ ${CC} -c $< -o $@ -I libft/include/ -I include/
 
 ${NAME}: ${LIBFT} ${OBJS}
-			@ ${CC} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
-			@ echo "${GREEN}${NAME} successfully compiled!${NC}"
+	@ ${CC} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
+	@ echo "${GREEN}${NAME} successfully compiled!${NC}"
 
 ${LIBFT}: 
-		@ make -C libft/ --no-print-directory
+	@ make -C libft/ --no-print-directory
 
 clean:
-		@ rm -rf ${OBJS_PATH}
-		@ echo "${L_CYAN}Objects deleted!${NC}"
+	@ rm -rf ${OBJS_PATH}
+	@ echo "${L_CYAN}Objects deleted!${NC}"
 
 fclean: clean
-		@ make fclean -C libft/ --no-print-directory
-		@ rm -rf ${NAME}
-		@ echo "${L_BLUE}push_swap deleted!${NC}"
+	@ make fclean -C libft/ --no-print-directory
+	@ rm -rf ${NAME}
+	@ echo "${L_BLUE}push_swap deleted!${NC}"
 	
 re: fclean all
 
