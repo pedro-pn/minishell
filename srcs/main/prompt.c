@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 07:43:28 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/01 11:33:17 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	show_prompt(t_data *data)
 		clean_array((void **)args);
 		// =====
 
-		ft_lstclear(&(data->exec_data), clean_s_cmd);
-		clean_prompt(&data->prompt);
+		// ft_lstclear(&(data->exec_data), clean_s_cmd);
+		// clean_prompt(&data->prompt);
 		reset_data(data);
 	}
 }

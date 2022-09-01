@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/01 07:43:53 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/01 11:48:02 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	builtin_executor(char **args, t_data *data)
 
 	cmd = args[0];
 	if (!ft_strcmp(cmd, "echo"))
-		__echo(args);
+		__echo(args, data);
 	else if (!ft_strcmp(cmd, "cd"))
 		__cd(args, data); // g_status = __cd(args, data);
 	else if (!ft_strcmp(cmd, "pwd"))

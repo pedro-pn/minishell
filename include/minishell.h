@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 08:02:40 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/01 11:48:14 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	validate_redirections(t_data *data);
 // builtins
 int		is_builtin(char *cmd);
 void	builtin_executor(char **args, t_data *data);
-void	__echo(char **args);
+void	__echo(char **args, t_data *data);
 int		__cd(char **args, t_data *data);
 void	__pwd(char **args);
 void	__env(char **args, t_data *data);
