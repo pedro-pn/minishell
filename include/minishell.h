@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 18:10:11 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:49:28 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_list	*parser_input(char *line);
 t_list	*create_input_list(char	*line);
 t_cmd	*cmd_init(void);
 void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
-void	remove_quotes(char *str);
+void	remove_quotes(char **str);
 
 // token
 char	**get_input(char *line);

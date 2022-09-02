@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 18:29:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:51:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,29 +106,29 @@ static void	join_commands(char **splitted_s, char **str)
 	free(temp);
 }
 
-void	remove_quotes(char *str)
+void	remove_quotes(char **str)
 {
 	char	**splitted_s;
 
-	if (!ft_strchr(str, 34) && !ft_strchr(str, 39))
+	if (!ft_strchr(*str, 34) && !ft_strchr(*str, 39))
 		return ;
-	save_spaces(str);
-	verify_quotes(str);
-	splitted_s = ft_split(str, ' ');
-	join_commands(splitted_s, &str);
-	restore_quotes(str);
+	save_spaces(*str);
+	verify_quotes(*str);
+	splitted_s = ft_split(*str, ' ');
+	join_commands(splitted_s, str);
+	restore_quotes(*str);
 	clean_array((void **)splitted_s);
 }
 
-void	print_chars(char *str)
-{
-	int index;
+// void	print_chars(char *str)
+// {
+// 	int index;
 
-	index = 0;
-	while (str[index])
-	{
-		ft_printf("%d\n", str[index]);
-		index++;
-	}
-	ft_printf("%d\n", str[index]);
-}
+// 	index = 0;
+// 	while (str[index])
+// 	{
+// 		ft_printf("%d\n", str[index]);
+// 		index++;
+// 	}
+// 	ft_printf("%d\n", str[index]);
+// }
