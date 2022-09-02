@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 16:50:47 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:29:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,55 +72,63 @@ static void	save_spaces(char *line)
 	while (line[index])
 	{
 		if (line[index] == ' ')
-			line[index] = 4;
+			line[index] = 1;
 		index++;
 	}
 }
 
 static void	restore_quotes(char *str)
 {
-	ft_memrpl(str, 4, 32, ft_strlen(str));
+	ft_memrpl(str, 1, 32, ft_strlen(str));
 	ft_memrpl(str, 2, 34, ft_strlen(str));
 	ft_memrpl(str, 3, 39, ft_strlen(str));
+}
+
+static void	join_commands(char **splitted_s, char **str)
+{
+	int		index;
+	char	*temp;
+
+	index = 0;
+	temp = ft_strdup(splitted_s[0]);
+	while (index++, splitted_s[index])
+	{
+		free(*str);
+		*str = ft_strjoin(temp, splitted_s[index]);
+		free(temp);
+		temp = ft_strdup(*str);
+	}
+	if (!splitted_s[1])
+	{
+		free(*str);
+		*str = ft_strdup(temp);
+	}
+	free(temp);
 }
 
 void	remove_quotes(char *str)
 {
 	char	**splitted_s;
-	int		index;
-	char 	*temp;
 
 	if (!ft_strchr(str, 34) && !ft_strchr(str, 39))
 		return ;
 	save_spaces(str);
 	verify_quotes(str);
 	splitted_s = ft_split(str, ' ');
-	temp = splitted_s[0];
-	index = 0;
-	while (index++, splitted_s[index])
-	{
-		free(str);
-		str = ft_strjoin(temp, splitted_s[index]);
-		temp = str;
-	}
-	if (!splitted_s[1])
-	{
-		free(str);
-		str = ft_strdup(temp);
-	}
+	join_commands(splitted_s, &str);
 	restore_quotes(str);
 	clean_array((void **)splitted_s);
 }
 
-// void	print_chars(char *str)
-// {
-// 	int index;
+void	print_chars(char *str)
+{
+	int index;
 
-// 	index = 0;
-// 	while (str[index])
-// 	{
-// 		ft_printf("%d\n", str[index]);
-// 		index++;
-// 	}
-// 	ft_printf("%d\n", str[index]);
-// }
+	index = 0;
+	while (str[index])
+	{
+		ft_printf("%d\n", str[index]);
+		index++;
+	}
+	ft_printf("%d\n", str[index]);
+}

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:12:56 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 16:11:16 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:09:58 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	get_cmd_len(char **cmd_line);
 static char	*format_cmd(char *cmd);
-void	remove_quotes(char *str);
 
 /* Gets the cmd line with its arguments and adds it to the t_cmd structure
 as a char ** array*/

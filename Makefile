@@ -13,7 +13,7 @@ VPATH :=	${SRCS_PATH} ${SRCS_PATH}/built_in ${SRCS_PATH}/clean \
 			${SRCS_PATH}/main ${SRCS_PATH}/parser ${SRCS_PATH}/utils \
 			${SRCS_PATH}/executor
 CC = gcc
-FLAGS =  -Werror -Wextra -Wall
+FLAGS =  -Werror -Wextra -Wall -g
 
 # Colors
 GREEN = \33[1;32m
