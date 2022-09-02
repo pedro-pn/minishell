@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 10:23:06 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 12:05:18 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,11 @@ void	show_prompt(t_data *data)
 			reset_data(data);
 			continue ;
 		}
-		if (!data->invalid_syntax)
-		{
-			if (is_builtin(args[0]))
-			{
-				if (!data->missing_cmd)
-					builtin_executor(args, data);
-			}
-			else
-			{
-				if (!data->missing_cmd)
-					executor(data);
-			}
-		}
+		executor(data);
 		clean_array((void **)args);
-		// =====
 
-		// ft_lstclear(&(data->exec_data), clean_s_cmd);
-		// clean_prompt(&data->prompt);
+		ft_lstclear(&(data->exec_data), clean_s_cmd);
+		clean_prompt(&data->prompt);
 		reset_data(data);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 10:54:22 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:46:20 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@ void	validate_pipes(t_data *data);
 void	validate_redirections(t_data *data);
 
 // builtins
-int		is_builtin(char *cmd);
-void	builtin_executor(char **args, t_data *data);
+int		is_builtin(t_data *data, t_cmd *exec, int process);
+int		builtin_executor(t_data *data, char **cmds);
+void	builtin_executor_2(t_data *data, t_cmd *exec);
 void	__echo(char **args, t_data *data);
 int		__cd(char **args, t_data *data);
 void	__pwd(char **args);
@@ -134,6 +135,7 @@ void	get_here_doc(t_cmd *exec);
 void	check_outfile(t_data *data, t_cmd *exec, int process);
 int		verify_infile(int *pipe, t_cmd *exec);
 int		verify_outfile(t_data *data, t_cmd *exec, int process);
+void	output_exec_error(t_cmd *exec);
 
 // utils
 void	ft_arrdisplay(char **a);

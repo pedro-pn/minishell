@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 08:19:32 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:54:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	_exec(t_data *data, t_list *exec_data)
 			//ft_printf("%s: command not found\n", exec->cmd[0]);
 		if (exec->here_doc)
 			get_here_doc(exec);
+		if (data->procs.processes_n == 1)
+			builtin_executor(data, exec->cmd);
 		data->procs.pids[process] = fork();
 		if (data->procs.pids[process] == 0)
 			exec_child(data, exec, process);
@@ -65,18 +67,12 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data->procs.pipes[process], exec);
 	check_outfile(data, exec, process);
-	if (exec->path)
+	if (is_builtin(data, exec, process))
+		builtin_executor_2(data, exec);
+	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
-	if (ft_strchr(exec->cmd[0], '/'))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		perror(exec->cmd[0]);
-	}
 	else
-	{
-		ft_putstr_fd(exec->cmd[0], 2);
-		ft_putendl_fd(": command not found", 2);
-	}
+		output_exec_error(exec);
 	// se chegar aqui, limpar tudo, significa que o comando n existe
 	//talvez seja necessario fechar os pipes
 	exit(EXIT_FAILURE);
