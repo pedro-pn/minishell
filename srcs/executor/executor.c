@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 11:54:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:17:56 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	_exec(t_data *data, t_list *exec_data)
 			//ft_printf("%s: command not found\n", exec->cmd[0]);
 		if (exec->here_doc)
 			get_here_doc(exec);
-		if (data->procs.processes_n == 1)
+		if (data->procs.processes_n == 1 && *exec->cmd)
 			builtin_executor(data, exec->cmd);
 		data->procs.pids[process] = fork();
 		if (data->procs.pids[process] == 0)
@@ -71,7 +71,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 		builtin_executor_2(data, exec);
 	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
-	else
+	else if (*exec->cmd)
 		output_exec_error(exec);
 	// se chegar aqui, limpar tudo, significa que o comando n existe
 	//talvez seja necessario fechar os pipes

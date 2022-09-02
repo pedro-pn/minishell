@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/02 11:58:56 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:16:20 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	builtin_executor(t_data *data, char **cmds)
 
 int	is_builtin(t_data *data, t_cmd *exec, int process)
 {
+	if (!*exec->cmd)
+		return(0);
 	if (!ft_strcmp(exec->cmd[0], "echo"))
 		return (1);
 	if (!ft_strcmp(exec->cmd[0], "pwd"))
