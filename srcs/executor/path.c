@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/31 16:17:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/02 09:37:53 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	get_path(t_data *data, char **cmd, char **path)
 	t_list	*path_node;
 	int		status;
 	
+	if (!*cmd)
+		return (1);
 	if (ft_strchr(*cmd, '/'))
 		status = get_given_path(data, cmd, path);
 	if (!status)
