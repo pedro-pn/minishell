@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 11:48:14 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:54:22 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ void	close_main_pipes(int **pipes);
 void	check_infile(int *pipe, t_cmd *exec);
 void	get_here_doc(t_cmd *exec);
 void	check_outfile(t_data *data, t_cmd *exec, int process);
+int		verify_infile(int *pipe, t_cmd *exec);
+int		verify_outfile(t_data *data, t_cmd *exec, int process);
 
 // utils
 void	ft_arrdisplay(char **a);

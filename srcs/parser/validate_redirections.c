@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validate_redirections.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 13:20:12 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/01 08:28:28 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:57:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	verify_file_existence_and_permission(t_data *data);
-static void	verify_num_args(t_data *data);
 
 void	validate_redirections(t_data *data)
 {
@@ -41,49 +38,5 @@ void	validate_redirections(t_data *data)
 			// g_status = 2;
 			return ;
 		}
-		verify_file_existence_and_permission(data);
-		verify_num_args(data);
 	}
-}
-
-static void	verify_file_existence_and_permission(t_data *data)
-{
-	char	**tokens;
-	char	*file;
-	int		i;
-	
-	tokens = ft_split(data->prompt.line, ' ');
-	if (!ft_strcmp(tokens[0], "<<"))
-		return ;
-	if (tokens[0][0] == '<')
-	{
-		file = tokens[1];
-		if (access(file, F_OK))
-		{
-			printf("-minishell: %s: No such file or directory\n", file);
-			data->invalid_syntax = 1;
-			// g_status = 1;
-		}
-		else if (access(tokens[1], R_OK))
-		{
-			printf("-minishell: %s: Permission denied\n", file);
-			data->invalid_syntax = 1;
-			// g_status = 1;
-		}
-	}
-	clean_array((void **)tokens);
-}
-
-static void	verify_num_args(t_data *data)
-{
-	char	**tokens;
-	int		i;
-	
-	tokens = ft_split(data->prompt.line, ' ');
-	i = 0;
-	while (tokens[i])
-		i++;
-	if (!tokens[2])
-		data->missing_cmd = 1;
-	clean_array((void **)tokens);
 }

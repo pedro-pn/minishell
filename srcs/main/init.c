@@ -71,7 +71,7 @@ void	init_data(t_data *data, char **ep)
 	data->cmd_count = 0;
 	data->is_pipe_empty = 0;
 	data->invalid_syntax = 0;
-	data->skip = 0;
+//	data->skip = 0;
 	init_prompt(&data->prompt);
 }
 
