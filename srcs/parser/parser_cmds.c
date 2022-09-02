@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:12:56 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 05:54:32 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:11:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	get_cmd_len(char **cmd_line);
 static char	*format_cmd(char *cmd);
+void	remove_quotes(char *str);
 
 /* Gets the cmd line with its arguments and adds it to the t_cmd structure
 as a char ** array*/
@@ -33,6 +34,7 @@ void	get_cmd(char **cmd_line, t_cmd **exec_cmds)
 		if (!ft_strchr(META_C, cmd_line[index_cmd][0]))
 		{
 			((*exec_cmds)->cmd)[index] = format_cmd(cmd_line[index_cmd]);
+			remove_quotes(((*exec_cmds)->cmd)[index]);
 			index++;
 		}
 		index_cmd++;
@@ -80,3 +82,21 @@ static char	*format_cmd(char *cmd)
 	}
 	return (ft_substr(cmd, 0, index));
 }
+
+// static void	remove_quotes(char **str)
+// {
+// 	char	*string;
+	
+// 	if ((*str)[0] == 34)
+// 	{
+// 		string = ft_strtrim(*str, "\"");
+// 		free(*str);
+// 		*str = string;
+// 	}
+// 	else if ((*str)[0] == 39)
+// 	{
+// 		string = ft_strtrim(*str, "\'");
+// 		free(*str);
+// 		*str = string;
+// 	}
+// }
