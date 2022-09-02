@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/31 14:10:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/01 06:56:22 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	update_SHLVL(t_data *data);
 void	init_prompt(t_prompt *prompt)
 {
 	prompt->line = NULL;
+	prompt->tb_line = NULL;
 	prompt->directory = getcwd(NULL, 0);
 }
 
@@ -62,9 +63,6 @@ static void	update_stdio_fds(void)
 
 void	init_data(t_data *data, char **ep)
 {
-	// const char	*builtins = "echo cd pwd env export unset exit";
-
-	// data->builtins = (char **)ft_split(builtins, ' ');
 	data->lst_env = (t_list *)get_lst_from_array(ep);
 	data->empty_vars = NULL;
 	update_SHLVL(data);
@@ -72,6 +70,8 @@ void	init_data(t_data *data, char **ep)
 
 	data->cmd_count = 0;
 	data->is_pipe_empty = 0;
+	data->invalid_syntax = 0;
+	data->skip = 0;
 	init_prompt(&data->prompt);
 }
 

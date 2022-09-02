@@ -6,11 +6,12 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/26 13:10:17 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/01 08:13:49 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 /* Handle SIGINT (Ctrl + C) signals */
 void	sigint_handler(int sig)
 {
