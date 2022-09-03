@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 10:52:10 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:42:19 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	check_outfile(data, exec, process);
 	i = 0;
 	while (exec->cmd[++i])
-		if (exec->cmd[i][0] == '$')
+		if (ft_strchr(exec->cmd[i], '$'))
 			expand(exec->cmd[i], data);
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);

@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 10:49:55 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:42:07 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,19 @@ void	output_exec_error(t_cmd *exec)
 void	expand(char *cmd, t_data *data)
 {
 	t_list	*node;
+	char	*key;
 	char	*value;
+	char	*to_find;
 
-	node = ft_lstfind(data->lst_env, cmd + 1);
+	int i = 0;
+	while (cmd[i] != '$')
+		i++;
+	key = ft_substr(cmd, 0, i);
+	to_find = ft_strchr(cmd, '$') + 1;
+	node = ft_lstfind(data->lst_env, to_find);
 	value = get_value((char *)node->content);
 	free(cmd);
-	cmd = ft_strdup(value);
+	cmd = ft_strjoin(key, value);
+	free(key);
 	free(value);
 }
