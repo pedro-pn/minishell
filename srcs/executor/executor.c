@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 17:17:56 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/03 10:52:10 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,17 @@ void	_exec(t_data *data, t_list *exec_data)
 void	exec_child(t_data *data, t_cmd *exec, int process)
 {
 	char	**env;
+	int		i;
 
 	env = get_array_from_lst(data->lst_env);
 	//ft_printf("path: %s\ncmd: %s\n", exec->path, exec->cmd[1]);
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data->procs.pipes[process], exec);
 	check_outfile(data, exec, process);
+	i = 0;
+	while (exec->cmd[++i])
+		if (exec->cmd[i][0] == '$')
+			expand(exec->cmd[i], data);
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)

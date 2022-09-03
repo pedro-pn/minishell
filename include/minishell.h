@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 18:49:28 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/03 10:51:52 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ void	__unset(char **args, t_data *data);
 // executor
 int		executor(t_data *data);
 void	exec_init(t_data *data);
-int		*get_pids(t_data *data);
 void	_exec(t_data *data, t_list *exec_data) ;
 void	exec_child(t_data *data, t_cmd *exec, int process);
 int		get_path(t_data *data, char **cmd, char **path);
@@ -136,7 +135,11 @@ void	get_here_doc(t_cmd *exec);
 void	check_outfile(t_data *data, t_cmd *exec, int process);
 int		verify_infile(int *pipe, t_cmd *exec);
 int		verify_outfile(t_data *data, t_cmd *exec, int process);
+
+// executor utils
+int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
+void	expand(char *cmd, t_data *data);
 
 // utils
 void	ft_arrdisplay(char **a);
