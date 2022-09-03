@@ -3,36 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 09:36:18 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:46:38 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	reset_data(t_data *data)
-{
-	ft_lstclear(&(data->exec_data), clean_s_cmd);
-	clean_prompt(&data->prompt);
-	data->is_pipe_empty = 0;
-	data->cmd_count = 0;
-	data->invalid_syntax = 0;
-	data->missing_cmd = 0;
-}
-
 void	show_prompt(t_data *data)
 {
-	char	**args;
-
 	while (1)
 	{
 		data->prompt.message = update_prompt_msg(data);
 		data->prompt.line = readline(data->prompt.message);
 		if (!data->prompt.line)
 		{
-			clean_prompt(&data->prompt);
+			//clean_data(data);
 			ft_putendl_fd("exit", 1);
 			break ;
 		}
@@ -48,7 +36,7 @@ void	show_prompt(t_data *data)
 
 		executor(data);
 
-		reset_data(data);
+		clean_data(data);
 	}
 }
 

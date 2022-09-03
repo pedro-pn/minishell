@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 08:13:21 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:43:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@ t_list	*parser_input(char *line)
 
 	cmd_lines = create_input_list(line);
 	exec_data = get_exec_data(cmd_lines);
-	/*Este loop é só pra teste, printa cada nó da t_list retornada pela função
-	anterior*/
-	/* Aqui virão as próximas funções de parsing (validar comando, atribuição
-	de variáveis, here_doc, infile, etc...)*/
 	ft_lstclear(&cmd_lines, clean_cmd_lines);
 	return (exec_data);
 }

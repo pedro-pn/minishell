@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 06:56:22 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:52:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,25 @@ static void	update_stdio_fds(void)
 	close(bk_stderr);
 }
 
+void	init_processes(t_process *procs)
+{
+	procs->pids = NULL;
+	procs->pipes = NULL;
+}
+
 void	init_data(t_data *data, char **ep)
 {
 	data->lst_env = (t_list *)get_lst_from_array(ep);
 	data->empty_vars = NULL;
 	update_SHLVL(data);
 	update_stdio_fds();
-
+	//data->exec_data = NULL;
 	data->cmd_count = 0;
 	data->is_pipe_empty = 0;
 	data->invalid_syntax = 0;
 //	data->skip = 0;
 	init_prompt(&data->prompt);
+	//init_processes(&data->procs);
 }
 
 static void	update_SHLVL(t_data *data)

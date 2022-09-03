@@ -6,29 +6,29 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 09:37:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:53:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_path(t_data *data, char **cmd, char **path)
+void	get_path(t_data *data, char **cmd, char **path)
 {
 	char	**bin_paths;
 	t_list	*path_node;
 	int		status;
 	
+	status = 1;
 	if (!*cmd)
-		return (1);
+		return ;
 	if (ft_strchr(*cmd, '/'))
 		status = get_given_path(data, cmd, path);
 	if (!status)
-		return (status);
+		return ;
 	path_node = ft_lstfind(data->lst_env, "PATH");
 	bin_paths = ft_split((char *)path_node->content, ':');
 	status = check_path(bin_paths, *cmd, path);
 	clean_array((void **)bin_paths);
-	return (status);
 }
 
 int	get_given_path(t_data *data, char **cmd, char **path)

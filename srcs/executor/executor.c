@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 10:52:10 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:44:36 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 		execve(exec->path, exec->cmd, env);
 	else if (*exec->cmd)
 		output_exec_error(exec);
+	clean_data(data);
 	// se chegar aqui, limpar tudo, significa que o comando n existe
 	//talvez seja necessario fechar os pipes
 	exit(EXIT_FAILURE);

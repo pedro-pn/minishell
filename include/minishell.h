@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 10:51:52 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 11:46:11 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	clean_array(void **array);
 void	clean_cmd_lines(void *content);
 void	clean_s_cmd(void *content);
 void	clean_prompt(t_prompt *prompt);
+void	clean_data(t_data *data);
 
 // validate
 void	validate_pipes(t_data *data);
@@ -122,7 +123,7 @@ int		executor(t_data *data);
 void	exec_init(t_data *data);
 void	_exec(t_data *data, t_list *exec_data) ;
 void	exec_child(t_data *data, t_cmd *exec, int process);
-int		get_path(t_data *data, char **cmd, char **path);
+void	get_path(t_data *data, char **cmd, char **path);
 int		get_given_path(t_data *data, char **cmd, char **path);
 int		check_path(char **bin_paths, char *cmd, char **path);
 int		wait_processes(t_data *data, int processes_n);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:25:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 06:12:44 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:46:43 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	clean_array(void **array)
 	int	index;
 
 	index = 0;
+	if (!array)
+		return ;
 	while (array[index])
 	{
 		free(array[index]);
@@ -62,4 +64,21 @@ void	clean_prompt(t_prompt *prompt)
 	prompt->line = NULL;
 	prompt->tb_line = NULL;
 	prompt->message = NULL;
+}
+
+void	clean_processes(t_process *procs)
+{
+	clean_array((void **)procs->pipes);
+	free(procs->pids);
+}
+
+void	clean_data(t_data *data)
+{
+	ft_lstclear(&(data->exec_data), clean_s_cmd);
+	clean_prompt(&data->prompt);
+	clean_processes(&data->procs);
+	data->is_pipe_empty = 0;
+	data->cmd_count = 0;
+	data->invalid_syntax = 0;
+	data->missing_cmd = 0;
 }
