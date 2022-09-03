@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/02 17:16:20 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/03 09:45:56 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	builtin_executor_2(t_data *data, t_cmd *exec)
 	cmd = exec->cmd[0];
 	if (!ft_strcmp(cmd, "echo"))
 		__echo(exec->cmd, data);
-	else if (!ft_strcmp(cmd, "cd"))
-		__cd(exec->cmd, data); // g_status = __cd(args, data);
 	else if (!ft_strcmp(cmd, "pwd"))
 		__pwd(exec->cmd);
 	else if (!ft_strcmp(cmd, "env"))

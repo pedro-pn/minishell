@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/01 07:47:16 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/03 09:44:26 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	__cd(char **args, t_data *data)
 		dest = args[1];
 	if (!chdir(dest))
 		return (update_pwd_variables(data, cwd));
-	ft_putstr_fd("minishell: cd: ", 1);
 	ft_putstr_fd(args[1], 1);
 	ft_putstr_fd(": ", 1);
 	perror("");

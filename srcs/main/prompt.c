@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 18:24:33 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/03 09:36:18 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*get_prompt(void)
 	char	*temp;
 
 	user = ft_strjoin(getenv("USER"), "@");
-	temp = ft_strjoin(user, getenv("USERNAME"));
+	temp = ft_strjoin(user, getenv("NAME"));
 	free(user);
 	prompt = ft_strjoin(temp, ": ");
 	free(temp);
