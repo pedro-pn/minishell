@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:33:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 10:54:47 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:03:55 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	verify_infile(int *pipe, t_cmd *exec)
 	}
 	if (!exec->in_file)
 	{
-		dup2(pipe[0], 0);
 		close(pipe[0]);
 		return (1);
 	}
