@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 10:55:39 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:30:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,23 @@ void	check_infile(int *pipe, t_cmd *exec)
 
 void	get_here_doc(t_cmd *exec)
 {
-	char	*buff;
-	int		i;
-	int		dlm_len;
-	int		middle;
+	char	*line;
 	char	*delimiter;
 
 	delimiter = ft_strjoin(exec->delimiter, "\n");
-	dlm_len = ft_strlen(delimiter);
-	middle = 0;
-	buff = ft_calloc(dlm_len + 1, sizeof(*buff));
 	pipe(exec->here_pipe);
-	while (ft_memset(buff, 0, dlm_len), read(STDIN_FILENO, buff, dlm_len)) // Pretendo alterar o here_doc para usar GNL
+	line = get_next_line(STDIN_FILENO);
+	while (line) // Pretendo alterar o here_doc para usar GNL
 	{
-		i = -1;
-		if ((!ft_strncmp(buff, delimiter, dlm_len)) && middle == 0)
+		if (!ft_strcmp(line, delimiter))
 			break ;
-		while (i++, buff[i])
-			write(exec->here_pipe[1], &buff[i], 1);
-		middle = 1;
-		if (buff[i - 1] == '\n')
-			middle = 0;
+		write(exec->here_pipe[1], line, ft_strlen(line));
+		free(line);
+		line = get_next_line(STDIN_FILENO);
 	}
 	free(delimiter);
 	close(exec->here_pipe[1]);
-	free(buff);
+	free(line);
 }
 
 void	check_outfile(t_data *data, t_cmd *exec, int process)

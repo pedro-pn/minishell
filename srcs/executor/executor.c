@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 12:53:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:35:25 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	else if (*exec->cmd)
 		output_exec_error(exec);
 	clean_data(data);
+	clean_array((void **)env);
 	// se chegar aqui, limpar tudo, significa que o comando n existe
 	//talvez seja necessario fechar os pipes
 	exit(EXIT_FAILURE);

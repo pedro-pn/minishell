@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 12:46:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:56:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_prompt(void)
 	char	*temp;
 
 	user = ft_strjoin(getenv("USER"), "@");
-	temp = ft_strjoin(user, getenv("NAME"));
+	temp = ft_strjoin(user, getenv("USERNAME"));
 	free(user);
 	prompt = ft_strjoin(temp, ": ");
 	free(temp);

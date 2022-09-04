@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:25:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 12:46:43 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:34:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ void	clean_s_cmd(void *content)
 	cmd = (t_cmd *)content;
 	clean_array((void **)cmd->cmd);
 	free(cmd->in_file);
+	free(cmd->delimiter);
 	free(cmd->out_file);
 	free(cmd->path);
 	cmd->in_file = NULL;
 	cmd->out_file = NULL;
 	cmd->path = NULL;
+	cmd->delimiter = NULL;
 	free(cmd);
 	cmd = NULL;
 }
