@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 18:35:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 19:08:53 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	env = get_array_from_lst(data->lst_env);
 	//ft_printf("path: %s\ncmd: %s\n", exec->path, exec->cmd[1]);
 	close_child_pipes(data->procs.pipes, process);
-	check_infile(data->procs.pipes[process], exec);
+	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
 	i = 0;
 	while (exec->cmd[++i])

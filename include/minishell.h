@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 11:46:11 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 19:10:25 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ int		**get_pipes(t_data *data);
 int		open_pipes(t_data *data);
 void	close_child_pipes(int **pipes, int process);
 void	close_main_pipes(int **pipes);
-void	check_infile(int *pipe, t_cmd *exec);
+void	check_infile(t_data *data, t_cmd *exec, int process);
 void	get_here_doc(t_cmd *exec);
 void	check_outfile(t_data *data, t_cmd *exec, int process);
-int		verify_infile(int *pipe, t_cmd *exec);
+int		verify_infile(t_data *data, t_cmd *exec, int process);
 int		verify_outfile(t_data *data, t_cmd *exec, int process);
 
 // executor utils

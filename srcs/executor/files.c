@@ -6,24 +6,24 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 18:30:45 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/04 19:09:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_infile(int *pipe, t_cmd *exec)
+void	check_infile(t_data *data, t_cmd *exec, int process)
 {
 	int	fd;
 
-	if (verify_infile(pipe, exec))
+	if (verify_infile(data, exec, process))
 		return ;
 	fd = open(exec->in_file, exec->mode_in);
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(exec->in_file);
-		close(pipe[0]);
+		close(data->procs.pipes[process][0]);
 	//	g_status = 1;
 		exit(1) ;
 	}
