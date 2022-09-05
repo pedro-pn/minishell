@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 13:14:07 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:50:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	executor(t_data *data)
 	exec_init(data);
 	_exec(data, data->exec_data);
 	close_main_pipes(data->procs.pipes);
-	last_status_code = wait_processes(data, data->procs.processes_n); 
+	last_status_code = wait_processes(data, data->procs.processes_n);
+	clean_processes(&data->procs);
+	ft_lstclear(&(data->exec_data), clean_s_cmd);
 	// temos que achar uma forma depois de armazenar esse retorno lá no prompt
 	// para uma variavel. Será necessaário para o comando $?
 	return (last_status_code);

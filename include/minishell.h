@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 13:19:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:52:06 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_data
 	t_list		*exec_data;
 	t_list		*empty_vars;
 	int			cmd_count;
+	int			last_code;
 	int			is_pipe_empty;
 	int			invalid_syntax;
 	int			missing_cmd;
@@ -102,6 +103,7 @@ void	clean_cmd_lines(void *content);
 void	clean_s_cmd(void *content);
 void	clean_prompt(t_prompt *prompt);
 void	clean_data(t_data *data);
+void	clean_processes(t_process *procs);
 
 // validate
 void	validate_pipes(t_data *data);
@@ -140,7 +142,7 @@ int		verify_outfile(t_data *data, t_cmd *exec, int process);
 // executor utils
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
-void	expand_variables(t_data *data, t_cmd *exec);
+void	expand_variables(t_data *data, t_cmd *exec);\
 
 // utils
 void	ft_arrdisplay(char **a);

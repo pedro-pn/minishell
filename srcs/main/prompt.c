@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 17:56:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:21:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,19 @@ void	show_prompt(t_data *data)
 		data->prompt.line = readline(data->prompt.message);
 		if (!data->prompt.line)
 		{
-			//clean_data(data);
+			clean_data(data);
+			ft_lstclear(&(data->lst_env), free);
 			ft_putendl_fd("exit", 1);
 			break ;
 		}
 		validate_pipes(data);
 		validate_redirections(data);
-
 		if (data->is_pipe_empty)
 			save_history(data->prompt.tb_line);
 		else
 			save_history(data->prompt.line);
-
 		data->exec_data = parser_input(data->prompt.line);
-
-		executor(data);
-
+		data->last_code = executor(data);
 		clean_data(data);
 	}
 }

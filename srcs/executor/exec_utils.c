@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 13:19:34 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:29:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static void	expand(char *cmd, t_data *data)
 	key = ft_substr(cmd, 0, i);
 	to_find = ft_strchr(cmd, '$') + 1;
 	node = ft_lstfind(data->lst_env, to_find);
-	value = get_value((char *)node->content);
+	if (!ft_strcmp(to_find, "?"))
+		value = ft_itoa(data->last_code);
+	else
+		value = get_value((char *)node->content);
 	free(cmd);
 	cmd = ft_strjoin(key, value);
 	free(key);
@@ -60,7 +63,9 @@ void	expand_variables(t_data *data, t_cmd *exec)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
+	if (!exec->cmd)
+		return ;
 	if (!ft_strcmp((exec->cmd)[0], "awk"))
 		return ;
 	while (exec->cmd[++i])
