@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 19:10:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 13:19:38 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		verify_outfile(t_data *data, t_cmd *exec, int process);
 // executor utils
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
-void	expand(char *cmd, t_data *data);
+void	expand_variables(t_data *data, t_cmd *exec);
 
 // utils
 void	ft_arrdisplay(char **a);

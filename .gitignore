@@ -5,3 +5,5 @@ objs/
 minishell
 local.supp
 sem
+infile
+outfile

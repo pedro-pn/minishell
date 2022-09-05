@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 19:08:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 13:14:07 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,12 @@ void	_exec(t_data *data, t_list *exec_data)
 void	exec_child(t_data *data, t_cmd *exec, int process)
 {
 	char	**env;
-	int		i;
 
 	env = get_array_from_lst(data->lst_env);
-	//ft_printf("path: %s\ncmd: %s\n", exec->path, exec->cmd[1]);
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
-	i = 0;
-	while (exec->cmd[++i])
-		if (ft_strchr(exec->cmd[i], '$'))
-			expand(exec->cmd[i], data);
+	expand_variables(data, exec);
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)
@@ -80,8 +75,6 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 		output_exec_error(exec);
 	clean_data(data);
 	clean_array((void **)env);
-	// se chegar aqui, limpar tudo, significa que o comando n existe
-	//talvez seja necessario fechar os pipes
 	exit(EXIT_FAILURE);
 }
 
