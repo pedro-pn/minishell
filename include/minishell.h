@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 16:52:06 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:50:43 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ void	remove_quotes(char **str);
 char	**get_input(char *line);
 
 // signals
-void	signals_setup(void);
+void	main_signals(void);
+void	executor_signals(int pid);
+void	heredoc_signals(int pid);
 
 // clean
 void	clean_array(void **array);

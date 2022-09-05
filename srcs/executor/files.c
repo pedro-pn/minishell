@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 19:09:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 14:19:04 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	get_here_doc(t_cmd *exec)
 		free(line);
 		line = get_next_line(STDIN_FILENO);
 	}
+	if (!line)
+		printf("minishell: warning: heredoc delimited by EOF. Wanted %s", delimiter);
 	free(delimiter);
 	close(exec->here_pipe[1]);
 	free(line);
