@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/05 14:51:28 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:19:30 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	//g_status = 130;
+	g_status = 130;
 }
 
 /* Set sigactions to properly invoke its handler */
@@ -53,20 +53,18 @@ void	executor_signals(int pid)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	heredoc_signals(int pid)
+void	heredoc_signals(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	sa_int.sa_flags = 0;
+	//sa_int.sa_flags = 0;
+	sa_int.sa_flags = SA_RESTART; // n sei qual a mais adequada
 	sigemptyset(&sa_int.sa_mask);
-	if (!pid)
-		sa_int.sa_handler = SIG_DFL;
-	else
-		sa_int.sa_handler = SIG_IGN;
+	sa_int.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa_int, NULL);
 	sa_quit.sa_flags = 0;
-	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_quit.sa_mask);
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }

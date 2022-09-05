@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 17:29:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:06:18 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	expand(char *cmd, t_data *data)
 	to_find = ft_strchr(cmd, '$') + 1;
 	node = ft_lstfind(data->lst_env, to_find);
 	if (!ft_strcmp(to_find, "?"))
-		value = ft_itoa(data->last_code);
+		value = ft_itoa(g_status);
 	else
 		value = get_value((char *)node->content);
 	free(cmd);

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 17:21:10 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:30:25 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	init_data(t_data *data, char **ep)
 	data->cmd_count = 0;
 	data->is_pipe_empty = 0;
 	data->invalid_syntax = 0;
-	data->last_code = 0;
 //	data->skip = 0;
 	init_prompt(&data->prompt);
 	init_processes(&data->procs);

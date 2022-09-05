@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 17:50:43 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:30:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
 
-//int		g_status;
+extern int		g_status;
 
 typedef struct s_prompt
 {
@@ -67,7 +67,6 @@ typedef struct s_data
 	t_list		*exec_data;
 	t_list		*empty_vars;
 	int			cmd_count;
-	int			last_code;
 	int			is_pipe_empty;
 	int			invalid_syntax;
 	int			missing_cmd;
@@ -97,7 +96,7 @@ char	**get_input(char *line);
 // signals
 void	main_signals(void);
 void	executor_signals(int pid);
-void	heredoc_signals(int pid);
+void	heredoc_signals(void);
 
 // clean
 void	clean_array(void **array);

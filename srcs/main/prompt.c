@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 17:49:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:32:06 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	show_prompt(t_data *data)
 		else
 			save_history(data->prompt.line);
 		data->exec_data = parser_input(data->prompt.line);
-		data->last_code = executor(data);
+		g_status = executor(data);
 		clean_data(data);
 	}
 }
@@ -60,7 +60,7 @@ char	*get_prompt(void)
 	char	*temp;
 
 	user = ft_strjoin(getenv("USER"), "@");
-	temp = ft_strjoin(user, getenv("NAME"));
+	temp = ft_strjoin(user, getenv("USERNAME"));
 	free(user);
 	prompt = ft_strjoin(temp, ": ");
 	free(temp);

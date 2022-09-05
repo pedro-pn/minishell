@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 14:19:04 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:18:56 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ void	get_here_doc(t_cmd *exec)
 	char	*line;
 	char	*delimiter;
 
-	delimiter = ft_strjoin(exec->delimiter, "\n");
+	line = NULL;
 	pipe(exec->here_pipe);
-	line = get_next_line(STDIN_FILENO);
-	while (line) // Pretendo alterar o here_doc para usar GNL
+	line = readline("> ");
+	while (line)
 	{
-		if (!ft_strcmp(line, delimiter))
+		if (!ft_strcmp(line, exec->delimiter))
 			break ;
 		write(exec->here_pipe[1], line, ft_strlen(line));
+		write(exec->here_pipe[1], "\n", 1);
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
 	}
 	if (!line)
-		printf("minishell: warning: heredoc delimited by EOF. Wanted %s", delimiter);
-	free(delimiter);
+		printf("minishell: warning: heredoc delimited by EOF. Wanted %s\n", exec->delimiter);
 	close(exec->here_pipe[1]);
 	free(line);
 }

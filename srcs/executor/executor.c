@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 17:53:06 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 20:21:14 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	_exec(t_data *data, t_list *exec_data)
 		exec = (t_cmd *)exec_data->content;
 		get_path(data, &exec->cmd[0], &exec->path);
 		if (exec->here_doc)
+		{	
+			heredoc_signals();
 		 	get_here_doc(exec);
+		}
 		if (data->procs.processes_n == 1 && *exec->cmd)
 			builtin_executor(data, exec->cmd);
 		data->procs.pids[process] = fork();
@@ -86,12 +89,12 @@ int	handle_signals(t_data *data, int status, int process, int processes_n)
 	if (WTERMSIG(status) == SIGINT)
 	{
 		printf("\n");
-		return (130); // g_status = 131;
+		g_status = 131;
 	}
 	if (WTERMSIG(status) == SIGQUIT && process == processes_n - 1)
 	{
 		printf("Quit\n");
-		return (131); // g_status = 131;
+		g_status = 131;
 	}
 	return (0);
 }
