@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 19:10:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 14:17:59 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ void	remove_quotes(char **str);
 char	**get_input(char *line);
 
 // signals
-void	signals_setup(void);
+void	main_signals(void);
+void	executor_signals(int pid);
+void	heredoc_signals(int pid);
 
 // clean
 void	clean_array(void **array);
@@ -133,6 +135,7 @@ void	close_child_pipes(int **pipes, int process);
 void	close_main_pipes(int **pipes);
 void	check_infile(t_data *data, t_cmd *exec, int process);
 void	get_here_doc(t_cmd *exec);
+// void	get_here_doc(t_cmd *exec, t_data *data, int process);
 void	check_outfile(t_data *data, t_cmd *exec, int process);
 int		verify_infile(t_data *data, t_cmd *exec, int process);
 int		verify_outfile(t_data *data, t_cmd *exec, int process);

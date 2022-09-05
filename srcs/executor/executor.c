@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/04 19:08:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/05 15:12:16 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	executor(t_data *data)
 	_exec(data, data->exec_data);
 	close_main_pipes(data->procs.pipes);
 	last_status_code = wait_processes(data, data->procs.processes_n); 
+	main_signals();
 	// temos que achar uma forma depois de armazenar esse retorno lá no prompt
 	// para uma variavel. Será necessaário para o comando $?
 	return (last_status_code);
@@ -43,12 +44,12 @@ void	_exec(t_data *data, t_list *exec_data)
 	{
 		exec = (t_cmd *)exec_data->content;
 		get_path(data, &exec->cmd[0], &exec->path);
-			//ft_printf("%s: command not found\n", exec->cmd[0]);
-		if (exec->here_doc)
-			get_here_doc(exec);
+		// if (exec->here_doc)
+		// 	get_here_doc(exec);
 		if (data->procs.processes_n == 1 && *exec->cmd)
 			builtin_executor(data, exec->cmd);
 		data->procs.pids[process] = fork();
+		executor_signals(data->procs.pids[process]);
 		if (data->procs.pids[process] == 0)
 			exec_child(data, exec, process);
 		if (exec->here_doc)
@@ -64,7 +65,6 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	int		i;
 
 	env = get_array_from_lst(data->lst_env);
-	//ft_printf("path: %s\ncmd: %s\n", exec->path, exec->cmd[1]);
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
@@ -72,7 +72,13 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	while (exec->cmd[++i])
 		if (ft_strchr(exec->cmd[i], '$'))
 			expand(exec->cmd[i], data);
-	if (is_builtin(data, exec, process))
+	if (exec->here_doc)
+	{
+		heredoc_signals(data->procs.pids[process]);
+		get_here_doc(exec);
+		exit(0);
+	}
+	else if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
@@ -85,6 +91,21 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	exit(EXIT_FAILURE);
 }
 
+int	handle_signals(t_data *data, int status, int process, int processes_n)
+{
+	if (WTERMSIG(status) == SIGINT)
+	{
+		printf("\n");
+		return (130); // g_status = 131;
+	}
+	if (WTERMSIG(status) == SIGQUIT && process == processes_n - 1)
+	{
+		printf("Quit\n");
+		return (131); // g_status = 131;
+	}
+	return (0);
+}
+
 int	wait_processes(t_data *data, int processes_n)
 {
 	int	process;
@@ -95,11 +116,11 @@ int	wait_processes(t_data *data, int processes_n)
 	while (process < processes_n)
 	{
 		waitpid(data->procs.pids[process], &status, 0);
-		if (WIFEXITED(status))
-		{
+		if (WIFSIGNALED(status))
+			status_code = handle_signals(data, status, process, processes_n);
+		else if (WIFEXITED(status))
 			if (process == processes_n - 1)
 				status_code = WEXITSTATUS(status);
-		}
 		process++;
 	}
 	return (status_code);
