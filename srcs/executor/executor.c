@@ -58,8 +58,6 @@ void	_exec(t_data *data, t_list *exec_data)
 		}
 		if (data->procs.pids[process] == 0)
 			exec_child(data, exec, process);
-		if (exec->here_doc)
-			close((exec->here_pipe)[0]);
 		process++;
 		exec_data = exec_data->next;
 	}
