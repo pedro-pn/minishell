@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/05 20:19:30 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/06 12:15:25 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ void	executor_signals(int pid)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	heredoc_signals(void)
+void	heredoc_signals(int pid)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	//sa_int.sa_flags = 0;
-	sa_int.sa_flags = SA_RESTART; // n sei qual a mais adequada
+	sa_int.sa_flags = SA_RESTART;
 	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_handler = SIG_DFL;
+	if (!pid)
+		sa_int.sa_handler = SIG_DFL;
+	else
+		sa_int.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sa_int, NULL);
 	sa_quit.sa_flags = 0;
 	sa_quit.sa_handler = SIG_IGN;
