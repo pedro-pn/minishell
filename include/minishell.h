@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 20:30:34 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:01:50 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ void	validate_redirections(t_data *data);
 int		is_builtin(t_data *data, t_cmd *exec, int process);
 int		builtin_executor(t_data *data, char **cmds);
 void	builtin_executor_2(t_data *data, t_cmd *exec);
-void	__echo(char **args, t_data *data);
+int		__echo(char **args, t_data *data);
 int		__cd(char **args, t_data *data);
-void	__pwd(char **args);
-void	__env(char **args, t_data *data);
+int		__pwd(char **args);
+int		__env(char **args, t_data *data);
 int		__export(char **args, t_data *data);
-void	__unset(char **args, t_data *data);
+int		__unset(char **args, t_data *data);
 
 // executor
 int		executor(t_data *data);
