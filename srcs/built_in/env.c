@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 05:43:25 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/01 05:43:39 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:17:53 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	__env(char **args, t_data *data)
+int	__env(char **args, t_data *data)
 {
 	ft_lstdisplay(data->lst_env);
-	// g_status = 0;
+	return (0);
 }

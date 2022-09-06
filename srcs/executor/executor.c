@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/06 12:21:04 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:38:41 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 		output_exec_error(exec);
 	clean_data(data);
 	clean_array((void **)env);
-	exit(EXIT_FAILURE);
+	if (is_builtin(data, exec, process))
+		exit(g_status);
+	exit(127);
 }
 
 int	handle_signals(t_data *data, int status, int process, int processes_n)
@@ -90,14 +92,14 @@ int	handle_signals(t_data *data, int status, int process, int processes_n)
 	if (WTERMSIG(status) == SIGINT)
 	{
 		write(1, "\n", 1);
-		g_status = 131;
+		g_status = 130;
 	}
 	if (WTERMSIG(status) == SIGQUIT && process == processes_n - 1)
 	{
 		write(1, "Quit\n", 5);
 		g_status = 131;
 	}
-	return (0);
+	return (g_status);
 }
 
 int	wait_processes(t_data *data, int processes_n)

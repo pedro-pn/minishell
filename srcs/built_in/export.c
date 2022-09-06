@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/01 05:08:54 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:59:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static int	check_export_error(t_data *data, char *arg)
 	if (arg[0] == '=')
 	{
 		ft_printf("minishell: export: '%s': not a valid identifier\n", arg);
-		// setar a exit code para 1
-		// g_status = 1;
+		g_status = 1;
 		return (1);
 	}
 	return (0);
@@ -57,6 +56,7 @@ int	__export(char **args, t_data *data)
 	int		index;
 
 	index = 0;
+	g_status = 0;
 	if (args[1] == NULL)
 		return (ft_export_display(data));
 	while (index++, args[index])
