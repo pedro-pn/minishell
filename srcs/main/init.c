@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 13:45:57 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:57:08 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,22 @@ void	init_data(t_data *data, char **ep)
 static void	update_SHELL(t_data *data)
 {
 	t_list	*node;
+	char	cwd[PATH_MAX];
 	char	*key;
 	char	*value;
+	char	*p;
 
 	node = ft_lstfind(data->lst_env, "SHELL");
 	key = get_key((char *)node->content);
-	value = ft_strdup("=./minishell");
+	getcwd(cwd, PATH_MAX);
+	value = ft_strjoin("=", cwd);
+	p = value;
+	value = ft_strjoin(p, "/minishell");
+	free(p);
 	free(node->content);
 	node->content = ft_strjoin(key, value);
 	free(key);
+	free(value);
 }
 
 static void	update_SHLVL(t_data *data)
