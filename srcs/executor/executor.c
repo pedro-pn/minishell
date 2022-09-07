@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 07:09:03 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:18:28 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,30 @@ void	exec_init(t_data *data)
 	open_pipes(data);
 }
 
-static char	*parse_input(t_data *data)
-{
-	char	**token;
-	char	*str;
-	char	*p;
-	char	*q;
-	int		i;
+// static char	*parse_input(t_data *data)
+// {
+// 	char	**token;
+// 	char	*str;
+// 	char	*p;
+// 	char	*q;
+// 	int		i;
 
-	str = ft_strdup("");
-	token = (char **)ft_split(data->prompt.line, '|');
-	i = -1;
-	while (++i < data->cmd_count)
-	{
-		p = ft_strjoin(token[i], "|");
-		q = str;
-		str = ft_strjoin(q, p);
-		free(q);
-		free(p);
-	}
-	p = str;
-	str = ft_strtrim(p, "|");
-	free(p);
-	return (str);
-}
+// 	str = ft_strdup("");
+// 	token = (char **)ft_split(data->prompt.line, '|');
+// 	i = -1;
+// 	while (++i < data->cmd_count)
+// 	{
+// 		p = ft_strjoin(token[i], "|");
+// 		q = str;
+// 		str = ft_strjoin(q, p);
+// 		free(q);
+// 		free(p);
+// 	}
+// 	p = str;
+// 	str = ft_strtrim(p, "|");
+// 	free(p);
+// 	return (str);
+// }
 
 void	_exec(t_data *data, t_list *exec_data)
 {

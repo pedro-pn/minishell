@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/03 09:44:26 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 10:18:50 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ int	__cd(char **args, t_data *data)
 	ft_putstr_fd(": ", 1);
 	perror("");
 	return (1);
-	// g_status = 1;
 }

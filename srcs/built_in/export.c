@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 16:59:45 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:15:57 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	check_export_error(t_data *data, char *arg)
 			ft_lstadd_back(&data->empty_vars, ft_lstnew(ft_strdup(arg)));
 		return (1);
 	}
-	if (arg[0] == '=')
+	if (*arg == '=')
 	{
-		ft_printf("minishell: export: '%s': not a valid identifier\n", arg);
+		ft_printf("-minishell: export: `%s': not a valid identifier\n", arg);
 		g_status = 1;
 		return (1);
 	}

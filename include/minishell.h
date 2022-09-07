@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 07:06:32 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:46:32 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
+
+# define RED "\x1b[38;5;88m"
+# define BLUE "\x1b[38;5;25m"
+# define GREEN "\x1b[38;5;40m"
+# define YELLOW "\x1b[38;5;220m"
+# define RES "\x1b[0m"
 
 extern int		g_status;
 
