@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 16:28:54 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:36:36 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ char	*update_root_prompt(char *ptr_prompt, char *abs_path)
 	free(p);
 	prompt = ft_strjoin(ptr_prompt, abs_path);
 	free(ptr_prompt);
+	free(abs_path);
 	p = prompt;
 	prompt = ft_strjoin(p, RES);
 	free(p);
@@ -155,6 +156,5 @@ char	*update_prompt_msg(t_data *data)
 	}
 	prompt = get_prompt();
 	prompt = update_root_prompt(prompt, abs_path);
-	free(abs_path);
 	return (prompt);
 }
