@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 12:15:25 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:58:53 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	heredoc_signals(int pid)
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	sa_int.sa_flags = SA_RESTART;
+	sa_int.sa_flags = 0;
 	sigemptyset(&sa_int.sa_mask);
 	if (!pid)
 		sa_int.sa_handler = SIG_DFL;

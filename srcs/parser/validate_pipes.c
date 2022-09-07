@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/01 08:03:17 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 05:45:18 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@ void	validate_pipes(t_data *data)
 	{
 		printf(ERR_PIPE);
 		data->invalid_syntax = 1;
-		// g_status = 2;
+		g_status = 2;
 		return ;
 	}
 	if (is_arg_between_pipes_empty(ft_split(data->prompt.line, '|')))
 	{
 		printf(ERR_PIPE);
 		data->invalid_syntax = 1;
-		// g_status = 2;
+		g_status = 2;
 		return ;
 	}
 	check_for_doubles(data, data->prompt.line);
-	if (data->is_pipe_empty)
-	{
-		data->prompt.tb_line = data->prompt.line;
-		data->prompt.line = (char *)parse_input(data);
-	}
+	// if (data->is_pipe_empty)
+	// {
+	// 	data->prompt.tb_line = data->prompt.line;
+	// 	data->prompt.line = (char *)parse_input(data);
+	// }
 }
 
 static char	*parse_input(t_data *data)
@@ -108,7 +108,7 @@ static void	check_for_doubles(t_data *data, char *str)
 	{
 		printf(ERR_PIPE);
 		data->invalid_syntax = 1;
-		// g_status = 2;
+		g_status = 2;
 		return ;
 	}
 	data->cmd_count++;

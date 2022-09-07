@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/06 17:34:09 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 07:06:32 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_data
 	int			missing_cmd;
 	t_prompt	prompt;
 	t_process	procs;
+	int			not_found;
+	// int			last_status;
 }		t_data;
 
 // init
@@ -144,7 +146,10 @@ int		verify_outfile(t_data *data, t_cmd *exec, int process);
 // executor utils
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
-void	expand_variables(t_data *data, t_cmd *exec);\
+
+void	expand(char *cmd, t_data *data);
+
+void	expand_variables(t_data *data, t_cmd *exec);
 
 // utils
 void	ft_arrdisplay(char **a);
