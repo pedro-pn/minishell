@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 18:51:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:22:53 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ void	remove_quotes(char **str)
 	save_spaces(*str);
 	verify_quotes(*str);
 	splitted_s = ft_split(*str, ' ');
-	join_commands(splitted_s, str);
+	if (splitted_s[0])
+		join_commands(splitted_s, str);
 	restore_quotes(*str);
 	clean_array((void **)splitted_s);
 }
