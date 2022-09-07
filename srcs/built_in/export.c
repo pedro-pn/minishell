@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 16:59:45 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:07:13 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static int	check_export_error(t_data *data, char *arg)
 {
+	if (ft_isdigit(arg[0]) || arg[0] == '=')
+	{
+		ft_printf("minishell: export: '%s': not a valid identifier\n", arg);
+		g_status = 1;
+		return (1);
+	}
 	if (!ft_strchr(arg, '='))
 	{
 		if (!ft_lstfind_2(data->empty_vars, arg) 
 			&& !ft_lstfind(data->lst_env, arg))
 			ft_lstadd_back(&data->empty_vars, ft_lstnew(ft_strdup(arg)));
-		return (1);
-	}
-	if (arg[0] == '=')
-	{
-		ft_printf("minishell: export: '%s': not a valid identifier\n", arg);
-		g_status = 1;
 		return (1);
 	}
 	return (0);
