@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/06 17:38:41 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 07:09:03 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	executor(t_data *data)
 	main_signals();
 	clean_processes(&data->procs);
 	ft_lstclear(&(data->exec_data), clean_s_cmd);
+
 	// temos que achar uma forma depois de armazenar esse retorno lá no prompt
 	// para uma variavel. Será necessaário para o comando $?
 	return (last_status_code);
@@ -36,12 +37,42 @@ void	exec_init(t_data *data)
 	open_pipes(data);
 }
 
+static char	*parse_input(t_data *data)
+{
+	char	**token;
+	char	*str;
+	char	*p;
+	char	*q;
+	int		i;
+
+	str = ft_strdup("");
+	token = (char **)ft_split(data->prompt.line, '|');
+	i = -1;
+	while (++i < data->cmd_count)
+	{
+		p = ft_strjoin(token[i], "|");
+		q = str;
+		str = ft_strjoin(q, p);
+		free(q);
+		free(p);
+	}
+	p = str;
+	str = ft_strtrim(p, "|");
+	free(p);
+	return (str);
+}
+
 void	_exec(t_data *data, t_list *exec_data)
 {
 	int		process;
 	t_cmd	*exec;
 
 	process = 0;
+	// if (data->is_pipe_empty)
+	// {
+	// 	data->prompt.line = (char *)parse_input(data);
+	// 	data->exec_data = parser_input(data->prompt.line);
+	// }
 	while (process < data->procs.processes_n)
 	{
 		exec = (t_cmd *)exec_data->content;
@@ -68,10 +99,19 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	char	**env;
 
 	env = get_array_from_lst(data->lst_env);
+	// if (!data->is_pipe_empty)
+	// {
+	// 	close_child_pipes(data->procs.pipes, process);
+	// 	check_infile(data, exec, process);
+	// 	check_outfile(data, exec, process);
+	// }
+
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
+
 	expand_variables(data, exec);
+
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/05 20:06:18 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 07:43:44 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand(char *cmd, t_data *data);
+void	expand(char *cmd, t_data *data);
 
 int	*get_pids(t_data *data)
 {
@@ -36,7 +36,7 @@ void	output_exec_error(t_cmd *exec)
 	}
 }
 
-static void	expand(char *cmd, t_data *data)
+void	expand(char *cmd, t_data *data)
 {
 	t_list	*node;
 	char	*key;
@@ -51,6 +51,8 @@ static void	expand(char *cmd, t_data *data)
 	node = ft_lstfind(data->lst_env, to_find);
 	if (!ft_strcmp(to_find, "?"))
 		value = ft_itoa(g_status);
+	else if (!node)
+		value = ft_strdup("");
 	else
 		value = get_value((char *)node->content);
 	free(cmd);
@@ -59,16 +61,37 @@ static void	expand(char *cmd, t_data *data)
 	free(value);
 }
 
+char	*parse_cmd(char *buff, char *arg)
+{
+	char	*pb;
+
+	pb = buff;
+	buff = ft_strjoin(pb, arg);
+	free(pb);
+	pb = buff;
+	buff = ft_strjoin(pb, " ");
+	free(pb);
+	return (buff);
+}
+
 void	expand_variables(t_data *data, t_cmd *exec)
 {
-	int	i;
+	char	*buff;
+	int		i;
 
 	i = -1;
-	if (!exec->cmd)
+	if (!exec->cmd || !ft_strcmp(exec->cmd[0], "awk"))
 		return ;
-	if (!ft_strcmp((exec->cmd)[0], "awk"))
-		return ;
+
+	buff = ft_strdup("");
 	while (exec->cmd[++i])
-	if (ft_strchr(exec->cmd[i], '$'))
-		expand(exec->cmd[i], data);
+	{
+		if (ft_strchr(exec->cmd[i], '$'))
+			expand(exec->cmd[i], data);
+		if (*exec->cmd[i])
+			buff = parse_cmd(buff, exec->cmd[i]);
+	}
+	clean_array((void **)exec->cmd);
+	exec->cmd = ft_split(buff, ' ');
+	free(buff);
 }

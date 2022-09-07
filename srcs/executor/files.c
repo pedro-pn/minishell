@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/06 12:16:23 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 06:40:29 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	check_infile(t_data *data, t_cmd *exec, int process)
 		ft_putstr_fd("minishell: ", 2);
 		perror(exec->in_file);
 		close(data->procs.pipes[process][0]);
-	//	g_status = 1;
 		exit(1) ;
 	}
 	dup2(fd, 0);
