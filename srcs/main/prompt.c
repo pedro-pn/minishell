@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 15:29:06 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:28:54 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	show_prompt(t_data *data)
 		if (!data->prompt.line)
 		{
 			clean_data(data);
-			ft_lstclear(&(data->lst_env), free);
+			ft_lstclear(&data->lst_env, free);
 			ft_putendl_fd("exit", 1);
 			break ;
 		}
@@ -102,13 +102,14 @@ char	*update_prompt(char *prompt, char *path)
 	cutoff = ft_strjoin("~", path);
 	p = cutoff;
 	cutoff = ft_strjoin(BLUE, p); // cor path
+	free(p);
 	p = cutoff;
 	cutoff = ft_strjoin(p, RES);
 	free(p);
 	ptr_prompt = prompt;
 	prompt = ft_strjoin(ptr_prompt, cutoff);
-	free(cutoff);
 	free(ptr_prompt);
+	free(cutoff);
 	ptr_prompt = prompt;
 	prompt = ft_strjoin(ptr_prompt, "$ ");
 	free(ptr_prompt);
@@ -147,11 +148,13 @@ char	*update_prompt_msg(t_data *data)
 	{
 		prompt = get_prompt();
 		path = ft_substr(abs_path, ft_strlen(home), ft_strlen(abs_path));
+		free(abs_path);
 		prompt = update_prompt(prompt, path);
 		free(path);
 		return (prompt);
 	}
 	prompt = get_prompt();
 	prompt = update_root_prompt(prompt, abs_path);
+	free(abs_path);
 	return (prompt);
 }

@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 15:57:08 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:22:18 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ static void	update_SHLVL(t_data *data);
 /* Initializes prompt struct variables*/
 void	init_prompt(t_prompt *prompt)
 {
+	char	cwd[PATH_MAX];
+
 	prompt->line = NULL;
 	prompt->tb_line = NULL;
-	prompt->directory = getcwd(NULL, 0);
+	getcwd(cwd, PATH_MAX);
+	prompt->directory = cwd;
 }
 
 /* Initializes struct s_cmds*/
