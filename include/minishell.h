@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 07:06:32 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:41:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
+# define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted %s\n"
 
 extern int		g_status;
 
@@ -146,9 +147,7 @@ int		verify_outfile(t_data *data, t_cmd *exec, int process);
 // executor utils
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
-
 void	expand(char *cmd, t_data *data);
-
 void	expand_variables(t_data *data, t_cmd *exec);
 
 // utils

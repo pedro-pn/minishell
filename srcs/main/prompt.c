@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 06:39:32 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:38:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	show_prompt(t_data *data)
 		data->exec_data = parser_input(data->prompt.line);
 		if (!data->invalid_syntax)
 			g_status = executor(data);
-		// data->last_status = g_status;
 		clean_data(data);
 	}
 }
