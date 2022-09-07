@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 13:38:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:29:06 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,42 @@ void	save_history(char *line)
 	}
 }
 
+static char	*get_host(void)
+{
+	char	*host;
+
+	host = getenv("HOSTNAME");
+	if (!host)
+		host = getenv("USERNAME");
+	if (!host)
+		host = getenv("NAME");
+	if (!host)
+		host = "minishell";
+	return (host);
+}
+
 char	*get_prompt(void)
 {
 	char	*prompt;
 	char	*user;
 	char	*temp;
+	char	*host;
+	char	*p;
 
 	user = ft_strjoin(getenv("USER"), "@");
-	temp = ft_strjoin(user, getenv("NAME"));
-	free(user);
-	prompt = ft_strjoin(temp, ": ");
-	free(temp);
+	host = get_host();
+	p = user;
+	prompt = ft_strjoin(p, host);
+	free(p);
+	p = prompt;
+	prompt = ft_strjoin(GREEN, p); // cor usuario
+	free(p);
+	p = prompt;
+	prompt = ft_strjoin(p, RES);
+	free(p);
+	p = prompt;
+	prompt = ft_strjoin(p, ":");
+	free(p);
 	return (prompt);
 }
 
@@ -72,8 +97,14 @@ char	*update_prompt(char *prompt, char *path)
 {
 	char	*cutoff;
 	char	*ptr_prompt;
+	char	*p;
 
 	cutoff = ft_strjoin("~", path);
+	p = cutoff;
+	cutoff = ft_strjoin(BLUE, p); // cor path
+	p = cutoff;
+	cutoff = ft_strjoin(p, RES);
+	free(p);
 	ptr_prompt = prompt;
 	prompt = ft_strjoin(ptr_prompt, cutoff);
 	free(cutoff);
@@ -87,12 +118,19 @@ char	*update_prompt(char *prompt, char *path)
 char	*update_root_prompt(char *ptr_prompt, char *abs_path)
 {
 	char	*prompt;
-	char	*temp;
+	char	*p;
 
-	temp = ft_strjoin(ptr_prompt, abs_path);
+	p = abs_path;
+	abs_path = ft_strjoin(BLUE, p); // cor path (non-home)
+	free(p);
+	prompt = ft_strjoin(ptr_prompt, abs_path);
 	free(ptr_prompt);
-	prompt = ft_strjoin(temp, "$ ");
-	free(temp);
+	p = prompt;
+	prompt = ft_strjoin(p, RES);
+	free(p);
+	p = prompt;
+	prompt = ft_strjoin(p, "$ ");
+	free(p);
 	return (prompt);
 }
 

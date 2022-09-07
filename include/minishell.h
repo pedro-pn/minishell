@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 13:41:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:28:32 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
 # define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted %s\n"
+
+# define RED "\x1b[38;5;88m"
+# define BLUE "\x1b[38;5;25m"
+# define GREEN "\x1b[38;5;40m"
+# define YELLOW "\x1b[38;5;220m"
+# define RES "\x1b[0m"
 
 extern int		g_status;
 
