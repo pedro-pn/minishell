@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/08 08:08:38 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/08 21:44:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 int	executor(t_data *data)
 {
 	int		last_status_code;
-	t_cmd	*exec;
-	char	*cmd;
 	
-	exec = (t_cmd *)data->exec_data->content;
-	cmd = ft_strtrim(exec->cmd[0], " ");
-	if (ft_strlen(cmd) == 1 && *cmd == '$')
-	{
-		printf("$: command not found\n");
-		free(cmd);
-		return (127);
-	}
 	exec_init(data);
 	_exec(data, data->exec_data);
 	close_main_pipes(data->procs.pipes);
@@ -33,7 +23,6 @@ int	executor(t_data *data)
 	main_signals();
 	clean_processes(&data->procs);
 	ft_lstclear(&(data->exec_data), clean_s_cmd);
-	free(cmd);
 	return (last_status_code);
 }
 

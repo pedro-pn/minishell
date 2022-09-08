@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 15:52:46 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/08 21:57:08 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	expand(char **cmd, t_data *data);
+static int	check_first_cmd(char *str);
 
 int	*get_pids(t_data *data)
 {
@@ -79,7 +80,9 @@ void	expand_variables(t_data *data, t_cmd *exec)
 	char	*buff;
 	int		i;
 
-	if (!exec->cmd || !ft_strcmp(exec->cmd[0], "awk"))
+	if (!exec->cmd)
+		return ;
+	if (check_first_cmd(exec->cmd[0]) || !ft_strcmp(exec->cmd[0], "awk"))
 		return ;
 	i = -1;
 	buff = ft_strdup("");
@@ -93,4 +96,16 @@ void	expand_variables(t_data *data, t_cmd *exec)
 	clean_array((void **)exec->cmd);
 	exec->cmd = ft_split(buff, ' ');
 	free(buff);
+}
+
+static int	check_first_cmd(char *str)
+{
+	char	*cmd;
+
+	if (!str)
+		return (1);
+	cmd = ft_strtrim(str, " ");
+	if (ft_strlen(cmd) == 1 && *cmd == '$')
+		return (1);
+	return (0);
 }
