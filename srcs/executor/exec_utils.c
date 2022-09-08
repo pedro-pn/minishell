@@ -6,7 +6,7 @@
 /*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/08 21:57:08 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/08 22:53:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ static int	check_first_cmd(char *str)
 		return (1);
 	cmd = ft_strtrim(str, " ");
 	if (ft_strlen(cmd) == 1 && *cmd == '$')
+	{
+		free(cmd);
 		return (1);
+	}
+	free(cmd);	
 	return (0);
 }

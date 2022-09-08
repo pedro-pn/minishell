@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 15:52:12 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/08 22:51:01 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ t_list	*create_input_list(char	*line);
 t_cmd	*cmd_init(void);
 void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
 void	remove_quotes(char **str);
+int		save_pipes(char *line);
+void	restore_pipes(char	**strs);
 
 // token
 char	**get_input(char *line);

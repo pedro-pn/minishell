@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 11:43:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/08 22:52:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ t_list	*create_input_list(char	*line)
 	int		index;
 
 	cmd_lines = NULL;
+	save_pipes(line);
 	inputs = ft_split(line, '|');
+	restore_pipes(inputs);
 	if (!inputs)
 		return (NULL);
 	index = -1;
