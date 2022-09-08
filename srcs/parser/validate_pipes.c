@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/07 05:45:18 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:47:11 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	validate_pipes(t_data *data)
 		return ;
 	}
 	check_for_doubles(data, data->prompt.line);
-	// if (data->is_pipe_empty)
-	// {
-	// 	data->prompt.tb_line = data->prompt.line;
-	// 	data->prompt.line = (char *)parse_input(data);
-	// }
+	if (data->is_pipe_empty)
+	{
+		data->prompt.tb_line = data->prompt.line;
+		data->prompt.line = (char *)parse_input(data);
+	}
 }
 
 static char	*parse_input(t_data *data)
@@ -82,6 +82,7 @@ static int	is_arg_between_pipes_empty(char **token)
 		if (ft_strlen(str) == 0)
 		{
 			clean_array((void **)token);
+			free(str);
 			return (1);
 		}
 		free(str);

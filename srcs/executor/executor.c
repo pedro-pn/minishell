@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 15:30:37 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/08 08:08:38 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 int	executor(t_data *data)
 {
-	int	last_status_code;
+	int		last_status_code;
+	t_cmd	*exec;
+	char	*cmd;
 	
+	exec = (t_cmd *)data->exec_data->content;
+	cmd = ft_strtrim(exec->cmd[0], " ");
+	if (ft_strlen(cmd) == 1 && *cmd == '$')
+	{
+		printf("$: command not found\n");
+		free(cmd);
+		return (127);
+	}
 	exec_init(data);
 	_exec(data, data->exec_data);
 	close_main_pipes(data->procs.pipes);
@@ -23,6 +33,7 @@ int	executor(t_data *data)
 	main_signals();
 	clean_processes(&data->procs);
 	ft_lstclear(&(data->exec_data), clean_s_cmd);
+	free(cmd);
 	return (last_status_code);
 }
 
@@ -44,6 +55,7 @@ void	_exec(t_data *data, t_list *exec_data)
 	{
 		exec = (t_cmd *)exec_data->content;
 		get_path(data, &exec->cmd[0], &exec->path);
+		expand_variables(data, exec);
 		if (data->procs.processes_n == 1 && *exec->cmd)
 			builtin_executor(data, exec->cmd);
 		data->procs.pids[process] = fork();
@@ -69,7 +81,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
-	expand_variables(data, exec);
+	// expand_variables(data, exec);
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)

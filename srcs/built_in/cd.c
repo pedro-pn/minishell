@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/07 10:18:50 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:42:25 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,15 @@ int	__cd(char **args, t_data *data)
 {
 	char	cwd[PATH_MAX];
 	char	*dest;
+	int		i;
 
+	i = -1;
+	while (args[++i])
+	if (i > 1)
+	{
+		printf("-minishell: cd: too many arguments\n");
+		return (1);
+	}
 	getcwd(cwd, PATH_MAX);
 	if (!args[1] || !ft_strcmp(args[1], "~"))
 		dest = getenv("HOME");
