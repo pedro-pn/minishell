@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/09 15:40:58 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:29:08 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ static int	check_valid_identifier(char *arg)
 {
 	int		index;
 
-	index = 0;
-	while (arg[index] != '=' && arg[index])
+	index = -1;
+	while (index++, arg[index] != '=' && arg[index])
 	{
-		if (!ft_isalnum(arg[index] || arg[index] == '_'))
+		if (!ft_isalnum(arg[index]))
+		{
+			if (arg[index] == '_')
+				continue ;
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -42,35 +46,6 @@ static int	check_export_error(t_data *data, char *arg)
 	}
 	return (0);
 }
-
-// static void	update_variable(t_data *data, char *arg, char *var)
-// {
-// 	t_list	*var_node;
-// 	int		var_len;
-// 	int		flag;
-// 	char	*var_conc;
-	
-// 	var_len = ft_strlen(var);
-// 	flag = 0;
-// 	if (var[var_len - 1] == '+')
-// 	{
-// 		flag = 1;
-// 		var[var_len - 1] = 0;
-// 	}
-// 	var_node = ft_lstfind(data->lst_env, var);
-// 	if (var_node)
-// 	{
-// 		if (flag)
-// 		{
-// 			var_conc = ft_strjoin(var_node->content, ft_strchr(arg, '=') + 1);
-// 			free(var_node->content);
-// 			var_node->content = var_conc;
-// 			return ;
-// 		}
-// 		free(var_node->content);
-// 		var_node->content = ft_strdup(arg);
-// 	}
-// }
 
 static int	ft_export_display(t_data *data)
 {
