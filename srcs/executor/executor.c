@@ -19,7 +19,7 @@ int	executor(t_data *data)
 	
 	exec = (t_cmd *)data->exec_data->content;
 	expand_variables(data, exec);
-	if (ft_lstsize(data->exec_data) == 1 && exec->cmd)
+	if (ft_lstsize(data->exec_data) == 1 && exec->cmd[0])
 		builtin_executor(data, exec->cmd);
 	data->procs.exec_pid = fork();
 	executor_signals(data->procs.exec_pid, 0);
