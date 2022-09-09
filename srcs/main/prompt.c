@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 16:36:36 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:34:20 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ void	show_prompt(t_data *data)
 			save_history(data->prompt.tb_line);
 		else
 			save_history(data->prompt.line);
-		data->exec_data = parser_input(data->prompt.line);
-		if (!data->invalid_syntax)
-			g_status = executor(data);
+		if (*data->prompt.line)
+		{
+			data->exec_data = parser_input(data->prompt.line);
+			if (!data->invalid_syntax)
+				g_status = executor(data);
+		}
 		clean_data(data);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/09 11:36:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:26:22 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,8 @@ char	**get_input(char *line);
 
 // signals
 void	main_signals(void);
-void	executor_signals(int pid);
-// void	heredoc_signals(void);
-void	heredoc_signals(int pid);
+void	executor_signals(int pid, int f);
+void	heredoc_signals(int pid, int f);
 
 // clean
 void	clean_array(void **array);

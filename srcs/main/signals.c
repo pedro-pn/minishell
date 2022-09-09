@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 17:58:53 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:26:11 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	main_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-void	executor_signals(int pid)
+void	executor_signals(int pid, int f)
 {
 	struct sigaction	sa;
 
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-	if (!pid)
+	if (!pid && f)
 		sa.sa_handler = SIG_DFL;
 	else
 		sa.sa_handler = SIG_IGN;
@@ -53,14 +53,14 @@ void	executor_signals(int pid)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	heredoc_signals(int pid)
+void	heredoc_signals(int pid, int f)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
 	sa_int.sa_flags = 0;
 	sigemptyset(&sa_int.sa_mask);
-	if (!pid)
+	if (!pid && f)
 		sa_int.sa_handler = SIG_DFL;
 	else
 		sa_int.sa_handler = SIG_IGN;

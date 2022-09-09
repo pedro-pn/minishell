@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/09 11:55:10 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:32:28 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	executor(t_data *data)
 {
-	int	last_status_code;
+	int		last_status_code;
+	t_cmd	*exec;
 	
-	if (ft_lstsize(data->exec_data) == 1
-			&& ((t_cmd *)data->exec_data->content)->cmd)
-		builtin_executor(data, ((t_cmd *)data->exec_data->content)->cmd);
+	exec = (t_cmd *)data->exec_data->content;
+	expand_variables(data, exec);
+	if (ft_lstsize(data->exec_data) == 1 && exec->cmd)
+		builtin_executor(data, exec->cmd);
 	data->procs.exec_pid = fork();
+	executor_signals(data->procs.exec_pid, 0);
 	if (data->procs.exec_pid == 0)
 		main_exec(data);
 	last_status_code = wait_executor(data);
@@ -63,13 +66,12 @@ void	_exec(t_data *data, t_list *exec_data)
 		get_path(data, &exec->cmd[0], &exec->path);
 		if (exec->here_doc)
 		{	
-			heredoc_signals(data->procs.pids[process]);
+			heredoc_signals(data->procs.pids[process], 1);
 			if (data->procs.pids[process] == 0)
 				get_here_doc(exec);
 		}
-		expand_variables(data, exec);
 		data->procs.pids[process] = fork();
-		executor_signals(data->procs.pids[process]);
+		executor_signals(data->procs.pids[process], 1);
 		if (data->procs.pids[process] == 0)
 			exec_child(data, exec, process);
 		process++;
