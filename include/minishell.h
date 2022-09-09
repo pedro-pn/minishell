@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/08 22:51:01 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:36:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_process
 {
 	int			**pipes;
 	int			*pids;
+	int			exec_pid;
 	int			processes_n;
 }		t_process;
 
@@ -151,6 +152,8 @@ void	get_here_doc(t_cmd *exec);
 void	check_outfile(t_data *data, t_cmd *exec, int process);
 int		verify_infile(t_data *data, t_cmd *exec, int process);
 int		verify_outfile(t_data *data, t_cmd *exec, int process);
+int		main_exec(t_data *data);
+int		wait_executor(t_data *data);
 
 // executor utils
 int		*get_pids(t_data *data);
