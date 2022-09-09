@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/09 16:29:08 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:37:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,22 @@ static int	ft_export_display(t_data *data)
 	return (0);
 }
 
+void	update_variable(t_data *data, char *arg, char *var)
+{
+	t_list	*var_node;
+
+	var_node = ft_lstfind(data->lst_env, var);
+	if (var_node)
+	{
+		free(var_node->content);
+		var_node->content = ft_strdup(arg);
+		return ;
+	}
+	ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(arg)));
+}
+
 int	__export(char **args, t_data *data)
 {
-	t_list	*var;
 	char	**var_key;
 	int		index;
 
@@ -81,17 +94,10 @@ int	__export(char **args, t_data *data)
 		if (check_export_error(data, args[index]))
 			continue ;
 		var_key = ft_split(args[index], '=');
-		var = ft_lstfind(data->lst_env, var_key[0]);
 		if (ft_lstfind_2(data->empty_vars, var_key[0]))
 			ft_lstremove_2(&data->empty_vars, var_key[0]);
+		update_variable(data, args[index], var_key[0]);
 		clean_array((void **) var_key);
-		if (var)
-		{
-			free(var->content);
-			var->content = ft_strdup(args[index]);
-			continue ;
-		}
-		ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(args[index])));
 	}
 	return (0);
 }
