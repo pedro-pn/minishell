@@ -6,15 +6,28 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/07 15:32:02 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:40:58 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	check_valid_identifier(char *arg)
+{
+	int		index;
+
+	index = 0;
+	while (arg[index] != '=' && arg[index])
+	{
+		if (!ft_isalnum(arg[index] || arg[index] == '_'))
+			return (1);
+	}
+	return (0);
+}
+
 static int	check_export_error(t_data *data, char *arg)
 {
-	if (ft_isdigit(arg[0]) || arg[0] == '=')
+	if (ft_isdigit(arg[0]) || arg[0] == '=' || check_valid_identifier(arg))
 	{
 		ft_printf("minishell: export: '%s': not a valid identifier\n", arg);
 		g_status = 1;
@@ -29,6 +42,35 @@ static int	check_export_error(t_data *data, char *arg)
 	}
 	return (0);
 }
+
+// static void	update_variable(t_data *data, char *arg, char *var)
+// {
+// 	t_list	*var_node;
+// 	int		var_len;
+// 	int		flag;
+// 	char	*var_conc;
+	
+// 	var_len = ft_strlen(var);
+// 	flag = 0;
+// 	if (var[var_len - 1] == '+')
+// 	{
+// 		flag = 1;
+// 		var[var_len - 1] = 0;
+// 	}
+// 	var_node = ft_lstfind(data->lst_env, var);
+// 	if (var_node)
+// 	{
+// 		if (flag)
+// 		{
+// 			var_conc = ft_strjoin(var_node->content, ft_strchr(arg, '=') + 1);
+// 			free(var_node->content);
+// 			var_node->content = var_conc;
+// 			return ;
+// 		}
+// 		free(var_node->content);
+// 		var_node->content = ft_strdup(arg);
+// 	}
+// }
 
 static int	ft_export_display(t_data *data)
 {
@@ -77,5 +119,4 @@ int	__export(char **args, t_data *data)
 		ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(args[index])));
 	}
 	return (0);
-	// return (g_status); 1 or 0
 }
