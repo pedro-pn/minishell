@@ -32,11 +32,11 @@
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
 # define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted %s\n"
 
-# define RED "\x1b[38;5;88m"
-# define BLUE "\x1b[38;5;25m"
-# define GREEN "\x1b[38;5;40m"
-# define YELLOW "\x1b[38;5;220m"
-# define RES "\x1b[0m"
+# define RED "\001\x1b[38;5;88m\002"
+# define BLUE "\001\x1b[38;5;25m\002"
+# define GREEN "\001\x1b[38;5;40m\002"
+# define YELLOW "\001\x1b[38;5;220m\002"
+# define RES "\001\x1b[0m\002"
 
 extern int		g_status;
 
