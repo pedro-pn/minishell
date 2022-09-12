@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 07:44:55 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:41:11 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	output_exec_error(t_cmd *exec)
 		ft_putstr_fd(exec->cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
 	}
+	g_status = 127;
 }
 
 void	expand(char *cmd, t_data *data)
@@ -99,8 +100,8 @@ void	expand_variables(t_data *data, t_cmd *exec)
 	}
 	clean_array((void **)exec->cmd);
 	verify_quotes(buff);
-	clean_quotes(buff, 39);
-	clean_quotes(buff, 34);
+	clean_quotes(buff, 39, 32, CTRL_SPC);
+	clean_quotes(buff, 34, 32, CTRL_SPC);
 	exec->cmd = ft_split(buff, ' ');
 	restore_quotes(exec->cmd);
 	free(buff);

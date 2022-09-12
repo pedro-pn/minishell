@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 19:51:03 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/11 21:44:57 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:04:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	**get_input(char *line)
 
 	if (verify_quotes(line))
 		return (NULL); // se a condição for verdadeira, há aspas simples ou dupla aberta;
-	clean_quotes(line, 39);
-	clean_quotes(line, 34);
+	handle_quoted_args(line);
 	handle_io(line);
 	input = ft_split(line, ' ');
 	restore_quotes(input);
@@ -38,7 +37,7 @@ int	verify_quotes_2(char **line)
 			if (**line == 34)
 				break ;
 			if (**line == 39)
-				**line = 3;
+				**line = CTRL_S;
 		}
 		if (!**line)
 			return (1);
@@ -58,7 +57,7 @@ int	verify_quotes(char *line)
 				if (*line == 39)
 					break ;
 				if (*line == 34)
-					*line = 2;
+					*line = CTRL_D;
 			}
 			if (!*line)
 				return (1);
@@ -71,7 +70,7 @@ int	verify_quotes(char *line)
 }
 
 /* Replaces the spaces between quotes with a control character*/
-void	clean_quotes(char *line, int c)
+void	clean_quotes(char *line, int quote, int c, int ctrl)
 {
 	int	index;
 	int	flag;
@@ -80,12 +79,12 @@ void	clean_quotes(char *line, int c)
 	flag = 1;
 	while (line[index])
 	{
-		if (line[index] == c)
+		if (line[index] == quote)
 			flag *= -1;
 		else if (flag == -1)
 		{
-			if (line[index] == ' ')
-				line[index] = 1;
+			if (line[index] == c)
+				line[index] = ctrl;
 		}
 		index++;
 	}
@@ -100,9 +99,9 @@ static void handle_io(char *line)
 	while (line[index])
 	{
 		if (line[index] == '>' && line[index + 1] == ' ')
-			line[index + 1] = 1;
+			line[index + 1] = CTRL_SPC;
 		else if (line[index] == '<' && line[index + 1] == ' ')
-			line[index + 1] = 1;
+			line[index + 1] = CTRL_SPC;
 		index++;
 	}
 }

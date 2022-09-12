@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/11 21:30:43 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:41:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,18 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
-	// expand_variables(data, exec);
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
 	else if (*exec->cmd)
 		output_exec_error(exec);
+	ft_lstclear(&(data->exec_data), clean_s_cmd);
+	ft_lstclear(&data->lst_env, free);
+	clean_processes(&data->procs);
 	clean_data(data);
 	clean_array((void **)env);
-	if (is_builtin(data, exec, process))
-		exit(g_status);
-	exit(127);
+	exit(g_status);
 }
 
 int	handle_signals(t_data *data, int status, int process, int processes_n)

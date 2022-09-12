@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 07:30:24 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:01:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 
 # define META_C "><"
 # define PATH_MAX 4096
+# define CTRL_SPC 1
+# define CTRL_H 2
+# define CTRL_L 3
+# define CTRL_S 4
+# define CTRL_D 5
 
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
@@ -93,21 +98,21 @@ void	show_prompt(t_data *data);
 void	save_history(char *line);
 char	*update_prompt_msg(t_data *data);
 
-// parser
+// parser e token
 t_list	*parser_input(t_data *data, char *line);
 t_list	*create_input_list(char	*line);
 t_cmd	*cmd_init(void);
+char	**get_input(char *line);
 void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
 void	remove_quotes(char **str);
 int		save_pipes(char *line);
 void	restore_pipes(char	**strs);
 int		verify_quotes(char *line);
 int		verify_quotes_2(char **line);
-void	clean_quotes(char *line, int c);
+void	clean_quotes(char *line, int quote, int c, int ctrl);
 void	restore_quotes(char **array);
-
-// token
-char	**get_input(char *line);
+void	handle_quoted_args(char *str);
+void	restore_io_quoted(char **array);
 
 // signals
 void	main_signals(void);
