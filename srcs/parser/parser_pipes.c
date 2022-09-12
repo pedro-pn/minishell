@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 22:24:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/08 22:51:44 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:43:07 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	verify_quotes_2(char **line)
+static int	save_pipes_2(char **line)
 {
 	if (**line == 34)
 	{
@@ -22,8 +22,6 @@ static int	verify_quotes_2(char **line)
 				break ;
 			if (**line == '|')
 				**line = 1;
-			if (**line == 39)
-				**line = 3;
 		}
 		if (!**line)
 			return (1);
@@ -44,13 +42,11 @@ int	save_pipes(char *line)
 					break ;
 				if (*line == '|')
 					*line = 1;
-				if (*line == 34)
-					*line = 2;
 			}
 			if (!*line)
 				return (1);
 		}
-		if (verify_quotes_2(&line))
+		if (save_pipes_2(&line))
 			return (1);
 		line++;
 	}

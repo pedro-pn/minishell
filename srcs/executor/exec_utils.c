@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/08 22:53:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:40:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ void	expand_variables(t_data *data, t_cmd *exec)
 			buff = parse_cmd(buff, exec->cmd[i]);
 	}
 	clean_array((void **)exec->cmd);
+	verify_quotes(buff);
+	clean_quotes(buff, 39);
+	clean_quotes(buff, 34);
 	exec->cmd = ft_split(buff, ' ');
+	restore_quotes(exec->cmd);
 	free(buff);
 }
 

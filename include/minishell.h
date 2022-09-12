@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/09 12:26:22 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/11 20:57:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,17 @@ void	save_history(char *line);
 char	*update_prompt_msg(t_data *data);
 
 // parser
-t_list	*parser_input(char *line);
+t_list	*parser_input(t_data *data, char *line);
 t_list	*create_input_list(char	*line);
 t_cmd	*cmd_init(void);
 void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
 void	remove_quotes(char **str);
 int		save_pipes(char *line);
 void	restore_pipes(char	**strs);
+int		verify_quotes(char *line);
+int		verify_quotes_2(char **line);
+void	clean_quotes(char *line, int c);
+void	restore_quotes(char **array);
 
 // token
 char	**get_input(char *line);

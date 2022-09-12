@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:12:56 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/02 18:53:45 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/11 20:51:43 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	get_cmd(char **cmd_line, t_cmd **exec_cmds)
 		if (!ft_strchr(META_C, cmd_line[index_cmd][0]))
 		{
 			((*exec_cmds)->cmd)[index] = format_cmd(cmd_line[index_cmd]);
-			remove_quotes(&((*exec_cmds)->cmd)[index]);
 			index++;
 		}
 		index_cmd++;

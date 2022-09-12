@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 15:22:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:30:32 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_chars(char *str);
 
-static int	verify_quotes_2(char **line)
+static int	handle_quotes_2(char **line)
 {
 	if (**line == 34)
 	{
@@ -36,7 +36,7 @@ static int	verify_quotes_2(char **line)
 }
 
 /* Handles single and double quotes in the input line*/
-static int	verify_quotes(char *line)
+static int	handle_quotes(char *line)
 {
 	while (*line)
 	{
@@ -56,7 +56,7 @@ static int	verify_quotes(char *line)
 			if (!*line)
 				return (1);
 		}
-		if (verify_quotes_2(&line))
+		if (handle_quotes_2(&line))
 			return (1);
 		line++;
 	}
@@ -77,7 +77,7 @@ static void	save_spaces(char *line)
 	}
 }
 
-static void	restore_quotes(char *str)
+static void	restore_quote(char *str)
 {
 	ft_memrpl(str, 1, 32, ft_strlen(str));
 	ft_memrpl(str, 2, 34, ft_strlen(str));
@@ -109,16 +109,21 @@ static void	join_commands(char **splitted_s, char **str)
 void	remove_quotes(char **str)
 {
 	char	**splitted_s;
+	int		index;
 
-	if (!ft_strchr(*str, 34) && !ft_strchr(*str, 39))
-		return ;
-	save_spaces(*str);
-	verify_quotes(*str);
-	splitted_s = ft_split(*str, ' ');
-	if (splitted_s[0])
-		join_commands(splitted_s, str);
-	restore_quotes(*str);
-	clean_array((void **)splitted_s);
+	index = -1;
+	while (index++, str[index])
+	{
+		if (!ft_strchr(str[index], 34) && !ft_strchr(str[index], 39))
+			continue ;
+		save_spaces(str[index]);
+		handle_quotes(str[index]);
+		splitted_s = ft_split(str[index], ' ');
+		if (splitted_s[0])
+			join_commands(splitted_s, &str[index]);
+		restore_quote(str[index]);
+		clean_array((void **)splitted_s);
+	}
 }
 
 // void	print_chars(char *str)

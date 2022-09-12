@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/09 12:32:28 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:30:43 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	executor(t_data *data)
 	t_cmd	*exec;
 	
 	exec = (t_cmd *)data->exec_data->content;
-	expand_variables(data, exec);
 	if (ft_lstsize(data->exec_data) == 1 && exec->cmd[0])
 		builtin_executor(data, exec->cmd);
 	data->procs.exec_pid = fork();

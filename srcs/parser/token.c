@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 19:51:03 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/01 08:13:12 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:44:57 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	clean_quotes(char *argv, int c);
 static void	handle_io(char *line);
-static int	verify_quotes(char *line);
-static int	verify_quotes_2(char **line);
 
 /* Gets the input line and splits it into an array.*/
 char	**get_input(char *line)
 {
 	char	**input;
-	int		index_input;
 
 	if (verify_quotes(line))
 		return (NULL); // se a condição for verdadeira, há aspas simples ou dupla aberta;
@@ -29,17 +25,11 @@ char	**get_input(char *line)
 	clean_quotes(line, 34);
 	handle_io(line);
 	input = ft_split(line, ' ');
-	index_input = -1;
-	while (index_input++, input[index_input])
-	{
-		ft_memrpl(input[index_input], 1, 32, ft_strlen(input[index_input]));
-		ft_memrpl(input[index_input], 2, 34, ft_strlen(input[index_input]));
-		ft_memrpl(input[index_input], 3, 39, ft_strlen(input[index_input]));
-	}
+	restore_quotes(input);
 	return (input);
 }
 
-static int	verify_quotes_2(char **line)
+int	verify_quotes_2(char **line)
 {
 	if (**line == 34)
 	{
@@ -57,7 +47,7 @@ static int	verify_quotes_2(char **line)
 }
 
 /* Handles single and double quotes in the input line*/
-static int	verify_quotes(char *line)
+int	verify_quotes(char *line)
 {
 	while (*line)
 	{
@@ -81,7 +71,7 @@ static int	verify_quotes(char *line)
 }
 
 /* Replaces the spaces between quotes with a control character*/
-static void	clean_quotes(char *line, int c)
+void	clean_quotes(char *line, int c)
 {
 	int	index;
 	int	flag;
