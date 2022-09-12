@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/07 16:47:11 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:48:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	validate_pipes(t_data *data)
 {
 	char	*p;
 
+	save_pipes(data->prompt.line);
 	p = data->prompt.line;
 	data->prompt.line = ft_strtrim(p, " ");
 	free(p);

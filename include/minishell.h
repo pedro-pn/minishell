@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 12:01:41 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:49:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define CTRL_L 3
 # define CTRL_S 4
 # define CTRL_D 5
+# define CTRL_PIPE 6
 
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"

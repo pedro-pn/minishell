@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 22:24:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/11 21:43:07 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:50:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	save_pipes_2(char **line)
 			if (**line == 34)
 				break ;
 			if (**line == '|')
-				**line = 1;
+				**line = CTRL_PIPE;
 		}
 		if (!**line)
 			return (1);
@@ -41,7 +41,7 @@ int	save_pipes(char *line)
 				if (*line == 39)
 					break ;
 				if (*line == '|')
-					*line = 1;
+					*line = CTRL_PIPE;
 			}
 			if (!*line)
 				return (1);
@@ -60,5 +60,5 @@ void	restore_pipes(char	**strs)
 
 	index = -1;
 	while (index++, strs[index])
-		ft_memrpl(strs[index], 1, '|', ft_strlen(strs[index]));
+		ft_memrpl(strs[index], CTRL_PIPE, '|', ft_strlen(strs[index]));
 }
