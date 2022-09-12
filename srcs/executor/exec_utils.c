@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 12:41:11 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:20:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,28 @@ int	*get_pids(t_data *data)
 
 void	output_exec_error(t_cmd *exec)
 {
-	if (ft_strchr(exec->cmd[0], '/'))
+	struct stat path_stat;
+	
+	stat(exec->cmd[0], &path_stat);
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(exec->cmd[0], 2);
+		ft_putendl_fd(" Is a directory", 2);
+		g_status = 126;
+	}
+	else if (ft_strchr(exec->cmd[0], '/'))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(exec->cmd[0]);
+		g_status = 127;
 	}
 	else
 	{
 		ft_putstr_fd(exec->cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
+		g_status = 127;
 	}
-	g_status = 127;
 }
 
 void	expand(char *cmd, t_data *data)

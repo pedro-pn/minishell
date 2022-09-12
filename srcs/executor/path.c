@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/03 11:53:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:20:39 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,18 @@ void	get_path(t_data *data, char **cmd, char **path)
 
 int	get_given_path(t_data *data, char **cmd, char **path)
 {
-	char	*name;
+	char		*name;
+	struct stat	path_stat;
 
+	stat(*cmd, &path_stat);
 	if (access(*cmd, F_OK))
 		return (1);
 	name = ft_strdup(ft_strrchr(*cmd, '/') + 1);
-	*path = *cmd;
-	*cmd = name;
+	if (!S_ISDIR(path_stat.st_mode))
+	{
+		*path = *cmd;
+		*cmd = name;
+	}
 	return (0);
 }
 

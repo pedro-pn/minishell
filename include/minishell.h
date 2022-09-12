@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 12:49:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/12 13:15:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 # define META_C "><"
 # define PATH_MAX 4096
