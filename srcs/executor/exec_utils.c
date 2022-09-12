@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 07:39:01 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/12 07:44:55 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,15 @@ void	expand(char *cmd, t_data *data)
 	char	*key;
 	char	*value;
 
+	// printf("%s\n", cmd);
+	// exit(1);
 	if (*cmd == '\'')
 		return ;
 	var = ft_strtrim(cmd, "\"");
-	key = ft_strchr(var, '$') + 1;
+	if (ft_strchr(cmd, '$'))
+		key = ft_strchr(var, '$') + 1;
+	else
+		key = cmd;
 	node = ft_lstfind(data->lst_env, key);
 	if (!ft_strcmp(key, "?"))
 		value = ft_itoa(g_status);
