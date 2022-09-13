@@ -64,6 +64,8 @@ void	builtin_executor_2(t_data *data, t_cmd *exec)
 		g_status = __env(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "unset"))
 		g_status = __unset(exec->cmd, data);
+	else if (!ft_strcmp(cmd, "export") && exec->cmd[1] == NULL)
+		__export(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "exit")) //esse comando é o unico que será executado fora do fork()
 		exit(0); // porém ele só pode ser executado quando data->procs.processes_n == 1
 	else if (!ft_strcmp(cmd, "clear"))
