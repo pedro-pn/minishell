@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:17:38 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/09 16:37:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/13 19:50:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	check_valid_identifier(char *arg)
 		if (!ft_isalnum(arg[index]))
 		{
 			if (arg[index] == '_')
+				continue ;
+			if (arg[index] == '+' && arg[index + 1] == '=')
 				continue ;
 			return (1);
 		}
@@ -80,6 +82,38 @@ void	update_variable(t_data *data, char *arg, char *var)
 	ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strdup(arg)));
 }
 
+void	append_variable(t_data *data, char *arg, char *var)
+{
+	t_list	*var_node;
+	char	*temp;
+
+	*ft_strchr(var, '+') = 0;
+	var_node = ft_lstfind(data->lst_env, var);
+	if (var_node)
+	{
+		temp = (char *) var_node->content;
+		var_node->content = ft_strjoin(temp, ft_strchr(arg, '+') + 2);
+		free(temp);
+		return ;
+	}
+	temp = ft_strjoin(var, "=");
+	ft_lstadd_back(&data->lst_env, ft_lstnew(ft_strjoin(temp,
+				ft_strchr(arg, '=') + 1)));
+	free(temp);
+}
+
+int	check_for_append(char *var)
+{
+	char	*key;
+	
+	key = ft_strchr(var, '+');
+	if (!key)
+		return (0);
+	if (*(++key) == 0)
+		return (1);
+	return (0);
+}
+
 int	__export(char **args, t_data *data)
 {
 	char	**var_key;
@@ -96,7 +130,10 @@ int	__export(char **args, t_data *data)
 		var_key = ft_split(args[index], '=');
 		if (ft_lstfind_2(data->empty_vars, var_key[0]))
 			ft_lstremove_2(&data->empty_vars, var_key[0]);
-		update_variable(data, args[index], var_key[0]);
+		if (check_for_append(var_key[0]))
+			append_variable(data, args[index], var_key[0]);
+		else
+			update_variable(data, args[index], var_key[0]);
 		clean_array((void **) var_key);
 	}
 	return (0);
