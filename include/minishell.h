@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/14 13:20:19 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:10:29 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,11 @@ int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
 int		check_first_cmd(char *str);
 char	*parse_cmd(char *buff, char *arg);
+char	*_get_value(char *key, t_list *node);
 
 // expansion
 void	expand_variables(t_data *data, t_cmd *exec);
+void	simple_expansion(char *cmd, t_data *data, char **s);
 
 // utils
 void	ft_arrdisplay(char **a);

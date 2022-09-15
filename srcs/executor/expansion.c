@@ -6,18 +6,16 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:53:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/14 13:26:12 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:10:58 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	expand(char **buff, char *cmd, t_data *data);
-static char	*simple_expansion(char *cmd, t_data *data);
 static char	*quoted_expansion(char *cmd, t_data *data);
 static void	fill_buffer(char **buff, char **cmd);
 static char	*ft_chtos(char ch);
-static char	*_get_value(char *key, t_list *node);
 
 void	expand_variables(t_data *data, t_cmd *exec)
 {
@@ -49,10 +47,13 @@ void	expand_variables(t_data *data, t_cmd *exec)
 
 static void	expand(char **buff, char *cmd, t_data *data)
 {
+	char	*s;
 	char	*str;
 	char	*pb;
+	char	*p;
 
 	pb = *buff;
+	s = ft_strdup("");
 	if (*cmd == '\'')
 	{
 		*buff = parse_cmd(*buff, cmd);
@@ -60,41 +61,20 @@ static void	expand(char **buff, char *cmd, t_data *data)
 	}
 	if (*cmd != '"')
 	{
-		str = simple_expansion(cmd, data);
-		*buff = ft_strjoin(pb, str);
+		simple_expansion(cmd, data, &s);
+		p = s;
+		s = ft_strjoin(p, " ");
+		free(p);
+		*buff = ft_strjoin(pb, s);
+		free(s);
 	}
 	else
 	{
 		str = quoted_expansion(cmd, data);
 		*buff = ft_strjoin(pb, str);
+		free(str);
 	}
 	free(pb);
-	free(str);
-}
-
-static char	*simple_expansion(char *cmd, t_data *data)
-{
-	t_list	*node;
-	char	*result;
-	char	*str;
-	char	*value;
-	char	*var;
-	int		i;
-
-	i = 0;
-	while (cmd[i] != '$')
-		i++;
-	str = ft_substr(cmd, 0, i);
-	var = ft_strchr(cmd, '$') + 1;
-	node = ft_lstfind(data->lst_env, var);
-	value = _get_value(var, node);
-	var = value;
-	value = ft_strjoin(var, " ");
-	free(var);
-	result = ft_strjoin(str, value);
-	free(str);
-	free(value);
-	return (result);
 }
 
 static char	*quoted_expansion(char *cmd, t_data *data)
@@ -142,18 +122,4 @@ static char	*ft_chtos(char ch)
 	str = (char *)ft_calloc(2, sizeof(char));
 	*str = ch;
 	return (str);
-}
-
-static char	*_get_value(char *key, t_list *node)
-{
-	char	*value;
-
-	value = NULL;
-	if (*key == '?')
-		value = ft_itoa(g_status);
-	else if (!node)
-		value = ft_strdup("");
-	else
-		value = get_value((char *)node->content);
-	return (value);
 }

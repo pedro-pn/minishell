@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/14 13:03:14 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:10:41 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,18 @@ int	check_first_cmd(char *str)
 	}
 	free(cmd);	
 	return (0);
+}
+
+char	*_get_value(char *key, t_list *node)
+{
+	char	*value;
+
+	value = NULL;
+	if (*key == '?')
+		value = ft_itoa(g_status);
+	else if (!node)
+		value = ft_strdup("");
+	else
+		value = get_value((char *)node->content);
+	return (value);
 }
