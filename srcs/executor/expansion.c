@@ -6,13 +6,14 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:53:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/15 22:56:35 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:38:15 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand(char **buff, char *cmd, t_data *data);
+static void	init_buffer(char **buff, char *cmd, t_data *data);
+static void	prep_next(char *str, char *pb, char **buff);
 
 void	expand_variables(t_data *data, t_cmd *exec)
 {
@@ -28,7 +29,7 @@ void	expand_variables(t_data *data, t_cmd *exec)
 	while (exec->cmd[++i])
 	{
 		if (ft_strchr(exec->cmd[i], '$'))
-			expand(&buff, exec->cmd[i], data);
+			init_buffer(&buff, exec->cmd[i], data);
 		else
 			if (*exec->cmd[i])
 				buff = parse_cmd(buff, exec->cmd[i]);
@@ -42,15 +43,13 @@ void	expand_variables(t_data *data, t_cmd *exec)
 	restore_quotes(exec->cmd);
 }
 
-static void	expand(char **buff, char *cmd, t_data *data)
+static void	init_buffer(char **buff, char *cmd, t_data *data)
 {
-	char	*s;
 	char	*str;
 	char	*pb;
-	char	*p;
 
 	pb = *buff;
-	s = ft_strdup("");
+	str = ft_strdup("");
 	if (*cmd == '\'')
 	{
 		*buff = parse_cmd(*buff, cmd);
@@ -58,18 +57,43 @@ static void	expand(char **buff, char *cmd, t_data *data)
 	}
 	if (*cmd != '"')
 	{
-		simple_expansion(cmd, data, &s);
-		p = s;
-		s = ft_strjoin(p, " ");
-		free(p);
-		*buff = ft_strjoin(pb, s);
-		free(s);
+		simple_expansion(cmd, data, &str);
+		prep_next(str, pb, buff);
+		return ;
 	}
-	else
-	{
-		quoted_expansion(cmd, data, &s);
-		*buff = ft_strjoin(pb, s);
-		free(s);
-	}
+	quoted_expansion(cmd, data, &str);
+	prep_next(str, pb, buff);
+}
+
+static void	prep_next(char *str, char *pb, char **buff)
+{
+	char	*p;
+
+	p = str;
+	str = ft_strjoin(p, " ");
+	free(p);
+	*buff = ft_strjoin(pb, str);
+	free(str);
 	free(pb);
+}
+
+void	expand(t_exp *exp, char **buffer)
+{
+	t_list	*node;
+	char	*to_find;
+	char	*value;
+	char	*result;
+	char	*pb;
+
+	to_find = ft_substr(exp->var, 0, exp->i);
+	node = ft_lstfind(exp->data->lst_env, to_find);
+	value = _get_value(to_find, node);
+	free(to_find);
+	result = ft_strjoin(exp->temp, value);
+	free(exp->temp);
+	free(value);
+	pb = *buffer;
+	*buffer = ft_strjoin(pb, result);
+	free(pb);
+	free(result);
 }

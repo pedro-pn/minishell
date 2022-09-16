@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/15 14:30:55 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:16:41 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,15 @@ typedef struct s_data
 	t_prompt	prompt;
 	t_process	procs;
 	int			not_found;
-	// int			last_status;
 }		t_data;
+
+typedef struct s_exp
+{
+	t_data		*data;
+	char		*temp;
+	char		*var;
+	int			i;
+}		t_exp;
 
 // init
 void	init_prompt(t_prompt *prompt);
@@ -176,6 +183,7 @@ char	*_get_value(char *key, t_list *node);
 void	expand_variables(t_data *data, t_cmd *exec);
 void	simple_expansion(char *cmd, t_data *data, char **s);
 void	quoted_expansion(char *cmd, t_data *data, char **s);
+void	expand(t_exp *exp, char **buffer);
 
 // utils
 void	ft_arrdisplay(char **a);

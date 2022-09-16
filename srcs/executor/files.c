@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 13:33:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:24:20 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_infile(t_data *data, t_cmd *exec, int process)
 	fd = open(exec->in_file, exec->mode_in);
 	if (fd == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("-minishell: ", 2);
 		perror(exec->in_file);
 		close(data->procs.pipes[process][0]);
 		exit(1) ;
@@ -62,7 +62,7 @@ void	check_outfile(t_data *data, t_cmd *exec, int process)
 	fd = open(exec->out_file, exec->mode_out, 0664);
 	if (fd == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("-minishell: ", 2);
 		perror(exec->out_file);
 		close(data->procs.pipes[process + 1][1]);
 		exit (1);

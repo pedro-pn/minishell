@@ -6,85 +6,40 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:18:16 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/16 10:51:46 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:18:52 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	fill_buffer(char **buff, char **cmd);
+static void	init_temp(char **temp, char **cmd);
 static char	*ft_chtos(char ch);
+static void	fill_buffer(t_exp *exp, char **buffer, char **cmd, int mode);
+static char	*alloc_whspc_str(int i);
 
-void	quoted_expansion(char *cmd, t_data *data, char **s)
+void	quoted_expansion(char *cmd, t_data *data, char **buffer)
 {
+	t_exp	exp;
 	char	*temp;
-	char	*p;
-	char	*value;
-	char	*result;
-	t_list	*node;
-	char	*pb;
-	char	*var;
-	char	*to_find;
-	char	*spaces;
-	int 	i;
 
+	exp.data = data;
 	if (!*cmd)
 		return ;
-	temp = ft_strdup("");
+	exp.temp = ft_strdup("");
 	if (*cmd != '$')
-		fill_buffer(&temp, &cmd);
-	var = ++cmd;
-	i = 0;
-	while (var[i] != '$' && var[i] != ' ' && var[i] != '"' && var[i])
-		i++;
-	if (var[i] == '$')
-	{
-		to_find = ft_substr(var, 0, i);
-		node = ft_lstfind(data->lst_env, to_find);
-		value = _get_value(to_find, node);
-		free(to_find);
-		result = ft_strjoin(temp, value);
-		free(temp);
-		free(value);
-		pb = *s;
-		*s = ft_strjoin(pb, result);
-		free(pb);
-		free(result);
-		while (*cmd != ' ' && *cmd != '$')
-			cmd++;
-		quoted_expansion(cmd, data, s);
-	}
+		init_temp(&exp.temp, &cmd);
+	exp.var = ++cmd;
+	exp.i = 0;
+	while (exp.var[exp.i] != '$' && exp.var[exp.i] != ' ' \
+		&& exp.var[exp.i] != '"' && exp.var[exp.i])
+		exp.i++;
+	if (exp.var[exp.i] == '$')
+		fill_buffer(&exp, buffer, &cmd, 1);
 	else
-	{
-		to_find = ft_substr(var, 0, i);
-		node = ft_lstfind(data->lst_env, to_find);
-		value = _get_value(to_find, node);
-		free(to_find);
-		result = ft_strjoin(temp, value);
-		free(temp);
-		free(value);
-		pb = *s;
-		*s = ft_strjoin(pb, result);
-		free(pb);
-		free(result);
-		while (*cmd != ' ' && *cmd)
-			cmd++;
-		i = 0;
-		while (*cmd++ == ' ' && *cmd)
-			i++;
-		spaces = (char *)malloc(i + 1 * sizeof(char));
-		ft_memset(spaces, ' ', i);
-		spaces[i] = 0;
-		pb = *s;
-		*s = ft_strjoin(pb, spaces);
-		free(pb);
-		free(spaces);
-		--cmd;
-		quoted_expansion(cmd, data, s);
-	}
+		fill_buffer(&exp, buffer, &cmd, 0);
 }
 
-static void	fill_buffer(char **buff, char **cmd)
+static void	init_temp(char **temp, char **cmd)
 {
 	char	*ch;
 	char	*pb;
@@ -92,8 +47,8 @@ static void	fill_buffer(char **buff, char **cmd)
 	while (**cmd != '$' && **cmd)
 	{
 		ch = ft_chtos(**cmd);
-		pb = *buff;
-		*buff = ft_strjoin(pb, ch);
+		pb = *temp;
+		*temp = ft_strjoin(pb, ch);
 		free(ch);
 		free(pb);
 		(*cmd)++;
@@ -107,4 +62,43 @@ static char	*ft_chtos(char ch)
 	str = (char *)ft_calloc(2, sizeof(char));
 	*str = ch;
 	return (str);
+}
+
+static char	*alloc_whspc_str(int i)
+{
+	char	*str;
+
+	str = (char *)malloc(i + 1 * sizeof(char));
+	ft_memset(str, ' ', i);
+	str[i] = 0;
+	return (str);
+}
+
+static void	fill_buffer(t_exp *exp, char **buffer, char **cmd, int mode)
+{
+	char	*spaces;
+	char	*pb;
+
+	if (mode == 1)
+	{
+		expand(exp, buffer);
+		while (**cmd != ' ' && **cmd != '$')
+			(*cmd)++;
+		quoted_expansion(*cmd, exp->data, buffer);
+	}
+	else
+	{
+		expand(exp, buffer);
+		while (**cmd != ' ' && **cmd)
+			(*cmd)++;
+		exp->i = 0;
+		while (*(*cmd)++ == ' ' && **cmd)
+			exp->i++;
+		spaces = alloc_whspc_str(exp->i);
+		pb = *buffer;
+		*buffer = ft_strjoin(pb, spaces);
+		free(pb);
+		free(spaces);
+		quoted_expansion(--(*cmd), exp->data, buffer);
+	}
 }
