@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 12:50:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:54:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_list	*parser_input(t_data *data, char *line)
 	t_list	*exec_data;
 	t_list	*cmd_lines;
 
-	cmd_lines = create_input_list(line);
+	cmd_lines = NULL;
+	create_input_list(&cmd_lines, line);
 	exec_data = get_exec_data(data, cmd_lines);
 	ft_lstclear(&cmd_lines, clean_cmd_lines);
 	return (exec_data);
@@ -111,34 +112,40 @@ static void	get_outfile(char **cmd_line, t_cmd **exec_cmds)
 	}
 }
 
-/* Creates a t_list with each command separated by pipes*/
-t_list	*create_input_list(char	*line)
+char	*trim_spc(char *str)
 {
-	char	**inputs;
-	t_list	*cmd_lines;
-	void	*content;
-	int		index;
+	char	*temp;
 
-	cmd_lines = NULL;
-	save_pipes(line);
-	inputs = ft_split(line, '|');
-	restore_pipes(inputs);
-	if (!inputs)
-		return (NULL);
-	index = -1;
-	while (index++, inputs[index])
+	temp = str;
+	str = ft_strtrim(temp, " ");
+	free(temp);
+	return (str);
+}
+
+/* Creates a t_list with each command separated by pipes*/
+void	create_input_list(t_list **cmd_lines, char *line)
+{
+	int	start;
+	int end;
+	int	flag;
+	
+	start = 0;
+	end = 0;
+	flag = 0;
+	while (line[end])
 	{
-		content = get_input(inputs[index]);
-		if (!content)
+		end++;
+		if (line[end] == '\"' && !(flag & QUOTE_S))
+			flag ^= QUOTE_D;
+		else if (line[end] == '\'' && !(flag & QUOTE_D))
+			flag ^= QUOTE_S;
+		if ((line[end] == '|' || line[end] == 0) && !(flag & 3))
 		{
-			ft_lstclear(&cmd_lines, clean_s_cmd);
-			ft_putendl_fd("Invalid syntax", 1);
-			break ;
+			ft_lstadd_back(cmd_lines, ft_lstnew(
+				trim_spc(ft_substr(line, start, end - start))));
+			start = end + 1;
 		}
-		ft_lstadd_back(&cmd_lines, ft_lstnew(content));
 	}
-	clean_array((void **) inputs);
-	return (cmd_lines);
 }
 
 /* Função de teste para printar arrays, será deletada*/

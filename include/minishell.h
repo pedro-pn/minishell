@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 13:15:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:18:47 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <sys/stat.h>
 
 # define META_C "><"
+# define QUOTES "\"\'"
+# define QUOTE_S 1
+# define QUOTE_D 2
 # define PATH_MAX 4096
 # define CTRL_SPC 1
 # define CTRL_H 2
@@ -102,7 +105,7 @@ char	*update_prompt_msg(t_data *data);
 
 // parser e token
 t_list	*parser_input(t_data *data, char *line);
-t_list	*create_input_list(char	*line);
+void	create_input_list(t_list **cmd_lines, char *line);
 t_cmd	*cmd_init(void);
 char	**get_input(char *line);
 void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
