@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/16 11:54:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/16 13:08:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,11 @@ void	create_input_list(t_list **cmd_lines, char *line)
 	flag = 0;
 	while (line[end])
 	{
-		end++;
 		if (line[end] == '\"' && !(flag & QUOTE_S))
 			flag ^= QUOTE_D;
 		else if (line[end] == '\'' && !(flag & QUOTE_D))
 			flag ^= QUOTE_S;
+		end++;
 		if ((line[end] == '|' || line[end] == 0) && !(flag & 3))
 		{
 			ft_lstadd_back(cmd_lines, ft_lstnew(
