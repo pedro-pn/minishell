@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:53:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/15 22:33:00 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:56:35 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	expand_variables(t_data *data, t_cmd *exec)
 		return ;
 	if (check_first_cmd(exec->cmd[0]) || !ft_strcmp(exec->cmd[0], "awk"))
 		return ;
-	i = 0;
-	buff = ft_strjoin(exec->cmd[0], " ");
+	i = -1;
+	buff = ft_strdup("");
 	while (exec->cmd[++i])
 	{
 		if (ft_strchr(exec->cmd[i], '$'))
