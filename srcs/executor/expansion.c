@@ -6,16 +6,13 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:53:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/15 11:10:58 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:33:00 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	expand(char **buff, char *cmd, t_data *data);
-static char	*quoted_expansion(char *cmd, t_data *data);
-static void	fill_buffer(char **buff, char **cmd);
-static char	*ft_chtos(char ch);
 
 void	expand_variables(t_data *data, t_cmd *exec)
 {
@@ -70,56 +67,9 @@ static void	expand(char **buff, char *cmd, t_data *data)
 	}
 	else
 	{
-		str = quoted_expansion(cmd, data);
-		*buff = ft_strjoin(pb, str);
-		free(str);
+		quoted_expansion(cmd, data, &s);
+		*buff = ft_strjoin(pb, s);
+		free(s);
 	}
 	free(pb);
-}
-
-static char	*quoted_expansion(char *cmd, t_data *data)
-{
-	char	*temp;
-	char	*p;
-	char	*value;
-	char	*str;
-
-	temp = ft_strdup("");
-	if (*cmd != '$')
-		fill_buffer(&temp, &cmd);
-	p = ft_strtrim(++cmd, "\"");
-	value = _get_value(p, ft_lstfind(data->lst_env, p));
-	free(p);
-	p = value;
-	value = ft_strjoin(p, "\" ");
-	free(p);
-	str = ft_strjoin(temp, value);
-	free(temp);
-	free(value);
-	return (str);
-}
-
-static void	fill_buffer(char **buff, char **cmd)
-{
-	char	*ch;
-	char	*pb;
-
-	while (**cmd != '$' && **cmd)
-	{
-		ch = ft_chtos(**cmd);
-		pb = *buff;
-		*buff = ft_strjoin(pb, ch);
-		free(ch);
-		free(pb);
-		(*cmd)++;
-	}
-}
-
-static char	*ft_chtos(char ch)
-{
-	char	*str;
-
-	str = (char *)ft_calloc(2, sizeof(char));
-	*str = ch;
-	return (str);
 }

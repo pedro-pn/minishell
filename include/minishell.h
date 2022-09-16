@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/15 11:10:29 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/15 14:30:55 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ char	*_get_value(char *key, t_list *node);
 // expansion
 void	expand_variables(t_data *data, t_cmd *exec);
 void	simple_expansion(char *cmd, t_data *data, char **s);
+void	quoted_expansion(char *cmd, t_data *data, char **s);
 
 // utils
 void	ft_arrdisplay(char **a);
