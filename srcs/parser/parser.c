@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/16 18:16:18 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/17 11:36:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_list	*parser_input(t_data *data, char *line)
 	exec_data = NULL;
 	create_input_list(&cmd_lines, line);
 	exec_data = create_exec_data(cmd_lines);
-	//print_exec_data(exec_data);
+//	print_exec_data(exec_data);
 	ft_lstclear(&cmd_lines, free);
 	return (exec_data);
 }
@@ -85,8 +85,7 @@ void	*get_exec_data(t_cmd *exec_cont, t_list *cmd_lines, t_list **exec_cmds)
 			get_infile(exec_cont, cmd, &start, &end);
 		else if (cmd[start] == '>' && !(flag & 3))
 			get_outfile(exec_cont, cmd, &start, &end);
-		else if ((ft_strchr(META_C, cmd[end]) || cmd[end] == 0) && !(flag & 3)
-					&& end > start)
+		else if ((ft_strchr(META_C, cmd[end]) || cmd[end] == 0) && !(flag & 3))
 		{
 			ft_lstadd_front(exec_cmds, ft_lstnew(
 				trim_spc(ft_substr(cmd, start, end - start))));
@@ -126,7 +125,8 @@ static void	get_infile(t_cmd *exec_cmds, char *cmd, int *st, int *ed)
 	if (cmd[*ed] == ' ')
 		(*ed)++;
 	(exec_cmds)->mode_in = O_RDONLY;
-	while ((cmd[(*ed)] != ' ' && flag & 3) || cmd[(*ed)] != 0)
+	*st = *ed;
+	while (!((cmd[*ed] == ' ' && !(flag & 3)) || !cmd[*ed]))
 	{
 		flag = quote_flag(cmd[(*ed)], flag);
 		printf("ed: %d\n", *ed);
@@ -156,7 +156,8 @@ static void	get_outfile(t_cmd *exec_cmds, char *cmd, int *st, int *ed)
 		exec_cmds->mode_out = O_CREAT | O_WRONLY | O_TRUNC;
 	if (cmd[*ed] == ' ')
 		(*ed)++;
-	while ((cmd[(*ed)] != ' ' && flag & 3) || cmd[(*ed)] != 0)
+	*st = *ed;
+	while (!((cmd[*ed] == ' ' && !(flag & 3)) || !cmd[*ed]))
 	{
 		flag = quote_flag(cmd[*ed], flag);
 		(*ed)++;
