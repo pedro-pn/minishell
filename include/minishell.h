@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 15:30:41 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:49:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ void	restore_io_quoted(char **array);
 int		quote_flag(char c, int flag);
 t_list	*create_unquoted_list(char *str);
 void	clean_quote(t_cmd *cmd);
+void	clean_cmds_quotes(char **cmds);
+void	clean_infile_quotes(char **infile);
+void	clean_outfile_quotes(char **outfile);
+void	clean_delimiter_quotes(char **delimiter);
 
 // signals
 void	main_signals(void);

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:08:00 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 15:38:55 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:50:01 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,9 @@ t_list	*create_unquoted_list(char *str)
 
 void	clean_quote(t_cmd *cmd)
 {
-	int		i;
+	clean_cmds_quotes(cmd->cmd);
+	clean_infile_quotes(&cmd->in_file);
+	clean_outfile_quotes(&cmd->out_file);
+	clean_delimiter_quotes(&cmd->delimiter);
 
-	i = -1;
-	if (cmd->cmd)
-	{
-		while (i++, cmd->cmd[i])
-		{
-			if (ft_strchr(cmd->cmd[i], '\'') || ft_strchr(cmd->cmd[i], '\"'))
-				remove_quotes(&cmd->cmd[i]);
-		}
-	}
-	if (cmd->in_file)
-	{
-		if (ft_strchr(cmd->in_file, '\'') || ft_strchr(cmd->in_file, '\"'))
-			remove_quotes(&cmd->in_file);
-	}
-	if (cmd->out_file)
-	{
-		if (ft_strchr(cmd->out_file, '\'') || ft_strchr(cmd->out_file, '\"'))
-			remove_quotes(&cmd->out_file);
-	}
-	if (cmd->delimiter)
-	{
-		if (ft_strchr(cmd->delimiter, '\'') || ft_strchr(cmd->delimiter, '\"'))
-			remove_quotes(&cmd->delimiter);
-	}
 }
