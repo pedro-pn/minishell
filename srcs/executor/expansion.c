@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:53:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/16 12:38:15 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/17 13:11:53 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	expand(t_exp *exp, char **buffer)
 
 	to_find = ft_substr(exp->var, 0, exp->i);
 	node = ft_lstfind(exp->data->lst_env, to_find);
-	value = _get_value(to_find, node);
+	value = get_value_expansion(to_find, node);
 	free(to_find);
 	result = ft_strjoin(exp->temp, value);
 	free(exp->temp);
