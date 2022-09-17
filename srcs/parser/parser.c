@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 11:36:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:36:14 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_list	*create_exec_data(t_list *cmd_lines)
 		get_exec_data(exec_cont, cmd_lines, &exec_cmds);
 		exec_cont->cmd = get_array_from_lst(exec_cmds);
 		ft_lstclear(&exec_cmds, free);
+		clean_quote(exec_cont);
 		ft_lstadd_back(&exec_data, ft_lstnew(exec_cont));
 		cmd_lines = cmd_lines->next;
 	}
@@ -129,7 +130,6 @@ static void	get_infile(t_cmd *exec_cmds, char *cmd, int *st, int *ed)
 	while (!((cmd[*ed] == ' ' && !(flag & 3)) || !cmd[*ed]))
 	{
 		flag = quote_flag(cmd[(*ed)], flag);
-		printf("ed: %d\n", *ed);
 		(*ed)++;
 	}
 	if (exec_cmds->here_doc == 1)
