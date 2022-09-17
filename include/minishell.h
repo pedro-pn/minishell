@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 15:49:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:44:31 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,26 +105,29 @@ char	*update_prompt_msg(t_data *data);
 
 // parser e token
 t_list	*parser_input(t_data *data, char *line);
-void	create_input_list(t_list **cmd_lines, char *line);
 t_cmd	*cmd_init(void);
-char	**get_input(char *line);
-void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
 void	remove_quotes(char **str);
-int		save_pipes(char *line);
-void	restore_pipes(char	**strs);
-int		verify_quotes(char *line);
-int		verify_quotes_2(char **line);
-void	clean_quotes(char *line, int quote, int c, int ctrl);
-void	restore_quotes(char **array);
-void	handle_quoted_args(char *str);
-void	restore_io_quoted(char **array);
-int		quote_flag(char c, int flag);
 t_list	*create_unquoted_list(char *str);
 void	clean_quote(t_cmd *cmd);
 void	clean_cmds_quotes(char **cmds);
 void	clean_infile_quotes(char **infile);
 void	clean_outfile_quotes(char **outfile);
 void	clean_delimiter_quotes(char **delimiter);
+
+// parser_utils
+int		quote_flag(char c, int flag);
+void	reset_infile(t_cmd *exec_cmds);
+void	reset_outfile(t_cmd *exec_cmds);
+void	get_infile(t_cmd *exec_cmds, char *cmd, int *st, int *ed);
+void	get_outfile(t_cmd *exec_cmds, char *cmd, int *st, int *ed);
+
+// devem ser removidas futuramente
+void	clean_quotes(char *line, int quote, int c, int ctrl);
+void	restore_quotes(char **array);
+void	handle_quoted_args(char *str);
+void	restore_io_quoted(char **array);
+int		save_pipes(char *line);
+int		verify_quotes(char *line);
 
 // signals
 void	main_signals(void);
@@ -195,6 +198,7 @@ char	*get_key(char *str);
 char	*get_value(char *str);
 void	*get_declared_vars(void *content);
 t_list	*ft_lstfind_2(t_list *lst, char *value);
+char	*trim_spc(char *str);
 
 // Debbug - delete later
 void	print_content(char **array);
