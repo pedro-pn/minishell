@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 20:35:31 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/17 20:59:26 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,9 @@ void	fn(char *str, t_list **lst, t_data *data)
 			ft_lstadd_back(lst, ft_lstnew(ft_chtos(*pb++)));
 		while (i--)
 			str++;
+		fn(str, lst, data);
+		free(buff);
+		return ;
 	}
 	if (*str != '$' && *str != '"')
 		ft_lstadd_back(lst, ft_lstnew(ft_chtos(*str)));
