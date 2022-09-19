@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 11:21:07 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:14:13 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	_exec(t_data *data, t_list *exec_data)
 	while (process < data->procs.processes_n)
 	{
 		exec = (t_cmd *)exec_data->content;
-		get_path(data, &exec->cmd[0], &exec->path);
+		get_path(data, exec->cmd, &exec->path);
 		if (exec->here_doc)
 		{	
 			heredoc_signals(data->procs.pids[process], 1);
@@ -90,7 +90,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 		builtin_executor_2(data, exec);
 	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
-	else if (*exec->cmd)
+	else if (exec->cmd)
 		output_exec_error(exec);
 	ft_lstclear(&(data->exec_data), clean_s_cmd);
 	ft_lstclear(&data->lst_env, free);
