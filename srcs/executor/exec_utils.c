@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 14:20:45 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:41:37 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	output_exec_error(t_cmd *exec)
 {
 	struct stat path_stat;
 	
+	path_stat.st_mode = 0;
 	stat(exec->cmd[0], &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
 	{
