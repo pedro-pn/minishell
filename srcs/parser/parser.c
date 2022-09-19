@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 18:39:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:52:05 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static t_list	*create_exec_data(t_list *cmd_lines)
 	{
 		exec_cont = cmd_init();
 		get_exec_data(exec_cont, cmd_lines, &exec_cmds);
+		clean_empty_nodes(&exec_cmds);
 		exec_cont->cmd = get_array_from_lst(exec_cmds);
 		ft_lstclear(&exec_cmds, free);
 		clean_quote(exec_cont);

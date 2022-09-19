@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 12:41:16 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:21:07 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	executor(t_data *data)
 	t_cmd	*exec;
 	
 	exec = (t_cmd *)data->exec_data->content;
-	if (ft_lstsize(data->exec_data) == 1 && exec->cmd[0])
+	if (ft_lstsize(data->exec_data) == 1 && exec->cmd)
 		builtin_executor(data, exec->cmd);
 	data->procs.exec_pid = fork();
 	executor_signals(data->procs.exec_pid, 0);

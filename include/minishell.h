@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 18:44:31 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:30:21 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ char	*get_value(char *str);
 void	*get_declared_vars(void *content);
 t_list	*ft_lstfind_2(t_list *lst, char *value);
 char	*trim_spc(char *str);
+void	clean_empty_nodes(t_list **lst);
 
 // Debbug - delete later
 void	print_content(char **array);

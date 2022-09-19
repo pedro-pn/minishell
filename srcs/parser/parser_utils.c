@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 18:16:49 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 18:21:31 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:51:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	get_infile(t_cmd *exec_cmds, char *cmd, int *st, int *ed)
 		exec_cmds->here_doc = 1;
 		(*ed)++;
 	}
-	if (cmd[*ed] == ' ')
+	while (cmd[*ed] == ' ')
 		(*ed)++;
 	(exec_cmds)->mode_in = O_RDONLY;
 	*st = *ed;
@@ -79,7 +79,7 @@ void	get_outfile(t_cmd *exec_cmds, char *cmd, int *st, int *ed)
 	}
 	else
 		exec_cmds->mode_out = O_CREAT | O_WRONLY | O_TRUNC;
-	if (cmd[*ed] == ' ')
+	while (cmd[*ed] == ' ')
 		(*ed)++;
 	*st = *ed;
 	while (!((cmd[*ed] == ' ' && !(flag & 3)) || !cmd[*ed]))
