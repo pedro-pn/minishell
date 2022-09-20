@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 21:52:49 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:07:49 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define QUOTES "\"\'"
 # define QUOTE_S 1
 # define QUOTE_D 2
+# define OPEN_BCKT 4
+# define CLOSE_BCKT 8
 # define PATH_MAX 4096
 # define CTRL_SPC 1
 # define CTRL_H 2
@@ -115,6 +117,7 @@ void	clean_infile_quotes(char **infile);
 void	clean_outfile_quotes(char **outfile);
 void	clean_delimiter_quotes(char **delimiter);
 int		check_open_quotes(char *line);
+int		check_open_var(char *line);
 
 // parser_utils
 int		quote_flag(char c, int flag);

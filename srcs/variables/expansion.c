@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 18:52:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 22:05:45 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:10:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,10 @@ int	check_for_variable(char *line)
 	{
 		flag = quote_flag(line[index], flag);
 		if (line[index] == '$' && !(flag & QUOTE_S))
-		{
-			if (line[index + 1] == ' ' || line[index + 1] == 0)
-				return (1);
-		}
+			return (0);
 		index++;
 	}
-	return (0);
+	return (1);
 }
 
 void	get_line_lst(t_list **lst, char *line)
@@ -67,7 +64,7 @@ void	get_line_lst(t_list **lst, char *line)
 	{
 		flag = quote_flag(line[end], flag);
 		end++;
-		if (line [start] == '$' && !(flag & QUOTE_S))
+		if (line[start] == '$' && !(flag & QUOTE_S))
 			get_variable_node(lst, line, &start, &end);
 		else if (line[end] == 0 || (line[end] == '$' && !(flag & QUOTE_S)))
 		{
@@ -79,6 +76,14 @@ void	get_line_lst(t_list **lst, char *line)
 
 void	get_variable_node(t_list **lst, char *line, int *start, int *end)
 {
+	int	flag;
+
+	flag = 0;
+	*end = *start + 1;
+	if (line[*end] == '{')
+		flag = 1;
+	while (line[*end] != '}' && flag == 1)
+		(*end)++;
 	while (!ft_strchr(QUOTE_DELIMITER, line[*end]) && line[*end])
 		(*end)++;
 	if (line[*end] == '}')
@@ -97,7 +102,9 @@ void	expand_variables_lst(t_list *env, t_list **lst)
 	while (temp)
 	{
 		content = (char *)temp->content;
-		if (content[0] == '$')
+		if (!ft_strcmp(content, "$"))
+			;
+		else if (content[0] == '$')
 		{
 			var = get_var_name(content);
 			free(temp->content);
@@ -152,4 +159,25 @@ char	*join_variables_lst(t_list *lst)
 		lst = lst->next;
 	}
 	return (line);
+}
+
+int	check_open_var(char *line)
+{
+	int	flag;
+	int	index;
+
+	flag = 0;
+	index = 0;
+	while (line[index])
+	{
+		flag = quote_flag(line[index], flag);
+		if (line[index] == '{' && !(flag & (QUOTE_S + OPEN_BCKT)))
+			flag ^= OPEN_BCKT;
+		else if (line[index] == '}' && (flag & OPEN_BCKT))
+			flag ^= OPEN_BCKT;
+		index++;
+	}
+	if (flag & 4)
+		return (1);
+	return (0);
 }
