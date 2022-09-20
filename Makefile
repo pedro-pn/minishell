@@ -2,8 +2,8 @@ SOURCES =	main.c prompt.c parser.c token.c signals.c clean.c init.c utils.c \
 			parser_cmds.c validate_pipes.c validate_redirections.c builtins.c \
 			executor.c files.c pipes.c path.c exec_utils.c files_2.c \
 			parser_quotes.c cd.c echo.c env.c export.c pwd.c unset.c \
-			parser_pipes.c token_utils.c expansion.c simple_expansion.c \
-			quoted_expansion.c
+			parser_pipes.c token_utils.c expansion.c str_utils.c expansion_q.c \
+			expansion_utils.c
 
 NAME = minishell
 LIBFT = libft/libft.a

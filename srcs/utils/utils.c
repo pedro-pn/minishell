@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:25:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/08/29 21:14:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 20:26:11 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 
 char	*insert_var_quotes(char *str);
 
-// Exibe o array de strings
-void	ft_arrdisplay(char **a)
-{
-	while (*a)
-		printf("%s\n", *a++);
-}
-
-// Exibe a lista
 void	ft_lstdisplay(t_list *lst)
 {
 	if (!lst)
@@ -35,25 +27,6 @@ void	raise_error(char *msg, int errn)
 {
 	ft_putendl_fd(msg, 2);
 	// g_status = errn;
-}
-
-char	**get_array_from_lst(t_list *lst)
-{
-	char	**arr;
-	int		i;
-
-	if (!lst)
-		return (NULL);
-	i = ft_lstsize(lst);
-	arr = (char **)ft_calloc(i + 1, sizeof(*arr));
-	if (!arr)
-		return (NULL);
-	while (lst)
-	{
-		arr[--i] = ft_strdup((char *)lst->content);
-		lst = lst->next;
-	}
-	return (arr);
 }
 
 void	ft_lstremove(t_list **lst, char *value)
@@ -138,30 +111,6 @@ t_list	*get_lst_from_array(char **arr)
 	while (*arr)
 		ft_lstadd_back(&lst, ft_lstnew(ft_strdup(*arr++)));
 	return (lst);
-}
-
-char	*get_key(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '=' && str[i])
-		i++;
-	if (!str[i])
-		return (NULL);
-	return (ft_substr(str, 0, i));
-}
-
-char	*get_value(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '=' && str[i])
-		i++;
-	if (!str[i])
-		return (NULL);
-	return (ft_strdup(str + i + 1));
 }
 
 void	*get_declared_vars(void *content)

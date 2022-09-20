@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 13:06:34 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/19 23:44:23 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ typedef struct s_data
 typedef struct s_exp
 {
 	t_data		*data;
-	char		*temp;
-	char		*var;
+	t_list		**lst;
+	char		*buff;
 	int			i;
 }		t_exp;
 
@@ -177,13 +177,16 @@ int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
 int		check_first_cmd(char *str);
 char	*parse_cmd(char *buff, char *arg);
-char	*get_value_expansion(char *key, t_list *node);
+
 
 // expansion
-void	expand_variables(t_data *data, t_cmd *exec);
-void	simple_expansion(char *cmd, t_data *data, char **s);
-void	quoted_expansion(char *cmd, t_data *data, char **s);
-void	expand(t_exp *exp, char **buffer);
+void	expand(char *str, t_list **lst, t_data *data);
+char	*expand_value(char *key, t_list *node);
+void	update_buffer(char **buff, char *str, t_data *data);
+int		get_len(char *s, int flag);
+void	init_exp(t_exp *exp, t_list **lst, t_data *data);
+void	populate_list_with_buffer(int i, char **str, char *buff, t_list **lst);
+int		is_dollar_sign_only(char *str);
 
 // utils
 void	ft_arrdisplay(char **a);
@@ -199,6 +202,9 @@ char	*get_key(char *str);
 char	*get_value(char *str);
 void	*get_declared_vars(void *content);
 t_list	*ft_lstfind_2(t_list *lst, char *value);
+
+char	*ft_chtos(char ch);
+char	*get_str_from_lst(t_list *lst);
 
 // Debbug - delete later
 void	print_content(char **array);
