@@ -6,12 +6,12 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 19:22:57 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:36:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	expansions(char	*line);
+void	expansions(t_list *env, char	**line);
 void	show_prompt(t_data *data)
 {
 	while (1)
@@ -31,14 +31,14 @@ void	show_prompt(t_data *data)
 			clean_data(data);
 			continue ;
 		}
-		expansions(data->prompt.line);
-		continue;
+	//	printf("line: \n%s\n", data->prompt.line);
 		validate_pipes(data);
 		validate_redirections(data);
 		if (data->is_pipe_empty)
 			save_history(data->prompt.tb_line);
 		else
 			save_history(data->prompt.line);
+		expansions(data->lst_env, &data->prompt.line);
 		if (*data->prompt.line)
 		{
 			data->exec_data = parser_input(data, data->prompt.line);

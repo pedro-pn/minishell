@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 18:52:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 19:37:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:05:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 int	check_for_variable(char *line);
 void	get_line_lst(t_list **lst, char *line);
 void	get_variable_node(t_list **lst, char *line, int *start, int *end);
+void	expand_variables_lst(t_list *env, t_list **lst);
+char	*get_var_name(char *str);
+void	get_variable(t_list *env, t_list *node, char *var);
+char	*join_variables_lst(t_list *lst);
 
-void	expansions(char	*line)
+void	expansions(t_list *env, char **line)
 {
 	t_list	*line_lst;
 
 	line_lst = NULL;
-	if (check_for_variable(line))
+	if (check_for_variable(*line))
 		return ;
-	get_line_lst(&line_lst, line);
-	ft_lstdisplay(line_lst);
-	//exit(0);
+	get_line_lst(&line_lst, *line);
+	expand_variables_lst(env, &line_lst);
+	free(*line);
+	*line = join_variables_lst(line_lst);
+	ft_lstclear(&line_lst, free);
 }
 
 int	check_for_variable(char *line)
@@ -70,13 +76,80 @@ void	get_line_lst(t_list **lst, char *line)
 		}
 	}
 }
-#define QUOTE_LIMITER "$\"\'}|>< "
+
 void	get_variable_node(t_list **lst, char *line, int *start, int *end)
 {
-	while (!ft_strchr(QUOTE_LIMITER, line[*end]) && line[*end])
+	while (!ft_strchr(QUOTE_DELIMITER, line[*end]) && line[*end])
 		(*end)++;
 	if (line[*end] == '}')
 		(*end)++;
 	ft_lstadd_back(lst, ft_lstnew(ft_substr(line, *start, *end - *start)));
 	*start = *end;
+}
+
+void	expand_variables_lst(t_list *env, t_list **lst)
+{
+	t_list	*temp;
+	char	*var;
+	char	*content;
+	
+	temp = *lst;
+	while (temp)
+	{
+		content = (char *)temp->content;
+		if (content[0] == '$')
+		{
+			var = get_var_name(content);
+			free(temp->content);
+			get_variable(env, temp, var);
+			free(var);
+		}
+		temp = temp->next;
+	}
+}
+
+char	*get_var_name(char *str)
+{
+	int		start;
+	int		end;
+
+	start = 0;
+	while (ft_strchr("${", str[start]))
+		start++;
+	end = start;
+	while (str[end] != '}' && str[end] != 0)
+		end++;
+	return (ft_substr(str, start, end - start));
+}
+
+void	get_variable(t_list *env, t_list *node, char *var)
+{
+	char	*value;
+
+	value = ft_lstfind_value(env, var);
+	if (!ft_strcmp(var, "?"))
+	{
+		node->content = ft_itoa(g_status);
+		return ;
+	}
+	else if (value)
+		node->content = ft_strdup(value);
+	else
+		node->content = ft_strdup("");
+}
+
+char	*join_variables_lst(t_list *lst)
+{
+	char	*line;
+	char	*aux;
+
+	line = ft_strdup("");
+	while (lst)
+	{
+		aux = line;
+		line = ft_strjoin(aux, (char *)lst->content);
+		free(aux);
+		lst = lst->next;
+	}
+	return (line);
 }

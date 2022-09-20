@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 14:04:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:52:49 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/stat.h>
 
 # define META_C ">< "
+#define QUOTE_DELIMITER "$\"\'}|><= "
 # define QUOTES "\"\'"
 # define QUOTE_S 1
 # define QUOTE_D 2
