@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 10:11:52 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:59:50 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,18 @@ static void	get_exec_data(t_cmd *exec_cont, t_list *cmd_l, t_list **exec_cmds);
 static t_list	*create_exec_data(t_list *cmd_lines);
 static void	create_input_list(t_list **cmd_lines, char *line);
 
-t_list	*parser_input(t_data *data, char *line)
+t_list	*parser_input(t_data *data, char *prompt)
 {
 	t_list	*exec_data;
 	t_list	*cmd_lines;
 	t_list	*lst;
-	char 	*p;
+	char 	*line;
 
 	cmd_lines = NULL;
 	exec_data = NULL;
 	lst = NULL;
-	expand(line, &lst, data);
-	// p = line;
+	expand(prompt, &lst, data);
 	line = get_str_from_lst(lst);
-	// free(p);
 	create_input_list(&cmd_lines, line);
 	exec_data = create_exec_data(cmd_lines);
 	ft_lstclear(&lst, free);
