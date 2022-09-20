@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 10:59:50 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:31:42 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_list	*parser_input(t_data *data, char *prompt)
 	exec_data = NULL;
 	lst = NULL;
 	expand(prompt, &lst, data);
+	ft_lstadd_back(&lst, ft_lstnew(ft_calloc(1, sizeof(char))));
 	line = get_str_from_lst(lst);
 	create_input_list(&cmd_lines, line);
 	exec_data = create_exec_data(cmd_lines);
