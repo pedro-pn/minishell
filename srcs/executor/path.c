@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/12 14:20:39 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:42:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	get_path(t_data *data, char **cmd, char **path)
 	int		status;
 	
 	status = 1;
-	if (!*cmd)
+	if (!cmd)
 		return ;
 	if (ft_strchr(*cmd, '/'))
 		status = get_given_path(data, cmd, path);
@@ -36,6 +36,7 @@ int	get_given_path(t_data *data, char **cmd, char **path)
 	char		*name;
 	struct stat	path_stat;
 
+	path_stat.st_mode = 0;
 	stat(*cmd, &path_stat);
 	if (access(*cmd, F_OK))
 		return (1);
@@ -45,6 +46,8 @@ int	get_given_path(t_data *data, char **cmd, char **path)
 		*path = *cmd;
 		*cmd = name;
 	}
+	else
+		free(name);
 	return (0);
 }
 

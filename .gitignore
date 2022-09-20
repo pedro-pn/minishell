@@ -9,3 +9,4 @@ infile
 outfile
 vgcore*
 notas.txt
+parser_testes.c

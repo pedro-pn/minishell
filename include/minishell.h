@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 23:44:23 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:06:25 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-# define META_C "><"
+# define META_C ">< "
+# define QUOTES "\"\'"
+# define QUOTE_S 1
+# define QUOTE_D 2
 # define PATH_MAX 4096
 # define CTRL_SPC 1
 # define CTRL_H 2
@@ -109,19 +112,30 @@ char	*update_prompt_msg(t_data *data);
 
 // parser e token
 t_list	*parser_input(t_data *data, char *line);
-t_list	*create_input_list(char	*line);
 t_cmd	*cmd_init(void);
-char	**get_input(char *line);
-void	get_cmd(char **cmd_line, t_cmd **exec_cmds);
 void	remove_quotes(char **str);
-int		save_pipes(char *line);
-void	restore_pipes(char	**strs);
-int		verify_quotes(char *line);
-int		verify_quotes_2(char **line);
+t_list	*create_unquoted_list(char *str);
+void	clean_quote(t_cmd *cmd);
+void	clean_cmds_quotes(char **cmds);
+void	clean_infile_quotes(char **infile);
+void	clean_outfile_quotes(char **outfile);
+void	clean_delimiter_quotes(char **delimiter);
+int		check_open_quotes(char *line);
+
+// parser_utils
+int		quote_flag(char c, int flag);
+void	reset_infile(t_cmd *exec_cmds);
+void	reset_outfile(t_cmd *exec_cmds);
+void	get_infile(t_cmd *exec_cmds, char *cmd, int *st, int *ed);
+void	get_outfile(t_cmd *exec_cmds, char *cmd, int *st, int *ed);
+
+// devem ser removidas futuramente
 void	clean_quotes(char *line, int quote, int c, int ctrl);
 void	restore_quotes(char **array);
 void	handle_quoted_args(char *str);
 void	restore_io_quoted(char **array);
+int		save_pipes(char *line);
+int		verify_quotes(char *line);
 
 // signals
 void	main_signals(void);
@@ -202,6 +216,8 @@ char	*get_key(char *str);
 char	*get_value(char *str);
 void	*get_declared_vars(void *content);
 t_list	*ft_lstfind_2(t_list *lst, char *value);
+char	*trim_spc(char *str);
+void	clean_empty_nodes(t_list **lst);
 
 char	*ft_chtos(char ch);
 char	*get_str_from_lst(t_list *lst);

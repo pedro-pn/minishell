@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 20:05:11 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:06:30 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	show_prompt(t_data *data)
 			ft_lstclear(&data->lst_env, free);
 			ft_putendl_fd("exit", 1);
 			break ;
+		}
+		if (check_open_quotes(data->prompt.line)) // será refatorado com o resto dos checks
+		{
+			ft_putendl_fd("Invalid syntax", 2);
+			clean_data(data);
+			continue ;
 		}
 		validate_pipes(data);
 		validate_redirections(data);
