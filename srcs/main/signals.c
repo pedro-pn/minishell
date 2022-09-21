@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/21 13:05:23 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:08:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ void	executor_signals(int pid, int f)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	heredoc_handler(int pid)
+void	heredoc_handler(int sig)
 {
+	(void)sig;
 	ft_putchar_fd('\n', 1);
 	clean_data(&data);
 	clean_processes(&data.procs);
