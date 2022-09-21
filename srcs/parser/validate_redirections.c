@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_redirections.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 13:20:12 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 18:00:26 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:28:32 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	validate_redirections(t_data *data)
 		{
 			printf(ERR_NEWL);
 			data->invalid_syntax = 1;
-			g_status = 2;
+			data->status = 2;
 			return ;
 		}
 		ch = data->prompt.line[ft_strlen(data->prompt.line) - 1];
@@ -35,7 +35,7 @@ void	validate_redirections(t_data *data)
 		{
 			printf(ERR_NEWL);
 			data->invalid_syntax = 1;
-			g_status = 2;
+			data->status = 2;
 			return ;
 		}
 	}

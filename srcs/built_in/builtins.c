@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/19 12:09:05 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:26:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	builtin_executor(t_data *data, char **cmds)
 {
 	if (!ft_strcmp(cmds[0], "cd"))
-		g_status = __cd(cmds, data);
+		data->status = __cd(cmds, data);
 	if (!ft_strcmp(cmds[0], "export"))
 		__export(cmds, data);
 	if (!ft_strcmp(cmds[0], "unset"))
-		g_status = __unset(cmds, data);
+		data->status = __unset(cmds, data);
 	if (!ft_strcmp(cmds[0], "exit"))
 		exit(0);
 	if (!ft_strcmp(cmds[0], "clear"))
@@ -57,13 +57,13 @@ void	builtin_executor_2(t_data *data, t_cmd *exec)
 
 	cmd = exec->cmd[0];
 	if (!ft_strcmp(cmd, "echo"))
-		g_status = __echo(exec->cmd, data);
+		data->status = __echo(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "pwd"))
-		g_status = __pwd(exec->cmd);
+		data->status = __pwd(exec->cmd);
 	else if (!ft_strcmp(cmd, "env"))
-		g_status = __env(exec->cmd, data);
+		data->status = __env(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "unset"))
-		g_status = __unset(exec->cmd, data);
+		data->status = __unset(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "export") && exec->cmd[1] == NULL)
 		__export(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "exit")) //esse comando é o unico que será executado fora do fork()

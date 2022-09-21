@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/09 12:26:11 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:05:23 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_status = 130;
+	data.status = 130;
 }
 
 /* Set sigactions to properly invoke its handler */
@@ -53,6 +53,16 @@ void	executor_signals(int pid, int f)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+void	heredoc_handler(int pid)
+{
+	ft_putchar_fd('\n', 1);
+	clean_data(&data);
+	clean_processes(&data.procs);
+	ft_lstclear(&data.exec_data, clean_s_cmd);
+	ft_lstclear(&data.lst_env, free);
+	exit(130);
+}
+
 void	heredoc_signals(int pid, int f)
 {
 	struct sigaction	sa_int;
@@ -61,7 +71,7 @@ void	heredoc_signals(int pid, int f)
 	sa_int.sa_flags = 0;
 	sigemptyset(&sa_int.sa_mask);
 	if (!pid && f)
-		sa_int.sa_handler = SIG_DFL;
+		sa_int.sa_handler = &heredoc_handler;
 	else
 		sa_int.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sa_int, NULL);

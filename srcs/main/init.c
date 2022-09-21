@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 16:22:18 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:26:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	init_data(t_data *data, char **ep)
 	update_stdio_fds();
 	data->exec_data = NULL;
 	data->cmd_count = 0;
+	data->status = 0;
 	data->is_pipe_empty = 0;
 	data->invalid_syntax = 0;
 	// data->last_status = 1;

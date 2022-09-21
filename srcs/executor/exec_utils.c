@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 13:41:37 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:30:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ void	output_exec_error(t_cmd *exec)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(exec->cmd[0], 2);
 		ft_putendl_fd(" Is a directory", 2);
-		g_status = 126;
+		data.status = 126;
 	}
 	else if (ft_strchr(exec->cmd[0], '/'))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(exec->cmd[0]);
-		g_status = 127;
+		data.status = 127;
 	}
 	else
 	{
 		ft_putstr_fd(exec->cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		g_status = 127;
+		data.status = 127;
 	}
 }
 
@@ -68,7 +68,7 @@ void	expand(char *cmd, t_data *data)
 		key = cmd;
 	node = ft_lstfind(data->lst_env, key);
 	if (!ft_strcmp(key, "?"))
-		value = ft_itoa(g_status);
+		value = ft_itoa(data->status);
 	else if (!node)
 		value = ft_strdup("");
 	else

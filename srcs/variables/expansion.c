@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 18:52:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 13:24:05 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:30:44 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	get_variable(t_list *env, t_list *node, char *var)
 	value = ft_lstfind_value(env, var);
 	if (!ft_strcmp(var, "?"))
 	{
-		node->content = ft_itoa(g_status);
+		node->content = ft_itoa(data.status);
 		return ;
 	}
 	else if (value)

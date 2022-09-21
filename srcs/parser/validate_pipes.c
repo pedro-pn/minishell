@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/17 18:47:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:28:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	validate_pipes(t_data *data)
 	{
 		printf(ERR_PIPE);
 		data->invalid_syntax = 1;
-		g_status = 2;
+		data->status = 2;
 		return ;
 	}
 	if (is_arg_between_pipes_empty(ft_split(data->prompt.line, '|')))
 	{
 		printf(ERR_PIPE);
 		data->invalid_syntax = 1;
-		g_status = 2;
+		data->status = 2;
 		return ;
 	}
 	check_for_doubles(data, data->prompt.line);
@@ -110,7 +110,7 @@ static void	check_for_doubles(t_data *data, char *str)
 	{
 		printf(ERR_PIPE);
 		data->invalid_syntax = 1;
-		g_status = 2;
+		data->status = 2;
 		return ;
 	}
 	data->cmd_count++;

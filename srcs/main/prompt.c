@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 13:07:18 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:27:57 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	show_prompt(t_data *data)
 		{
 			data->exec_data = parser_input(data, data->prompt.line);
 			if (!data->invalid_syntax && data->exec_data)
-				g_status = executor(data);
+				data->status = executor(data);
 		}
 		clean_data(data);
 	}

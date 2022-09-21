@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 13:14:13 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:27:32 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	clean_processes(&data->procs);
 	clean_data(data);
 	clean_array((void **)env);
-	exit(g_status);
+	exit(data->status);
 }
 
 int	handle_signals(t_data *data, int status, int process, int processes_n)
@@ -105,14 +105,14 @@ int	handle_signals(t_data *data, int status, int process, int processes_n)
 	if (WTERMSIG(status) == SIGINT)
 	{
 		write(1, "\n", 1);
-		g_status = 130;
+		data->status = 130;
 	}
 	if (WTERMSIG(status) == SIGQUIT && process == processes_n - 1)
 	{
 		write(1, "Quit\n", 5);
-		g_status = 131;
+		data->status = 131;
 	}
-	return (g_status);
+	return (data->status);
 }
 
 int		wait_executor(t_data *data)

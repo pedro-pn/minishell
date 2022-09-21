@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 13:24:10 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:29:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define QUOTE_S 1
 # define QUOTE_D 2
 # define OPEN_BCKT 4
-# define CLOSE_BCKT 8
 # define PATH_MAX 4096
 # define CTRL_SPC 1
 # define CTRL_H 2
@@ -50,8 +49,6 @@
 # define GREEN "\001\x1b[38;5;40m\002"
 # define YELLOW "\001\x1b[38;5;220m\002"
 # define RES "\001\x1b[0m\002"
-
-extern int		g_status;
 
 typedef struct s_prompt
 {
@@ -94,8 +91,10 @@ typedef struct s_data
 	t_prompt	prompt;
 	t_process	procs;
 	int			not_found;
-	// int			last_status;
+	int			status;
 }		t_data;
+
+extern t_data	data;
 
 // init
 void	init_prompt(t_prompt *prompt);
