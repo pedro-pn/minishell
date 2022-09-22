@@ -6,14 +6,14 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:26:04 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:03:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_SHELL(t_data *data);
-static void	update_SHLVL(t_data *data);
+static void	update_shell(t_data *data);
+static void	update_shlvl(t_data *data);
 
 /* Initializes prompt struct variables*/
 void	init_prompt(t_prompt *prompt)
@@ -24,23 +24,6 @@ void	init_prompt(t_prompt *prompt)
 	prompt->tb_line = NULL;
 	getcwd(cwd, PATH_MAX);
 	prompt->directory = cwd;
-}
-
-/* Initializes struct s_cmds*/
-t_cmd	*cmd_init(void)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(*cmd));
-	cmd->cmd = NULL;
-	cmd->path = NULL;
-	cmd->in_file = NULL;
-	cmd->out_file = NULL;
-	cmd->delimiter = NULL;
-	cmd->mode_in = 0;
-	cmd->mode_out = 0;
-	cmd->here_doc = 0;
-	return (cmd);
 }
 
 //                                    bash                    minishell
@@ -65,31 +48,24 @@ static void	update_stdio_fds(void)
 	close(bk_stderr);
 }
 
-void	init_processes(t_process *procs)
-{
-	procs->pids = NULL;
-	procs->pipes = NULL;
-}
-
 void	init_data(t_data *data, char **ep)
 {
 	data->lst_env = (t_list *)get_lst_from_array(ep);
 	data->empty_vars = NULL;
-	update_SHELL(data);
-	update_SHLVL(data);
+	update_shell(data);
+	update_shlvl(data);
 	update_stdio_fds();
 	data->exec_data = NULL;
 	data->cmd_count = 0;
 	data->status = 0;
 	data->is_pipe_empty = 0;
 	data->invalid_syntax = 0;
-	// data->last_status = 1;
 	data->not_found = 0;
 	init_prompt(&data->prompt);
 	init_processes(&data->procs);
 }
 
-static void	update_SHELL(t_data *data)
+static void	update_shell(t_data *data)
 {
 	t_list	*node;
 	char	cwd[PATH_MAX];
@@ -110,7 +86,7 @@ static void	update_SHELL(t_data *data)
 	free(value);
 }
 
-static void	update_SHLVL(t_data *data)
+static void	update_shlvl(t_data *data)
 {
 	t_list	*node;
 	char	*key;

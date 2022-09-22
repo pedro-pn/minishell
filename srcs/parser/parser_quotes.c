@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:08:00 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/17 15:50:01 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:30:39 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,4 @@ void	clean_quote(t_cmd *cmd)
 	clean_infile_quotes(&cmd->in_file);
 	clean_outfile_quotes(&cmd->out_file);
 	clean_delimiter_quotes(&cmd->delimiter);
-
 }

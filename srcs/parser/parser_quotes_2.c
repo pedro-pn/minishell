@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:38:04 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 14:08:09 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:34:30 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	clean_cmds_quotes(char **cmds)
 
 	i = -1;
 	if (!cmds)
-		return;
+		return ;
 	while (i++, cmds[i])
 	{
 		if (ft_strchr(cmds[i], '\'') || ft_strchr(cmds[i], '\"'))
@@ -29,7 +29,7 @@ void	clean_cmds_quotes(char **cmds)
 void	clean_infile_quotes(char **infile)
 {
 	if (!*infile)
-		return;
+		return ;
 	if (ft_strchr(*infile, '\'') || ft_strchr(*infile, '\"'))
 		remove_quotes(infile);
 }
@@ -37,7 +37,7 @@ void	clean_infile_quotes(char **infile)
 void	clean_outfile_quotes(char **outfile)
 {
 	if (!*outfile)
-		return;
+		return ;
 	if (ft_strchr(*outfile, '\'') || ft_strchr(*outfile, '\"'))
 		remove_quotes(outfile);
 }
@@ -45,7 +45,7 @@ void	clean_outfile_quotes(char **outfile)
 void	clean_delimiter_quotes(char **delimiter)
 {
 	if (!*delimiter)
-		return;
+		return ;
 	if (ft_strchr(*delimiter, '\'') || ft_strchr(*delimiter, '\"'))
 		remove_quotes(delimiter);
 }

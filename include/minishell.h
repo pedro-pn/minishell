@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:29:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:32:50 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ extern t_data	data;
 // init
 void	init_prompt(t_prompt *prompt);
 void	init_data(t_data *data, char **ep);
+void	init_processes(t_process *procs);
+t_cmd	*cmd_init(void);
 
 // prompt
 void	show_prompt(t_data *data);
@@ -107,7 +109,6 @@ char	*update_prompt_msg(t_data *data);
 
 // parser e token
 t_list	*parser_input(t_data *data, char *line);
-t_cmd	*cmd_init(void);
 void	remove_quotes(char **str);
 t_list	*create_unquoted_list(char *str);
 void	clean_quote(t_cmd *cmd);
@@ -137,10 +138,11 @@ int		verify_quotes(char *line);
 void	main_signals(void);
 void	executor_signals(int pid, int f);
 void	heredoc_signals(int pid, int f);
+int		handle_signals(t_data *data, int status, int process, int processes_n);
+
 
 // clean
 void	clean_array(void **array);
-void	clean_cmd_lines(void *content);
 void	clean_s_cmd(void *content);
 void	clean_prompt(t_prompt *prompt);
 void	clean_data(t_data *data);
@@ -160,6 +162,9 @@ int		__pwd(char **args);
 int		__env(char **args, t_data *data);
 int		__export(char **args, t_data *data);
 int		__unset(char **args, t_data *data);
+int		check_for_append(char *var);
+void	append_variable(t_data *data, char *arg, char *var);
+void	update_variable(t_data *data, char *arg, char *var);
 
 // executor
 int		executor(t_data *data);
@@ -185,7 +190,6 @@ int		wait_executor(t_data *data);
 // executor utils
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
-void	expand(char *cmd, t_data *data);
 void	expand_variables(t_data *data, t_cmd *exec);
 
 // utils
@@ -204,6 +208,7 @@ void	*get_declared_vars(void *content);
 t_list	*ft_lstfind_2(t_list *lst, char *value);
 char	*trim_spc(char *str);
 void	clean_empty_nodes(t_list **lst);
+char	*insert_var_quotes(char *str);
 
 // Debbug - delete later
 void	print_content(char **array);

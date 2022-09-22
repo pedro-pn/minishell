@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 13:33:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:18:48 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_infile(t_data *data, t_cmd *exec, int process)
 		ft_putstr_fd("minishell: ", 2);
 		perror(exec->in_file);
 		close(data->procs.pipes[process][0]);
-		exit(1) ;
+		exit(1);
 	}
 	dup2(fd, 0);
 	close(fd);
