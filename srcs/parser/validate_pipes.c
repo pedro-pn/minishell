@@ -3,47 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   validate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/20 17:28:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:41:12 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static char	*parse_input(t_data *data);
-static int	is_arg_between_pipes_empty(char **token);
+static int	is_pipe_empty(char **token);
+static void	throw_error(char *prompt, int err, t_data *data);
 static void	check_for_doubles(t_data *data, char *str);
 
 void	validate_pipes(t_data *data)
 {
+	char	*prompt;
 	char	*p;
+	int		err;
 
-	save_pipes(data->prompt.line);
-	p = data->prompt.line;
-	data->prompt.line = ft_strtrim(p, " ");
+	prompt = ft_strtrim(data->prompt.line, " ");
+	err = is_pipe_empty(ft_split(prompt, '|'));
+	if (!ft_strcmp(prompt, "|") || !ft_strcmp(prompt, "||") || err)
+	{
+		throw_error(prompt, err, data);
+		free(prompt);
+		return ;
+	}
+	p = ft_strtrim(prompt, "|");
+	if (ft_strlen(prompt) > 2 && !ft_strlen(p))
+	{
+		throw_error(prompt, 2, data);
+		free(prompt);
+		free(p);
+		return ;
+	}
+	free(prompt);
 	free(p);
-	if (*data->prompt.line == '|')
-	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
-		return ;
-	}
-	if (is_arg_between_pipes_empty(ft_split(data->prompt.line, '|')))
-	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
-		return ;
-	}
-	check_for_doubles(data, data->prompt.line);
-	if (data->is_pipe_empty)
-	{
-		data->prompt.tb_line = data->prompt.line;
-		data->prompt.line = (char *)parse_input(data);
-	}
 }
 
 static char	*parse_input(t_data *data)
@@ -71,7 +68,7 @@ static char	*parse_input(t_data *data)
 	return (str);
 }
 
-static int	is_arg_between_pipes_empty(char **token)
+static int	is_pipe_empty(char **token)
 {
 	char	*str;
 	int 	i;
@@ -93,6 +90,19 @@ static int	is_arg_between_pipes_empty(char **token)
 	return (0);
 }
 
+static void	throw_error(char *prompt, int err, t_data *data)
+{
+	if (err == 2)
+		printf("-minishell: syntax error near unexpected token `||'\n");
+	else if (err == 1)
+		printf("-minishell: syntax error near unexpected token `|'\n");
+	else
+		printf("-minishell: syntax error near unexpected token `%s'\n", prompt);
+	data->invalid_syntax = 1;
+	data->status = 2;
+}
+
+// pode ser usado para verificar se ha `||` no prompt 
 static void	check_for_doubles(t_data *data, char *str)
 {
 	int		count;

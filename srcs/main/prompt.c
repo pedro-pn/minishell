@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:27:57 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:27:47 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	show_prompt(t_data *data)
 		}
 		validate_pipes(data);
 		validate_redirections(data);
-		if (data->is_pipe_empty)
-			save_history(data->prompt.tb_line);
-		else
-			save_history(data->prompt.line);
+		// if (data->is_pipe_empty)
+		// 	save_history(data->prompt.tb_line);
+		// else
+		save_history(data->prompt.line);
 		if (check_open_quotes(data->prompt.line) || check_open_var(data->prompt.line)) // será refatorado com o resto dos checks
 		{
 			ft_putendl_fd("Invalid syntax", 2);
