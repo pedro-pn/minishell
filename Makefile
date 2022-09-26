@@ -3,7 +3,7 @@ SOURCES =	main.c prompt.c parser.c signals.c clean.c init.c utils.c \
 			executor.c files.c pipes.c path.c exec_utils.c files_2.c \
 			parser_quotes.c cd.c echo.c env.c export.c pwd.c unset.c \
 			token_utils.c parser_quotes_2.c utils_2.c parser_utils.c \
-			parser_pipes.c token.c expansion.c
+			parser_pipes.c token.c expansion.c wildcard.c ft_strrncmp.c
 
 NAME = minishell
 LIBFT = libft/libft.a

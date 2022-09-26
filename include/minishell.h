@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:29:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/26 17:50:39 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,16 @@ typedef struct s_process
 	int			exec_pid;
 	int			processes_n;
 }		t_process;
+
+typedef	struct s_wildcard
+{
+	int		wild_index;
+	int		arg_len;
+	int		file_len;
+	char	*arg;
+	char	*post_Wild;
+	char	*pre_wild;
+}			t_wild;
 
 typedef struct s_data
 {
