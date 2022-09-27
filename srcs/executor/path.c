@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 13:42:17 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:19:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_path(t_data *data, char **cmd, char **path)
 	char	**bin_paths;
 	t_list	*path_node;
 	int		status;
-	
+
 	status = 1;
 	if (!cmd)
 		return ;

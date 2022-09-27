@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 18:19:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/19 11:38:08 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:07:56 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,51 @@ void	clean_empty_nodes(t_list **lst)
 		ft_lstremove_2(lst, "");
 		empty_nodes--;
 	}
+}
+
+char	*insert_var_quotes(char *str)
+{
+	char	**key;
+	char	*value;
+	char	*temp;
+	char	*final_str;
+	char	*final_value;
+
+	key = ft_split(str, '=');
+	value = ft_strdup(ft_strchr(str, '=') + 1);
+	temp = ft_strjoin("=\"", value);
+	final_value = ft_strjoin(temp, "\"");
+	final_str = ft_strjoin(key[0], final_value);
+	free(temp);
+	free(final_value);
+	free(value);
+	clean_array((void **)key);
+	return (final_str);
+}
+
+void	*get_declared_vars(void *content)
+{
+	char	*var;
+	char	*empty_content;
+	char	*quoted_var;
+
+	if (!*(ft_strchr(((char *)content), '=') + 1))
+	{
+		empty_content = ft_strjoin((char *)content, "\"\"");
+		var = ft_strjoin("declare -x ", empty_content);
+		free(empty_content);
+	}
+	else
+	{
+		quoted_var = insert_var_quotes((char *)content);
+		var = ft_strjoin("declare -x ", quoted_var);
+		free(quoted_var);
+	}
+	return (var);
+}
+
+void	raise_error(char *msg, int errn)
+{
+	ft_putendl_fd(msg, 2);
+	data.status = errn;
 }
