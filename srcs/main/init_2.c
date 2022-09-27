@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:00:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:13:42 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:42:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,4 @@ void	init_processes(t_process *procs)
 {
 	procs->pids = NULL;
 	procs->pipes = NULL;
-}
-
-void	exec_init(t_data *data)
-{
-	data->procs.processes_n = ft_lstsize(data->exec_data);
-	data->procs.pids = get_pids(data);
-	data->procs.pipes = get_pipes(data);
-	open_pipes(data);
 }

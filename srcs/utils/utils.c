@@ -6,13 +6,13 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:25:55 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/22 11:11:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 13:53:22 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Exibe a lista
+// Display content of type char * of a list
 void	ft_lstdisplay(t_list *lst)
 {
 	if (!lst)

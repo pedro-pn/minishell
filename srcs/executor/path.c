@@ -6,11 +6,14 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:19:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 13:33:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	get_given_path(t_data *data, char **cmd, char **path);
+static int	check_path(char **bin_paths, char *cmd, char **path);
 
 void	get_path(t_data *data, char **cmd, char **path)
 {
@@ -31,7 +34,7 @@ void	get_path(t_data *data, char **cmd, char **path)
 	clean_array((void **)bin_paths);
 }
 
-int	get_given_path(t_data *data, char **cmd, char **path)
+static int	get_given_path(t_data *data, char **cmd, char **path)
 {
 	char		*name;
 	struct stat	path_stat;
@@ -51,7 +54,7 @@ int	get_given_path(t_data *data, char **cmd, char **path)
 	return (0);
 }
 
-int	check_path(char **bin_paths, char *cmd, char **path)
+static int	check_path(char **bin_paths, char *cmd, char **path)
 {
 	int		index;
 	char	*path_test;

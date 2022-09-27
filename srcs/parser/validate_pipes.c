@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/26 23:00:07 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:37:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	validate_pipes(t_data *data)
 {
 	char	*prompt;
 
+	if (data->invalid_syntax)
+		return ;
 	prompt = ft_strtrim(data->prompt.line, " ");
 	if (*prompt == '|')
 	{

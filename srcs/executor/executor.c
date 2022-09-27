@@ -6,11 +6,15 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 12:31:48 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 13:23:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	main_exec(t_data *data);
+static void	_exec(t_data *data, t_list *exec_data);
+static void	exec_child(t_data *data, t_cmd *exec, int process);
 
 int	executor(t_data *data)
 {
@@ -30,7 +34,7 @@ int	executor(t_data *data)
 	return (last_status_code);
 }
 
-int	main_exec(t_data *data)
+static int	main_exec(t_data *data)
 {
 	int	last_status_code;
 
@@ -46,7 +50,7 @@ int	main_exec(t_data *data)
 	exit(last_status_code);
 }
 
-void	_exec(t_data *data, t_list *exec_data)
+static void	_exec(t_data *data, t_list *exec_data)
 {
 	int		process;
 	t_cmd	*exec;
@@ -71,7 +75,7 @@ void	_exec(t_data *data, t_list *exec_data)
 	}
 }
 
-void	exec_child(t_data *data, t_cmd *exec, int process)
+static void	exec_child(t_data *data, t_cmd *exec, int process)
 {
 	char	**env;
 

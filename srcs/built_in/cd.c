@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/07 17:42:25 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/27 13:42:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	update_pwd_variables(t_data *data, char *old_cwd);
+static int	move_to_oldpwd(t_data *data, char *cwd);
 
 static int	update_pwd_variables(t_data *data, char *old_cwd)
 {

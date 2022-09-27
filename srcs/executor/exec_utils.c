@@ -6,14 +6,21 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:33:50 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:40:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		expand(char *cmd, t_data *data);
 static int	check_first_cmd(char *str);
+
+void	exec_init(t_data *data)
+{
+	data->procs.processes_n = ft_lstsize(data->exec_data);
+	data->procs.pids = get_pids(data);
+	data->procs.pipes = get_pipes(data);
+	open_pipes(data);
+}
 
 int	*get_pids(t_data *data)
 {
@@ -48,19 +55,6 @@ void	output_exec_error(t_cmd *exec)
 		ft_putendl_fd(": command not found", 2);
 		data.status = 127;
 	}
-}
-
-char	*parse_cmd(char *buff, char *arg)
-{
-	char	*pb;
-
-	pb = buff;
-	buff = ft_strjoin(pb, arg);
-	free(pb);
-	pb = buff;
-	buff = ft_strjoin(pb, " ");
-	free(pb);
-	return (buff);
 }
 
 static int	check_first_cmd(char *str)

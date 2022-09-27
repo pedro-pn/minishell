@@ -6,11 +6,13 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 12:17:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:34:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*get_host(void);
 
 void	show_prompt(t_data *data)
 {
@@ -19,31 +21,15 @@ void	show_prompt(t_data *data)
 		data->prompt.message = update_prompt_msg(data);
 		data->prompt.line = readline(data->prompt.message);
 		if (!data->prompt.line)
-		{
-			clean_data(data);
-			rl_clear_history();
-			ft_lstclear(&data->lst_env, free);
-			ft_putendl_fd("exit", 1);
-			break ;
-		}
+			exit_minishell(data);
+		check_open_quotes(data->prompt.line);
 		validate_pipes(data);
 		validate_redirections(data);
 		save_history(data->prompt.line);
-		if (check_open_quotes(data->prompt.line) || check_open_var(data->prompt.line)) // será refatorado com o resto dos checks
-		{
-			ft_putendl_fd("Invalid syntax", 2);
-			clean_data(data);
-			continue ;
-		}
-		expansions(data->lst_env, &data->prompt.line);
-		if (*data->prompt.line)
-		{
-			if (!data->invalid_syntax)
-			{
-				data->exec_data = parser_input(data, data->prompt.line);
-				data->status = executor(data);
-			}
-		}
+		if (data->invalid_syntax)
+			;
+		else if (*data->prompt.line)
+			parse_and_execute(data);
 		clean_data(data);
 	}
 }

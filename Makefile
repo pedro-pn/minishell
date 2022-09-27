@@ -2,13 +2,15 @@ SOURCES =	main.c prompt.c parser.c signals.c clean.c init.c utils.c \
 			validate_pipes.c validate_redirections.c builtins.c \
 			executor.c files.c pipes.c path.c exec_utils.c files_2.c \
 			parser_quotes.c cd.c echo.c env.c export.c pwd.c unset.c \
-			token_utils.c parser_quotes_2.c utils_2.c parser_utils.c \
-			parser_pipes.c token.c expansion.c init_2.c utils_3.c exec_wait.c \
-			signals_2.c export_utils.c
-MY_SOURCES := main.c parser.c clean.c init.c utils.c builtins.c executor.c \
+			parser_quotes_2.c utils_2.c parser_utils.c \
+			expansion.c init_2.c utils_3.c exec_wait.c \
+			signals_2.c export_utils.c expansion_utils.c prompt_utils.c
+
+PP_SOURCES := main.c parser.c clean.c init.c utils.c builtins.c executor.c \
 			files.c pipes.c path.c exec_utils.c files_2.c parser_quotes.c export.c \
 			unset.c parser_quotes_2.c utils_2.c parser_utils.c expansion.c init_2.c utils_3.c \
-			exec_wait.c signals_2.c export_utils.c
+			exec_wait.c signals_2.c export_utils.c expansion_utils.c prompt_utils.c
+
 NAME = minishell
 LIBFT = libft/libft.a
 SRCS_PATH = srcs
@@ -18,7 +20,7 @@ SRCS = ${addprefix ${SRCS_PATH}/, ${SOURCES}}
 OBJS = ${addprefix ${OBJS_PATH}/, ${notdir ${SOURCES:.c=.o}}}
 VPATH :=	${SRCS_PATH} ${SRCS_PATH}/built_in ${SRCS_PATH}/clean \
 			${SRCS_PATH}/main ${SRCS_PATH}/parser ${SRCS_PATH}/utils \
-			${SRCS_PATH}/executor ${SRCS_PATH}/variables
+			${SRCS_PATH}/executor
 CC = gcc
 FLAGS =  -Werror -Wextra -Wall -g
 
@@ -57,7 +59,7 @@ fclean: clean
 	
 re: fclean all
 
-norma: ${MY_SOURCES}
+norma: ${PP_SOURCES}
 		norminette $^ include/
 
 

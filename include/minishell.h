@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 12:29:04 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:19:33 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "parser.h"
+# include "executor.h"
+# include "builtin.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -33,12 +36,6 @@
 # define QUOTE_D 2
 # define OPEN_BCKT 4
 # define PATH_MAX 4096
-# define CTRL_SPC 1
-# define CTRL_H 2
-# define CTRL_L 3
-# define CTRL_S 4
-# define CTRL_D 5
-# define CTRL_PIPE 6
 
 # define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
@@ -96,122 +93,64 @@ typedef struct s_data
 
 extern t_data	data;
 
-// init
+/* init.c functions */
 void	init_prompt(t_prompt *prompt);
 void	init_data(t_data *data, char **ep);
+
+/* init_2.c funcitons */
+
 void	init_processes(t_process *procs);
 t_cmd	*cmd_init(void);
 
-// prompt
+/* prompt.c functions */
 void	show_prompt(t_data *data);
 void	save_history(char *line);
 char	*update_prompt_msg(t_data *data);
 
-// parser e token
-t_list	*parser_input(t_data *data, char *line);
-void	remove_quotes(char **str);
-t_list	*create_unquoted_list(char *str);
-void	clean_quote(t_cmd *cmd);
-void	clean_cmds_quotes(char **cmds);
-void	clean_infile_quotes(char **infile);
-void	clean_outfile_quotes(char **outfile);
-void	clean_delimiter_quotes(char **delimiter);
-int		check_open_quotes(char *line);
-int		check_open_var(char *line);
-void	expansions(t_list *env, char **line);
+/* prompt_utils.c functions */
 
-// parser_utils
-int		quote_flag(char c, int flag);
-void	reset_infile(t_cmd *exec_cmds);
-void	reset_outfile(t_cmd *exec_cmds);
-void	get_infile(t_cmd *exec_cmds, char *cmd, int *st, int *ed);
-void	get_outfile(t_cmd *exec_cmds, char *cmd, int *st, int *ed);
+void	exit_minishell(t_data *data);
+void	parse_and_execute(t_data *data);
 
-// devem ser removidas futuramente
-void	clean_quotes(char *line, int quote, int c, int ctrl);
-void	restore_quotes(char **array);
-void	handle_quoted_args(char *str);
-void	restore_io_quoted(char **array);
-int		save_pipes(char *line);
-int		verify_quotes(char *line);
+/* signals.c functions */
 
-// signals
 void	main_signals(void);
 void	executor_signals(int pid, int f);
 void	heredoc_signals(int pid, int f);
+
+/* signals_2.c functions */
+
 int		handle_signals(t_data *data, int status, int process, int processes_n);
 
-
-// clean
+/* clean.c functions */
 void	clean_array(void **array);
 void	clean_s_cmd(void *content);
 void	clean_prompt(t_prompt *prompt);
 void	clean_data(t_data *data);
 void	clean_processes(t_process *procs);
 
-// validate
-void	validate_pipes(t_data *data);
-void	validate_redirections(t_data *data);
+/* utils.c functions */
 
-// builtins
-int		is_builtin(t_data *data, t_cmd *exec, int process);
-int		builtin_executor(t_data *data, char **cmds);
-void	builtin_executor_2(t_data *data, t_cmd *exec);
-int		__echo(char **args, t_data *data);
-int		__cd(char **args, t_data *data);
-int		__pwd(char **args);
-int		__env(char **args, t_data *data);
-int		__export(char **args, t_data *data);
-int		__unset(char **args, t_data *data);
-int		check_for_append(char *var);
-void	append_variable(t_data *data, char *arg, char *var);
-void	update_variable(t_data *data, char *arg, char *var);
-
-// executor
-int		executor(t_data *data);
-void	exec_init(t_data *data);
-void	_exec(t_data *data, t_list *exec_data) ;
-void	exec_child(t_data *data, t_cmd *exec, int process);
-void	get_path(t_data *data, char **cmd, char **path);
-int		get_given_path(t_data *data, char **cmd, char **path);
-int		check_path(char **bin_paths, char *cmd, char **path);
-int		wait_processes(t_data *data, int processes_n);
-int		**get_pipes(t_data *data);
-int		open_pipes(t_data *data);
-void	close_child_pipes(int **pipes, int process);
-void	close_main_pipes(int **pipes);
-void	check_infile(t_data *data, t_cmd *exec, int process);
-void	get_here_doc(t_cmd *exec);
-void	check_outfile(t_data *data, t_cmd *exec, int process);
-int		verify_infile(t_data *data, t_cmd *exec, int process);
-int		verify_outfile(t_data *data, t_cmd *exec, int process);
-int		main_exec(t_data *data);
-int		wait_executor(t_data *data);
-
-// executor utils
-int		*get_pids(t_data *data);
-void	output_exec_error(t_cmd *exec);
-void	expand_variables(t_data *data, t_cmd *exec);
-
-// utils
-void	ft_arrdisplay(char **a);
 void	ft_lstdisplay(t_list *lst);
-void	raise_error(char *msg, int errn);
-char	**get_array_from_lst(t_list *lst);
-t_list	*get_lst_from_array(char **arr);
 void	ft_lstremove(t_list **lst, char *value);
-t_list	*ft_lstfind(t_list *lst, char *value);
-char	*ft_lstfind_value(t_list *lst, char *value);
 void	ft_lstremove_2(t_list **lst, char *value);
-char	*get_key(char *str);
-char	*get_value(char *str);
-void	*get_declared_vars(void *content);
+t_list	*ft_lstfind(t_list *lst, char *value);
 t_list	*ft_lstfind_2(t_list *lst, char *value);
+
+/* utils_2.c functions */
+
 char	*trim_spc(char *str);
 void	clean_empty_nodes(t_list **lst);
 char	*insert_var_quotes(char *str);
+void	*get_declared_vars(void *content);
+void	raise_error(char *msg, int errn);
 
-// Debbug - delete later
-void	print_content(char **array);
+/* utils_3.c functions */
+
+char	*ft_lstfind_value(t_list *lst, char *value);
+char	*get_value(char *str);
+char	*get_key(char *str);
+char	**get_array_from_lst(t_list *lst);
+t_list	*get_lst_from_array(char **arr);
 
 #endif

@@ -6,11 +6,17 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:08:00 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:30:39 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:42:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_list	*create_unquoted_list(char *str);
+static void		clean_single_quote(t_list **strings, char *str, int *start,
+					int *end);
+static void		clean_double_quote(t_list **strings, char *str, int *start,
+					int *end);
 
 void	remove_quotes(char **str)
 {
@@ -34,7 +40,8 @@ void	remove_quotes(char **str)
 	*str = string;
 }
 
-void	clean_single_quote(t_list **strings, char *str, int *start, int *end)
+static void	clean_single_quote(t_list **strings, char *str, int *start,
+							int *end)
 {
 	(*start)++;
 	while (str[*end] != '\'' && str[*end])
@@ -43,7 +50,8 @@ void	clean_single_quote(t_list **strings, char *str, int *start, int *end)
 	*start = *end + 1;
 }
 
-void	clean_double_quote(t_list **strings, char *str, int *start, int *end)
+static void	clean_double_quote(t_list **strings, char *str, int *start,
+									int *end)
 {
 	(*start)++;
 	while (str[*end] != '\"' && str[*end])
@@ -52,7 +60,7 @@ void	clean_double_quote(t_list **strings, char *str, int *start, int *end)
 	*start = *end + 1;
 }
 
-t_list	*create_unquoted_list(char *str)
+static t_list	*create_unquoted_list(char *str)
 {
 	t_list	*strings;
 	int		end;
