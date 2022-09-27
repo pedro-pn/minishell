@@ -6,66 +6,79 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/22 12:41:12 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:00:07 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*parse_input(t_data *data);
+static void	invalid_pipe(char *prompt, t_data *data);
+static void	toggle_quoted_pipes(char *s);
 static int	is_pipe_empty(char **token);
-static void	throw_error(char *prompt, int err, t_data *data);
+static void	pipe_check(char *s, t_data *data);
+static void	throw_pipe_error(int err, t_data *data);
 static void	check_for_doubles(t_data *data, char *str);
 
 void	validate_pipes(t_data *data)
 {
 	char	*prompt;
-	char	*p;
-	int		err;
 
 	prompt = ft_strtrim(data->prompt.line, " ");
-	err = is_pipe_empty(ft_split(prompt, '|'));
-	if (!ft_strcmp(prompt, "|") || !ft_strcmp(prompt, "||") || err)
+	if (*prompt == '|')
 	{
-		throw_error(prompt, err, data);
+		invalid_pipe(prompt, data);
 		free(prompt);
 		return ;
 	}
-	p = ft_strtrim(prompt, "|");
-	if (ft_strlen(prompt) > 2 && !ft_strlen(p))
+	toggle_quoted_pipes(prompt);
+	if (is_pipe_empty(ft_split(prompt, '|')))
 	{
-		throw_error(prompt, 2, data);
+		throw_pipe_error(1, data);
 		free(prompt);
-		free(p);
 		return ;
 	}
+	if (!ft_strchr(prompt, '|'))
+	{
+		free(prompt);
+		return ;
+	}
+	pipe_check(prompt, data);
 	free(prompt);
-	free(p);
 }
 
-static char	*parse_input(t_data *data)
+static void	invalid_pipe(char *prompt, t_data *data)
 {
-	char	**token;
-	char	*str;
-	char	*p;
-	char	*q;
-	int		i;
+	if (*(prompt + 1) == '|')
+		throw_pipe_error(2, data);
+	else
+		throw_pipe_error(1, data);
+}
 
-	str = ft_strdup("");
-	token = (char **)ft_split(data->prompt.line, '|');
-	i = -1;
-	while (++i < data->cmd_count)
+static void	toggle_quoted_pipes(char *s)
+{
+	while (*s)
 	{
-		p = ft_strjoin(token[i], "|");
-		q = str;
-		str = ft_strjoin(q, p);
-		free(q);
-		free(p);
+		if (*s == '"')
+		{
+			s++;
+			while (*s != '"')
+			{
+				if (*s == '|')
+					*s = 3;
+				s++;
+			}
+		} else if (*s == '\'')
+		{
+			s++;
+			while (*s != '\'')
+			{
+				if (*s == '|')
+					*s = 3;
+				s++;
+			}
+		}
+		s++;
 	}
-	p = str;
-	str = ft_strtrim(p, "|");
-	free(p);
-	return (str);
 }
 
 static int	is_pipe_empty(char **token)
@@ -90,16 +103,39 @@ static int	is_pipe_empty(char **token)
 	return (0);
 }
 
-static void	throw_error(char *prompt, int err, t_data *data)
+static void	throw_pipe_error(int err, t_data *data)
 {
-	if (err == 2)
-		printf("-minishell: syntax error near unexpected token `||'\n");
-	else if (err == 1)
+	if (err == 1)
 		printf("-minishell: syntax error near unexpected token `|'\n");
-	else
-		printf("-minishell: syntax error near unexpected token `%s'\n", prompt);
+	else if (err == 2)
+		printf("-minishell: syntax error near unexpected token `||'\n");
 	data->invalid_syntax = 1;
 	data->status = 2;
+}
+
+static void	pipe_check(char *s, t_data *data)
+{
+	int	i;
+
+	if (!*s)
+		return ;
+	i = 0;
+	while (s[i] == '|')
+		i++;
+	if (i > 2)
+	{
+		if (i == 3)
+			throw_pipe_error(1, data);
+		else
+			throw_pipe_error(2, data);
+		return ;
+	}
+	if (*s != '|')
+		s++;
+	else
+		while (i--)
+			s++;
+	pipe_check(s, data);
 }
 
 // pode ser usado para verificar se ha `||` no prompt 
