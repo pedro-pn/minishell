@@ -6,12 +6,12 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:27:57 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:51:20 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	expansions(t_list *env, char	**line);
+
 void	show_prompt(t_data *data)
 {
 	while (1)
@@ -40,9 +40,11 @@ void	show_prompt(t_data *data)
 		expansions(data->lst_env, &data->prompt.line);
 		if (*data->prompt.line)
 		{
-			data->exec_data = parser_input(data, data->prompt.line);
-			if (!data->invalid_syntax && data->exec_data)
+			if (!data->invalid_syntax)
+			{
+				data->exec_data = parser_input(data, data->prompt.line);
 				data->status = executor(data);
+			}
 		}
 		clean_data(data);
 	}

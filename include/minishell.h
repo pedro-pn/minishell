@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:29:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:48:39 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	clean_outfile_quotes(char **outfile);
 void	clean_delimiter_quotes(char **delimiter);
 int		check_open_quotes(char *line);
 int		check_open_var(char *line);
+void	expansions(t_list *env, char **line);
 
 // parser_utils
 int		quote_flag(char c, int flag);
