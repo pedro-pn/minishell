@@ -3,75 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   validate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/20 17:28:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:00:07 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*parse_input(t_data *data);
-static int	is_arg_between_pipes_empty(char **token);
+static void	invalid_pipe(char *prompt, t_data *data);
+static void	toggle_quoted_pipes(char *s);
+static int	is_pipe_empty(char **token);
+static void	pipe_check(char *s, t_data *data);
+static void	throw_pipe_error(int err, t_data *data);
 static void	check_for_doubles(t_data *data, char *str);
 
 void	validate_pipes(t_data *data)
 {
-	char	*p;
+	char	*prompt;
 
-	save_pipes(data->prompt.line);
-	p = data->prompt.line;
-	data->prompt.line = ft_strtrim(p, " ");
-	free(p);
-	if (*data->prompt.line == '|')
+	prompt = ft_strtrim(data->prompt.line, " ");
+	if (*prompt == '|')
 	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
+		invalid_pipe(prompt, data);
+		free(prompt);
 		return ;
 	}
-	if (is_arg_between_pipes_empty(ft_split(data->prompt.line, '|')))
+	toggle_quoted_pipes(prompt);
+	if (is_pipe_empty(ft_split(prompt, '|')))
 	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
+		throw_pipe_error(1, data);
+		free(prompt);
 		return ;
 	}
-	check_for_doubles(data, data->prompt.line);
-	if (data->is_pipe_empty)
+	if (!ft_strchr(prompt, '|'))
 	{
-		data->prompt.tb_line = data->prompt.line;
-		data->prompt.line = (char *)parse_input(data);
+		free(prompt);
+		return ;
 	}
+	pipe_check(prompt, data);
+	free(prompt);
 }
 
-static char	*parse_input(t_data *data)
+static void	invalid_pipe(char *prompt, t_data *data)
 {
-	char	**token;
-	char	*str;
-	char	*p;
-	char	*q;
-	int		i;
-
-	str = ft_strdup("");
-	token = (char **)ft_split(data->prompt.line, '|');
-	i = -1;
-	while (++i < data->cmd_count)
-	{
-		p = ft_strjoin(token[i], "|");
-		q = str;
-		str = ft_strjoin(q, p);
-		free(q);
-		free(p);
-	}
-	p = str;
-	str = ft_strtrim(p, "|");
-	free(p);
-	return (str);
+	if (*(prompt + 1) == '|')
+		throw_pipe_error(2, data);
+	else
+		throw_pipe_error(1, data);
 }
 
-static int	is_arg_between_pipes_empty(char **token)
+static void	toggle_quoted_pipes(char *s)
+{
+	while (*s)
+	{
+		if (*s == '"')
+		{
+			s++;
+			while (*s != '"')
+			{
+				if (*s == '|')
+					*s = 3;
+				s++;
+			}
+		} else if (*s == '\'')
+		{
+			s++;
+			while (*s != '\'')
+			{
+				if (*s == '|')
+					*s = 3;
+				s++;
+			}
+		}
+		s++;
+	}
+}
+
+static int	is_pipe_empty(char **token)
 {
 	char	*str;
 	int 	i;
@@ -93,6 +103,42 @@ static int	is_arg_between_pipes_empty(char **token)
 	return (0);
 }
 
+static void	throw_pipe_error(int err, t_data *data)
+{
+	if (err == 1)
+		printf("-minishell: syntax error near unexpected token `|'\n");
+	else if (err == 2)
+		printf("-minishell: syntax error near unexpected token `||'\n");
+	data->invalid_syntax = 1;
+	data->status = 2;
+}
+
+static void	pipe_check(char *s, t_data *data)
+{
+	int	i;
+
+	if (!*s)
+		return ;
+	i = 0;
+	while (s[i] == '|')
+		i++;
+	if (i > 2)
+	{
+		if (i == 3)
+			throw_pipe_error(1, data);
+		else
+			throw_pipe_error(2, data);
+		return ;
+	}
+	if (*s != '|')
+		s++;
+	else
+		while (i--)
+			s++;
+	pipe_check(s, data);
+}
+
+// pode ser usado para verificar se ha `||` no prompt 
 static void	check_for_doubles(t_data *data, char *str)
 {
 	int		count;
