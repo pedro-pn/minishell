@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/21 13:08:34 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:18:45 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	heredoc_handler(int sig)
 	clean_processes(&data.procs);
 	ft_lstclear(&data.exec_data, clean_s_cmd);
 	ft_lstclear(&data.lst_env, free);
+	rl_clear_history();
 	exit(130);
 }
 

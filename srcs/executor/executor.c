@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:27:32 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:18:21 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main_exec(t_data *data)
 	ft_lstclear(&(data->exec_data), clean_s_cmd);
 	clean_data(data);
 	ft_lstclear(&data->lst_env, free);
+	rl_clear_history();
 	exit(last_status_code);
 }
 
@@ -97,6 +98,7 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	clean_processes(&data->procs);
 	clean_data(data);
 	clean_array((void **)env);
+	rl_clear_history();
 	exit(data->status);
 }
 

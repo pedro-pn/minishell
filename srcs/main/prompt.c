@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 12:09:12 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:17:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	show_prompt(t_data *data)
 		if (!data->prompt.line)
 		{
 			clean_data(data);
+			rl_clear_history();
 			ft_lstclear(&data->lst_env, free);
 			ft_putendl_fd("exit", 1);
 			break ;
