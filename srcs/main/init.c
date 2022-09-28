@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:03:46 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:54:57 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static void	update_shlvl(t_data *data);
 /* Initializes prompt struct variables*/
 void	init_prompt(t_prompt *prompt)
 {
-	char	cwd[PATH_MAX];
-
+	char	*cwd;
+	
+	cwd = (char *)malloc(PATH_MAX * sizeof(char));
+	ft_bzero(cwd, PATH_MAX);
 	prompt->line = NULL;
 	prompt->tb_line = NULL;
 	getcwd(cwd, PATH_MAX);
