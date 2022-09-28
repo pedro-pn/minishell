@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 18:19:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:07:56 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:25:33 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ void	*get_declared_vars(void *content)
 void	raise_error(char *msg, int errn)
 {
 	ft_putendl_fd(msg, 2);
-	data.status = errn;
+	g_data.status = errn;
 }

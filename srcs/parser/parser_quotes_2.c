@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:38:04 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 14:38:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:25:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_open_quotes(char *line)
 	}
 	if (flag & 3)
 	{
-		data.invalid_syntax = 1;
+		g_data.invalid_syntax = 1;
 		ft_putendl_fd("Invalid syntax", 2);
 	}
 }

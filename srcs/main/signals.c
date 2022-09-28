@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:21:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/28 05:27:41 by coder            ###   ########.fr       */
+/*   Updated: 2022/09/28 11:24:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	data.status = 130;
+	g_data.status = 130;
 }
 
 /* Set sigactions to properly invoke its handler */
@@ -59,10 +59,10 @@ static void	heredoc_handler(int sig)
 {
 	(void)sig;
 	ft_putchar_fd('\n', 1);
-	clean_data(&data);
-	clean_processes(&data.procs);
-	ft_lstclear(&data.exec_data, clean_s_cmd);
-	ft_lstclear(&data.lst_env, free);
+	clean_data(&g_data);
+	clean_processes(&g_data.procs);
+	ft_lstclear(&g_data.exec_data, clean_s_cmd);
+	ft_lstclear(&g_data.lst_env, free);
 	rl_clear_history();
 	exit(130);
 }

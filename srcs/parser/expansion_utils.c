@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:39:37 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 14:40:16 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:25:55 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	get_variable(t_list *env, t_list *node, char *var)
 	value = ft_lstfind_value(env, var);
 	if (!ft_strcmp(var, "?"))
 	{
-		node->content = ft_itoa(data.status);
+		node->content = ft_itoa(g_data.status);
 		return ;
 	}
 	else if (value)
@@ -76,5 +76,5 @@ void	check_open_var(char *line)
 		index++;
 	}
 	if (flag & 4)
-		data.invalid_syntax = 1;
+		g_data.invalid_syntax = 1;
 }
