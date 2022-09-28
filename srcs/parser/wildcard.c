@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:45:06 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 16:30:55 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:39:25 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	check_wildcard_value(char *arg, char *file, t_wild *info);
 int	post_wild(t_wild info, char *file);
 int	pre_wild(t_wild info, char *file);
 int	search_wildcard(char *arg, char *file, t_wild info);
-int	ft_strrncmp(const char *s1, const char *s2, size_t n);
 void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp);
 
 void	expand_wildcard(t_list **args)
