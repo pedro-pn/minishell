@@ -4,12 +4,12 @@ SOURCES =	main.c prompt.c parser.c signals.c clean.c init.c utils.c \
 			parser_quotes.c cd.c echo.c env.c export.c pwd.c unset.c \
 			parser_quotes_2.c utils_2.c parser_utils.c \
 			expansion.c init_2.c utils_3.c exec_wait.c \
-			signals_2.c export_utils.c expansion_utils.c prompt_utils.c
+			signals_2.c export_utils.c expansion_utils.c prompt_utils.c utils_4.c
 
 PP_SOURCES := main.c parser.c clean.c init.c utils.c builtins.c executor.c \
 			files.c pipes.c path.c exec_utils.c files_2.c parser_quotes.c export.c \
 			unset.c parser_quotes_2.c utils_2.c parser_utils.c expansion.c init_2.c utils_3.c \
-			exec_wait.c signals_2.c export_utils.c expansion_utils.c prompt_utils.c
+			exec_wait.c signals_2.c export_utils.c expansion_utils.c prompt_utils.c utils_4.c
 
 NAME = minishell
 LIBFT = libft/libft.a

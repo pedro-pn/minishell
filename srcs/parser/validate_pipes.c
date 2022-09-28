@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/27 14:37:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 05:34:06 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static void	invalid_pipe(char *prompt, t_data *data);
 static void	toggle_quoted_pipes(char *s);
 static int	is_pipe_empty(char **token);
 static void	pipe_check(char *s, t_data *data);
-static void	throw_pipe_error(int err, t_data *data);
-static void	check_for_doubles(t_data *data, char *str);
 
 void	validate_pipes(t_data *data)
 {
@@ -69,7 +67,8 @@ static void	toggle_quoted_pipes(char *s)
 					*s = 3;
 				s++;
 			}
-		} else if (*s == '\'')
+		}
+		else if (*s == '\'')
 		{
 			s++;
 			while (*s != '\'')
@@ -86,7 +85,7 @@ static void	toggle_quoted_pipes(char *s)
 static int	is_pipe_empty(char **token)
 {
 	char	*str;
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (token[i])
@@ -103,16 +102,6 @@ static int	is_pipe_empty(char **token)
 	}
 	clean_array((void **)token);
 	return (0);
-}
-
-static void	throw_pipe_error(int err, t_data *data)
-{
-	if (err == 1)
-		printf("-minishell: syntax error near unexpected token `|'\n");
-	else if (err == 2)
-		printf("-minishell: syntax error near unexpected token `||'\n");
-	data->invalid_syntax = 1;
-	data->status = 2;
 }
 
 static void	pipe_check(char *s, t_data *data)
@@ -138,34 +127,4 @@ static void	pipe_check(char *s, t_data *data)
 		while (i--)
 			s++;
 	pipe_check(s, data);
-}
-
-// pode ser usado para verificar se ha `||` no prompt 
-static void	check_for_doubles(t_data *data, char *str)
-{
-	int		count;
-	char	*p;
-
-	if (!str)
-		return ;
-	p = ft_strchr(str, '|');
-	if (!p)
-		return ;
-	count = 0;
-	while (p && *p++ == '|')
-		count++;
-	if (count > 2)
-	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
-		return ;
-	}
-	data->cmd_count++;
-	if (count == 2)
-	{
-		data->is_pipe_empty = 1;
-		return ;
-	}
-	check_for_doubles(data, p);
 }

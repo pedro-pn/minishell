@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 14:19:33 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 05:50:13 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@
 # define OPEN_BCKT 4
 # define PATH_MAX 4096
 
-# define ERR_PIPE "-minishell: syntax error near unexpected token `|'\n"
-# define ERR_NEWL "-minishell: syntax error near unexpected token `newline'\n"
+# define ERR_PIPE1 "-minishell: syntax error near unexpected token `|'"
+# define ERR_PIPE2 "-minishell: syntax error near unexpected token `||'"
+# define ERR_NEWL "-minishell: syntax error near unexpected token `newline'"
 # define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted %s\n"
 
 # define RED "\001\x1b[38;5;88m\002"
@@ -94,6 +95,7 @@ typedef struct s_data
 extern t_data	data;
 
 /* init.c functions */
+
 void	init_prompt(t_prompt *prompt);
 void	init_data(t_data *data, char **ep);
 
@@ -103,14 +105,19 @@ void	init_processes(t_process *procs);
 t_cmd	*cmd_init(void);
 
 /* prompt.c functions */
+
 void	show_prompt(t_data *data);
-void	save_history(char *line);
-char	*update_prompt_msg(t_data *data);
+char	*get_host(void);
+char	*update_prompt(char *prompt, char *path);
+char	*update_root_prompt(char *ptr_prompt, char *abs_path);
 
 /* prompt_utils.c functions */
 
 void	exit_minishell(t_data *data);
 void	parse_and_execute(t_data *data);
+void	save_history(char *line);
+char	*get_prompt(void);
+char	*update_prompt_msg(t_data *data);
 
 /* signals.c functions */
 
@@ -123,6 +130,7 @@ void	heredoc_signals(int pid, int f);
 int		handle_signals(t_data *data, int status, int process, int processes_n);
 
 /* clean.c functions */
+
 void	clean_array(void **array);
 void	clean_s_cmd(void *content);
 void	clean_prompt(t_prompt *prompt);
@@ -152,5 +160,9 @@ char	*get_value(char *str);
 char	*get_key(char *str);
 char	**get_array_from_lst(t_list *lst);
 t_list	*get_lst_from_array(char **arr);
+
+/* utils_4.c functions */
+
+void	throw_pipe_error(int err, t_data *data);
 
 #endif

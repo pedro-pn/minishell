@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:21:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 14:44:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 05:32:29 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int		executor(t_data *data);
 
 /* exec_utils.c functions */
+
 void	exec_init(t_data *data);
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
