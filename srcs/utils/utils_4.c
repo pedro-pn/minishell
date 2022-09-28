@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 05:43:25 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/28 12:54:16 by ppaulo-d         ###   ########.fr       */
+/*   Created: 2022/09/28 05:31:14 by coder             #+#    #+#             */
+/*   Updated: 2022/09/28 05:49:43 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__env(t_data *data)
+void	throw_pipe_error(int err, t_data *data)
 {
-	ft_lstdisplay(data->lst_env);
-	return (0);
+	if (err == 1)
+		ft_putendl_fd(ERR_PIPE1, 2);
+	else if (err == 2)
+		ft_putendl_fd(ERR_PIPE2, 2);
+	data->invalid_syntax = 1;
+	data->status = 2;
 }

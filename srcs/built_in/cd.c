@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/07 17:42:25 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/28 05:47:14 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	update_pwd_variables(t_data *data, char *old_cwd);
+static int	move_to_oldpwd(t_data *data, char *cwd);
 
 static int	update_pwd_variables(t_data *data, char *old_cwd)
 {
@@ -53,11 +56,12 @@ int	__cd(char **args, t_data *data)
 	char	*dest;
 	int		i;
 
-	i = -1;
-	while (args[++i])
-	if (i > 1)
+	i = 0;
+	while (args[i])
+		i++;
+	if (i > 2)
 	{
-		printf("-minishell: cd: too many arguments\n");
+		ft_putendl_fd("-minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
 	getcwd(cwd, PATH_MAX);

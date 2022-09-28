@@ -6,19 +6,16 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 18:52:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:30:44 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:49:12 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_for_variable(char *line);
-void	get_line_lst(t_list **lst, char *line);
-void	get_variable_node(t_list **lst, char *line, int *start, int *end);
-void	expand_variables_lst(t_list *env, t_list **lst);
-char	*get_var_name(char *str);
-void	get_variable(t_list *env, t_list *node, char *var);
-char	*join_variables_lst(t_list *lst);
+static void	get_line_lst(t_list **lst, char *line);
+static void	get_variable_node(t_list **lst, char *line, int *start, int *end);
+static void	expand_variables_lst(t_list *env, t_list **lst);
+static char	*join_variables_lst(t_list *lst);
 
 void	expansions(t_list *env, char **line)
 {
@@ -34,28 +31,11 @@ void	expansions(t_list *env, char **line)
 	ft_lstclear(&line_lst, free);
 }
 
-int	check_for_variable(char *line)
+static void	get_line_lst(t_list **lst, char *line)
 {
-	int flag;
-	int	index;
-
-	flag = 0;
-	index = 0;
-	while (line[index])
-	{
-		flag = quote_flag(line[index], flag);
-		if (line[index] == '$' && !(flag & QUOTE_S))
-			return (0);
-		index++;
-	}
-	return (1);
-}
-
-void	get_line_lst(t_list **lst, char *line)
-{
-	int		flag;
-	int		start;
-	int		end;
+	int	flag;
+	int	start;
+	int	end;
 
 	start = 0;
 	end = 0;
@@ -74,7 +54,7 @@ void	get_line_lst(t_list **lst, char *line)
 	}
 }
 
-void	get_variable_node(t_list **lst, char *line, int *start, int *end)
+static void	get_variable_node(t_list **lst, char *line, int *start, int *end)
 {
 	int	flag;
 
@@ -92,12 +72,12 @@ void	get_variable_node(t_list **lst, char *line, int *start, int *end)
 	*start = *end;
 }
 
-void	expand_variables_lst(t_list *env, t_list **lst)
+static void	expand_variables_lst(t_list *env, t_list **lst)
 {
 	t_list	*temp;
 	char	*var;
 	char	*content;
-	
+
 	temp = *lst;
 	while (temp)
 	{
@@ -115,37 +95,7 @@ void	expand_variables_lst(t_list *env, t_list **lst)
 	}
 }
 
-char	*get_var_name(char *str)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	while (ft_strchr("${", str[start]))
-		start++;
-	end = start;
-	while (str[end] != '}' && str[end] != 0)
-		end++;
-	return (ft_substr(str, start, end - start));
-}
-
-void	get_variable(t_list *env, t_list *node, char *var)
-{
-	char	*value;
-
-	value = ft_lstfind_value(env, var);
-	if (!ft_strcmp(var, "?"))
-	{
-		node->content = ft_itoa(data.status);
-		return ;
-	}
-	else if (value)
-		node->content = ft_strdup(value);
-	else
-		node->content = ft_strdup("");
-}
-
-char	*join_variables_lst(t_list *lst)
+static char	*join_variables_lst(t_list *lst)
 {
 	char	*line;
 	char	*aux;
@@ -159,25 +109,4 @@ char	*join_variables_lst(t_list *lst)
 		lst = lst->next;
 	}
 	return (line);
-}
-
-int	check_open_var(char *line)
-{
-	int	flag;
-	int	index;
-
-	flag = 0;
-	index = 0;
-	while (line[index])
-	{
-		flag = quote_flag(line[index], flag);
-		if (line[index] == '{' && !(flag & (QUOTE_S + OPEN_BCKT)))
-			flag ^= OPEN_BCKT;
-		else if (line[index] == '}' && (flag & OPEN_BCKT))
-			flag ^= OPEN_BCKT;
-		index++;
-	}
-	if (flag & 4)
-		return (1);
-	return (0);
 }

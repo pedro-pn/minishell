@@ -6,17 +6,21 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/20 17:27:32 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/27 13:23:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	main_exec(t_data *data);
+static void	_exec(t_data *data, t_list *exec_data);
+static void	exec_child(t_data *data, t_cmd *exec, int process);
+
 int	executor(t_data *data)
 {
 	int		last_status_code;
 	t_cmd	*exec;
-	
+
 	exec = (t_cmd *)data->exec_data->content;
 	if (ft_lstsize(data->exec_data) == 1 && exec->cmd)
 		builtin_executor(data, exec->cmd);
@@ -30,7 +34,7 @@ int	executor(t_data *data)
 	return (last_status_code);
 }
 
-int	main_exec(t_data *data)
+static int	main_exec(t_data *data)
 {
 	int	last_status_code;
 
@@ -42,18 +46,11 @@ int	main_exec(t_data *data)
 	ft_lstclear(&(data->exec_data), clean_s_cmd);
 	clean_data(data);
 	ft_lstclear(&data->lst_env, free);
+	rl_clear_history();
 	exit(last_status_code);
 }
 
-void	exec_init(t_data *data)
-{
-	data->procs.processes_n = ft_lstsize(data->exec_data);
-	data->procs.pids = get_pids(data);
-	data->procs.pipes = get_pipes(data);
-	open_pipes(data);
-}
-
-void	_exec(t_data *data, t_list *exec_data)
+static void	_exec(t_data *data, t_list *exec_data)
 {
 	int		process;
 	t_cmd	*exec;
@@ -78,7 +75,7 @@ void	_exec(t_data *data, t_list *exec_data)
 	}
 }
 
-void	exec_child(t_data *data, t_cmd *exec, int process)
+static void	exec_child(t_data *data, t_cmd *exec, int process)
 {
 	char	**env;
 
@@ -97,52 +94,6 @@ void	exec_child(t_data *data, t_cmd *exec, int process)
 	clean_processes(&data->procs);
 	clean_data(data);
 	clean_array((void **)env);
+	rl_clear_history();
 	exit(data->status);
-}
-
-int	handle_signals(t_data *data, int status, int process, int processes_n)
-{
-	if (WTERMSIG(status) == SIGINT)
-	{
-		write(1, "\n", 1);
-		data->status = 130;
-	}
-	if (WTERMSIG(status) == SIGQUIT && process == processes_n - 1)
-	{
-		write(1, "Quit\n", 5);
-		data->status = 131;
-	}
-	return (data->status);
-}
-
-int		wait_executor(t_data *data)
-{
-	int	status;
-	int	status_code;
-
-	waitpid(data->procs.exec_pid, &status, 0);
-	if (WIFSIGNALED(status))
-		status_code = handle_signals(data, status, 0, 1);
-	else if (WIFEXITED(status))
-		status_code = WEXITSTATUS(status);
-	return (status_code);
-}
-int	wait_processes(t_data *data, int processes_n)
-{
-	int	process;
-	int	status;
-	int	status_code;
-
-	process = 0;
-	while (process < processes_n)
-	{
-		waitpid(data->procs.pids[process], &status, 0);
-		if (WIFSIGNALED(status))
-			status_code = handle_signals(data, status, process, processes_n);
-		else if (WIFEXITED(status))
-			if (process == processes_n - 1)
-				status_code = WEXITSTATUS(status);
-		process++;
-	}
-	return (status_code);
 }

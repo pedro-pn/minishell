@@ -1,19 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   init_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 05:43:25 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/28 12:54:16 by ppaulo-d         ###   ########.fr       */
+/*   Created: 2022/09/22 11:00:25 by ppaulo-d          #+#    #+#             */
+/*   Updated: 2022/09/27 14:42:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__env(t_data *data)
+/* Initializes struct s_cmds*/
+t_cmd	*cmd_init(void)
 {
-	ft_lstdisplay(data->lst_env);
-	return (0);
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(*cmd));
+	cmd->cmd = NULL;
+	cmd->path = NULL;
+	cmd->in_file = NULL;
+	cmd->out_file = NULL;
+	cmd->delimiter = NULL;
+	cmd->mode_in = 0;
+	cmd->mode_out = 0;
+	cmd->here_doc = 0;
+	return (cmd);
+}
+
+void	init_processes(t_process *procs)
+{
+	procs->pids = NULL;
+	procs->pipes = NULL;
 }

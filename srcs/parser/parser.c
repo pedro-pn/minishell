@@ -6,23 +6,22 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/26 14:45:17 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 17:07:49 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_exec_data(t_cmd *exec_cont, t_list *cmd_l, t_list **exec_cmds);
+static void		get_exec_data(t_cmd *exec_cont, t_list *cmd_l,
+					t_list **exec_cmds);
 static t_list	*create_exec_data(t_list *cmd_lines);
-static void	create_input_list(t_list **cmd_lines, char *line);
-void	expand_wildcard(t_list **args);
+static void		create_input_list(t_list **cmd_lines, char *line);
 
 /* Validates the input*/
-t_list	*parser_input(t_data *data, char *line)
+t_list	*parser_input(char *line)
 {
 	t_list	*exec_data;
 	t_list	*cmd_lines;
-	t_list	*temp;
 
 	cmd_lines = NULL;
 	exec_data = NULL;
@@ -37,7 +36,7 @@ static t_list	*create_exec_data(t_list *cmd_lines)
 	t_list	*exec_data;
 	t_list	*exec_cmds;
 	t_cmd	*exec_cont;
-	
+
 	exec_data = NULL;
 	exec_cmds = NULL;
 	while (cmd_lines)
@@ -88,9 +87,9 @@ static void	get_exec_data(t_cmd *exec_cont, t_list *cmd_l, t_list **exec_cmds)
 static void	create_input_list(t_list **cmd_lines, char *line)
 {
 	int	start;
-	int end;
+	int	end;
 	int	flag;
-	
+
 	start = 0;
 	end = 0;
 	flag = 0;
@@ -104,7 +103,7 @@ static void	create_input_list(t_list **cmd_lines, char *line)
 		if ((line[end] == '|' || line[end] == 0) && !(flag & 3))
 		{
 			ft_lstadd_back(cmd_lines, ft_lstnew(
-				trim_spc(ft_substr(line, start, end - start))));
+					trim_spc(ft_substr(line, start, end - start))));
 			start = end + 1;
 		}
 	}

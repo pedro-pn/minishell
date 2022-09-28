@@ -6,7 +6,7 @@
 /*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:25:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/07 16:53:24 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:57:44 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ void	clean_array(void **array)
 	}
 	free(array);
 	array = NULL;
-}
-
-/* Essa função é só para poder passar clean_array para ft_lstclear. Provavelmente
-ela n será necessária, deixei apenas como teste. Pretendo liberar esse array
-durante a execução*/
-void	clean_cmd_lines(void *content)
-{
-	clean_array(((void **) content));
 }
 
 /* Cleans the struct s_cmd*/

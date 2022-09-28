@@ -3,78 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   validate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 12:29:31 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/20 17:28:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 05:34:06 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*parse_input(t_data *data);
-static int	is_arg_between_pipes_empty(char **token);
-static void	check_for_doubles(t_data *data, char *str);
+static void	invalid_pipe(char *prompt, t_data *data);
+static void	toggle_quoted_pipes(char *s);
+static int	is_pipe_empty(char **token);
+static void	pipe_check(char *s, t_data *data);
 
 void	validate_pipes(t_data *data)
 {
-	char	*p;
+	char	*prompt;
 
-	save_pipes(data->prompt.line);
-	p = data->prompt.line;
-	data->prompt.line = ft_strtrim(p, " ");
-	free(p);
-	if (*data->prompt.line == '|')
+	if (data->invalid_syntax)
+		return ;
+	prompt = ft_strtrim(data->prompt.line, " ");
+	if (*prompt == '|')
 	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
+		invalid_pipe(prompt, data);
+		free(prompt);
 		return ;
 	}
-	if (is_arg_between_pipes_empty(ft_split(data->prompt.line, '|')))
+	toggle_quoted_pipes(prompt);
+	if (is_pipe_empty(ft_split(prompt, '|')))
 	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
+		throw_pipe_error(1, data);
+		free(prompt);
 		return ;
 	}
-	check_for_doubles(data, data->prompt.line);
-	if (data->is_pipe_empty)
+	if (!ft_strchr(prompt, '|'))
 	{
-		data->prompt.tb_line = data->prompt.line;
-		data->prompt.line = (char *)parse_input(data);
+		free(prompt);
+		return ;
+	}
+	pipe_check(prompt, data);
+	free(prompt);
+}
+
+static void	invalid_pipe(char *prompt, t_data *data)
+{
+	if (*(prompt + 1) == '|')
+		throw_pipe_error(2, data);
+	else
+		throw_pipe_error(1, data);
+}
+
+static void	toggle_quoted_pipes(char *s)
+{
+	while (*s)
+	{
+		if (*s == '"')
+		{
+			s++;
+			while (*s != '"')
+			{
+				if (*s == '|')
+					*s = 3;
+				s++;
+			}
+		}
+		else if (*s == '\'')
+		{
+			s++;
+			while (*s != '\'')
+			{
+				if (*s == '|')
+					*s = 3;
+				s++;
+			}
+		}
+		s++;
 	}
 }
 
-static char	*parse_input(t_data *data)
+static int	is_pipe_empty(char **token)
 {
-	char	**token;
 	char	*str;
-	char	*p;
-	char	*q;
 	int		i;
-
-	str = ft_strdup("");
-	token = (char **)ft_split(data->prompt.line, '|');
-	i = -1;
-	while (++i < data->cmd_count)
-	{
-		p = ft_strjoin(token[i], "|");
-		q = str;
-		str = ft_strjoin(q, p);
-		free(q);
-		free(p);
-	}
-	p = str;
-	str = ft_strtrim(p, "|");
-	free(p);
-	return (str);
-}
-
-static int	is_arg_between_pipes_empty(char **token)
-{
-	char	*str;
-	int 	i;
 
 	i = 0;
 	while (token[i])
@@ -93,31 +104,27 @@ static int	is_arg_between_pipes_empty(char **token)
 	return (0);
 }
 
-static void	check_for_doubles(t_data *data, char *str)
+static void	pipe_check(char *s, t_data *data)
 {
-	int		count;
-	char	*p;
+	int	i;
 
-	if (!str)
+	if (!*s)
 		return ;
-	p = ft_strchr(str, '|');
-	if (!p)
-		return ;
-	count = 0;
-	while (p && *p++ == '|')
-		count++;
-	if (count > 2)
+	i = 0;
+	while (s[i] == '|')
+		i++;
+	if (i > 2)
 	{
-		printf(ERR_PIPE);
-		data->invalid_syntax = 1;
-		data->status = 2;
+		if (i == 3)
+			throw_pipe_error(1, data);
+		else
+			throw_pipe_error(2, data);
 		return ;
 	}
-	data->cmd_count++;
-	if (count == 2)
-	{
-		data->is_pipe_empty = 1;
-		return ;
-	}
-	check_for_doubles(data, p);
+	if (*s != '|')
+		s++;
+	else
+		while (i--)
+			s++;
+	pipe_check(s, data);
 }

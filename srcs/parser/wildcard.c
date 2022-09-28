@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:45:06 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 16:39:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 17:09:50 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	get_wildcard(t_list **args);
 void	check_wildcard_value(char *arg, char *file, t_wild *info);
 int	post_wild(t_wild info, char *file);
 int	pre_wild(t_wild info, char *file);
-int	search_wildcard(char *arg, char *file, t_wild info);
+int	search_wildcard(char *file, t_wild info);
 void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp);
 
 void	expand_wildcard(t_list **args)
@@ -33,8 +33,8 @@ void	get_wildcard(t_list **args)
 
 	info.flag = 0;
 	info.arg = ft_strdup((char *)(*args)->content);
-	dp = opendir(ft_lstfind_value(data.lst_env, "PWD"));
-	while(dirp = readdir(dp))
+	dp = opendir(ft_lstfind_value(g_data.lst_env, "PWD"));
+	while((dirp = readdir(dp)))
 		add_wildcard(&info, args, dirp);
 	free(info.arg);
 	closedir(dp);
@@ -45,7 +45,7 @@ void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp)
 	if (dirp->d_name[0] == '.')
 		return ;
 	check_wildcard_value(info->arg, dirp->d_name, info);
-	if (search_wildcard(info->arg, dirp->d_name, *info))
+	if (search_wildcard(dirp->d_name, *info))
 	{
 		if (!info->flag)
 		{
@@ -94,7 +94,7 @@ int	pre_wild(t_wild info, char *file)
 	return (0);
 }
 
-int	search_wildcard(char *arg, char *file, t_wild info)
+int	search_wildcard(char *file, t_wild info)
 {
 
 	if (info.wild_index == 0)
