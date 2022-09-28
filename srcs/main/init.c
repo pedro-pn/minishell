@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 11:54:57 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:14:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,8 @@ static void	update_shlvl(t_data *data);
 /* Initializes prompt struct variables*/
 void	init_prompt(t_prompt *prompt)
 {
-	char	*cwd;
-	
-	cwd = (char *)malloc(PATH_MAX * sizeof(char));
-	ft_bzero(cwd, PATH_MAX);
 	prompt->line = NULL;
 	prompt->tb_line = NULL;
-	getcwd(cwd, PATH_MAX);
-	prompt->directory = cwd;
 }
 
 //                                    bash                    minishell

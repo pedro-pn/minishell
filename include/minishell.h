@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 11:23:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:14:47 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 
 typedef struct s_prompt
 {
-	char		*directory;
 	char		*message;
 	char		*tb_line;
 	char		*line;
