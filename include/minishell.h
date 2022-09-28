@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 05:50:13 by coder            ###   ########.fr       */
+/*   Updated: 2022/09/28 11:20:13 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define ERR_PIPE1 "-minishell: syntax error near unexpected token `|'"
 # define ERR_PIPE2 "-minishell: syntax error near unexpected token `||'"
 # define ERR_NEWL "-minishell: syntax error near unexpected token `newline'"
-# define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted %s\n"
+# define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted "
 
 # define RED "\001\x1b[38;5;88m\002"
 # define BLUE "\001\x1b[38;5;25m\002"
