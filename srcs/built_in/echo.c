@@ -6,13 +6,13 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 05:40:56 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 17:00:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:53:37 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__echo(char **args, t_data *data)
+int	__echo(char **args)
 {
 	int	flag;
 	int	i;

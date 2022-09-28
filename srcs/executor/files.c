@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 11:19:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:52:23 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	check_infile(t_data *data, t_cmd *exec, int process)
 void	get_here_doc(t_cmd *exec)
 {
 	char	*line;
-	char	*delimiter;
 
 	line = NULL;
 	pipe(exec->here_pipe);

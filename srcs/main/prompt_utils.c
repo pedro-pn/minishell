@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:00:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 05:38:16 by coder            ###   ########.fr       */
+/*   Updated: 2022/09/28 12:56:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	parse_and_execute(t_data *data)
 	expansions(data->lst_env, &data->prompt.line);
 	if (ft_strlen(data->prompt.line) == 0)
 		return ;
-	data->exec_data = parser_input(data, data->prompt.line);
+	data->exec_data = parser_input(data->prompt.line);
 	data->status = executor(data);
 }
 
@@ -56,7 +56,6 @@ char	*get_prompt(void)
 {
 	char	*prompt;
 	char	*user;
-	char	*temp;
 	char	*host;
 	char	*p;
 

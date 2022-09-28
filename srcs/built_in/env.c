@@ -6,13 +6,13 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 05:43:25 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 17:17:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:54:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__env(char **args, t_data *data)
+int	__env(t_data *data)
 {
 	ft_lstdisplay(data->lst_env);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:41:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 14:44:50 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:55:53 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int		__cd(char **args, t_data *data);
 
 /* echo.c file */
 
-int		__echo(char **args, t_data *data);
+int		__echo(char **args);
 
 /* env.c file */
 
-int		__env(char **args, t_data *data);
+int		__env(t_data *data);
 
 /* export.c files */
 
@@ -45,7 +45,7 @@ int		check_for_append(char *var);
 
 /* pwd.c functions */
 
-int		__pwd(char **args);
+int		__pwd(void);
 
 /* unset.c functions */
 

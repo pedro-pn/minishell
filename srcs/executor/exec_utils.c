@@ -6,13 +6,11 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 11:25:01 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:53:21 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	check_first_cmd(char *str);
 
 void	exec_init(t_data *data)
 {
@@ -55,20 +53,4 @@ void	output_exec_error(t_cmd *exec)
 		ft_putendl_fd(": command not found", 2);
 		g_data.status = 127;
 	}
-}
-
-static int	check_first_cmd(char *str)
-{
-	char	*cmd;
-
-	if (!str)
-		return (1);
-	cmd = ft_strtrim(str, " ");
-	if (ft_strlen(cmd) == 1 && *cmd == '$')
-	{
-		free(cmd);
-		return (1);
-	}
-	free(cmd);
-	return (0);
 }

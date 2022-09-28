@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:53:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 14:44:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:35:47 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_data	t_data;
 
 /* parser.c functions */
 
-t_list	*parser_input(t_data *data, char *line);
+t_list	*parser_input(char *line);
 
 /* parser_utils.c functions */
 

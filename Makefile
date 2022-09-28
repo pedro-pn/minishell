@@ -39,10 +39,10 @@ bonus: ${BONUS}
 ${OBJS_PATH}/%.o: %.c
 	@ mkdir -p ${OBJS_PATH}
 	@ echo "Compiling: $<"
-	@ ${CC} -c $< -o $@ -I libft/include/ -I include/
+	@ ${CC} ${FLAGS} -c $< -o $@ -I libft/include/ -I include/
 
 ${NAME}: ${LIBFT} ${OBJS}
-	@ ${CC} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
+	@ ${CC} ${FLAGS} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
 	@ echo "${GREEN}${NAME} successfully compiled!${NC}"
 
 ${LIBFT}: 

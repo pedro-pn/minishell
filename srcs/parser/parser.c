@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 10:56:16 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:35:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ static t_list	*create_exec_data(t_list *cmd_lines);
 static void		create_input_list(t_list **cmd_lines, char *line);
 
 /* Validates the input*/
-t_list	*parser_input(t_data *data, char *line)
+t_list	*parser_input(char *line)
 {
 	t_list	*exec_data;
 	t_list	*cmd_lines;
-	t_list	*temp;
 
 	cmd_lines = NULL;
 	exec_data = NULL;
