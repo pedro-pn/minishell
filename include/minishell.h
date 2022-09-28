@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/26 17:50:39 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:22:39 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef	struct s_wildcard
 	int		wild_index;
 	int		arg_len;
 	int		file_len;
+	int		flag;
 	char	*arg;
 	char	*post_Wild;
 	char	*pre_wild;
