@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:45:06 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 13:15:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 13:50:39 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	get_wildcard(t_list **args);
 void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp);
-int		new_wildcard(char *file, t_wild info);
+int		search_pattern(char *file, t_wild info);
+int		match_pattern(char **arg, char **file);
 
 void	expand_wildcard(t_list **args)
 {
@@ -24,15 +25,19 @@ void	expand_wildcard(t_list **args)
 
 void	get_wildcard(t_list **args)
 {
-	DIR 			*dp;
+	DIR				*dp;
 	struct dirent	*dirp;
 	t_wild			info;
 
 	info.flag = 0;
 	info.arg = ft_strdup((char *)(*args)->content);
 	dp = opendir(ft_lstfind_value(g_data.lst_env, "PWD"));
-	while((dirp = readdir(dp)))
+	dirp = readdir(dp);
+	while (dirp)
+	{
 		add_wildcard(&info, args, dirp);
+		dirp = readdir(dp);
+	}
 	free(info.arg);
 	closedir(dp);
 }
@@ -41,7 +46,7 @@ void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp)
 {
 	if (dirp->d_name[0] == '.')
 		return ;
-	if (new_wildcard(dirp->d_name, *info))
+	if (search_pattern(dirp->d_name, *info))
 	{
 		if (!info->flag)
 		{
@@ -54,37 +59,39 @@ void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp)
 	}
 }
 
-int	new_wildcard(char *file, t_wild info)
+int	search_pattern(char *file, t_wild info)
 {
-	int	index;
-
-	index = 0;
 	while (*(info.arg))
 	{
 		if (*(info.arg) == '*')
 		{
-			info.arg++;
+			while (*(info.arg) == '*')
+				info.arg++;
 			if (!(*info.arg))
 				return (1);
-			while ((*(info.arg) != file[index]) && file[index])
-				index++;
-			if (!file[index])
+			while ((*(info.arg) != *file) && *file)
+				file++;
+			if (!*file)
 				return (0);
 		}
-		if (*(info.arg) == file[index])
-		{
-			info.arg++;
-			index++;
-			if (!*(info.arg) && file[index])
-			{
-				while (*(info.arg) != '*')
-					info.arg--;
-			}
-		}
-		else
-			return (0) ;
+		if (!match_pattern(&(info.arg), &file))
+			return (0);
 	}
-	if (!file[index])
+	if (!*file)
 		return (1);
 	return (0);
+}
+
+int	match_pattern(char **arg, char **file)
+{
+	if (**arg != **file)
+		return (0);
+	(*arg)++;
+	(*file)++;
+	if (!(**arg) && **file)
+	{
+		while (**arg != '*')
+			(*arg)--;
+	}
+	return (1);
 }

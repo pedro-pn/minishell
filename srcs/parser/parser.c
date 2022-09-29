@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:18:26 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 17:07:49 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 13:51:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	get_exec_data(t_cmd *exec_cont, t_list *cmd_l, t_list **exec_cmds)
 		else if ((ft_strchr(META_C, cmd[end]) || cmd[end] == 0) && !(flag & 3))
 		{
 			ft_lstadd_front(exec_cmds, ft_lstnew(
-				trim_spc(ft_substr(cmd, start, end - start))));
+					trim_spc(ft_substr(cmd, start, end - start))));
 			expand_wildcard(exec_cmds);
 			start = end + 1;
 		}

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 13:14:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 13:49:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_process
 	int			processes_n;
 }		t_process;
 
-typedef	struct s_wildcard
+typedef struct s_wildcard
 {
 	int		flag;
 	char	*arg;
