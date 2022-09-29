@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:33:38 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:30:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:07:31 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,27 @@ int	verify_outfile(t_data *data, t_cmd *exec, int process)
 		return (1);
 	}
 	return (0);
+}
+
+void	redirection_wildcard(char *file, int process)
+{
+	t_list	*infile_wc;
+
+	infile_wc = NULL;
+	infile_wc = ft_lstnew(ft_strdup(file));
+	expand_wildcard(&infile_wc);
+	if (ft_lstsize(infile_wc) != 1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putendl_fd(": ambiguous redirect", 2);
+		close(g_data.procs.pipes[process][0]);
+		close(g_data.procs.pipes[process + 1][1]);
+		ft_lstclear(&infile_wc, free);
+		clean_executor();
+		exit(1);
+	}
+	free(file);
+	file = ft_strdup((char *)infile_wc->content);
+	ft_lstclear(&infile_wc, free);
 }
