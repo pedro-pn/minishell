@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:21:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 05:32:29 by coder            ###   ########.fr       */
+/*   Updated: 2022/09/29 17:46:44 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		executor(t_data *data);
 void	exec_init(t_data *data);
 int		*get_pids(t_data *data);
 void	output_exec_error(t_cmd *exec);
+void	clean_executor(void);
 
 /* exec_wait.c functions */
 

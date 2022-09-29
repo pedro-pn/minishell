@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 13:23:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:44:31 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,7 @@ static int	main_exec(t_data *data)
 	_exec(data, data->exec_data);
 	close_main_pipes(data->procs.pipes);
 	last_status_code = wait_processes(data, data->procs.processes_n);
-	clean_processes(&data->procs);
-	ft_lstclear(&(data->exec_data), clean_s_cmd);
-	clean_data(data);
-	ft_lstclear(&data->lst_env, free);
-	rl_clear_history();
+	clean_executor();
 	exit(last_status_code);
 }
 
@@ -79,21 +75,17 @@ static void	exec_child(t_data *data, t_cmd *exec, int process)
 {
 	char	**env;
 
-	env = get_array_from_lst(data->lst_env);
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
+	env = get_array_from_lst(data->lst_env);
 	if (is_builtin(data, exec, process))
 		builtin_executor_2(data, exec);
 	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
 	else if (exec->cmd)
 		output_exec_error(exec);
-	ft_lstclear(&(data->exec_data), clean_s_cmd);
-	ft_lstclear(&data->lst_env, free);
-	clean_processes(&data->procs);
-	clean_data(data);
+	clean_executor();
 	clean_array((void **)env);
-	rl_clear_history();
 	exit(data->status);
 }

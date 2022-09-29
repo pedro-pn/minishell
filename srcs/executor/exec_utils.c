@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 12:53:21 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:46:40 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,13 @@ void	output_exec_error(t_cmd *exec)
 		ft_putendl_fd(": command not found", 2);
 		g_data.status = 127;
 	}
+}
+
+void	clean_executor(void)
+{
+	ft_lstclear(&(g_data.exec_data), clean_s_cmd);
+	ft_lstclear(&g_data.lst_env, free);
+	clean_processes(&g_data.procs);
+	clean_data(&g_data);
+	rl_clear_history();
 }
