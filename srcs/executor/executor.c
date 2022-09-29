@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 18:04:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 19:37:41 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,10 @@ static void	exec_child(t_data *data, t_cmd *exec, int process)
 		execve(exec->path, exec->cmd, env);
 	else if (exec->cmd)
 		output_exec_error(exec);
-	close(data->procs.pipes[process][0]);
-	close(data->procs.pipes[process + 1][1]);
+	if (data->procs.pipes[process][0] != -1)
+		close(data->procs.pipes[process][0]);
+	if (data->procs.pipes[process + 1][1] != -1)
+		close(data->procs.pipes[process + 1][1]);
 	clean_executor();
 	clean_array((void **)env);
 	exit(data->status);

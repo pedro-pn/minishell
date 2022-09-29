@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:30:58 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 18:06:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 19:26:55 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_infile(t_data *data, t_cmd *exec, int process)
 
 	if (verify_infile(data, exec, process))
 		return ;
-	redirection_wildcard(exec->in_file, process);
+	redirection_wildcard(&exec->in_file, process);
 	fd = open(exec->in_file, exec->mode_in);
 	if (fd == -1)
 	{
@@ -64,13 +64,14 @@ void	check_outfile(t_data *data, t_cmd *exec, int process)
 
 	if (verify_outfile(data, exec, process))
 		return ;
-	redirection_wildcard(exec->out_file, process);
+	redirection_wildcard(&exec->out_file, process);
 	fd = open(exec->out_file, exec->mode_out, 0664);
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(exec->out_file);
-		close(data->procs.pipes[process][0]);
+		if (data->procs.pipes[process][0] != -1)
+			close(data->procs.pipes[process][0]);
 		close(data->procs.pipes[process + 1][1]);
 		clean_executor();
 		exit(1);

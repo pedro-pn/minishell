@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:21:15 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 18:06:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/29 19:02:03 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	check_outfile(t_data *data, t_cmd *exec, int process);
 
 int		verify_infile(t_data *data, t_cmd *exec, int process);
 int		verify_outfile(t_data *data, t_cmd *exec, int process);
-void	redirection_wildcard(char *file, int process);
+void	redirection_wildcard(char **file, int process);
 
 /* path.c functions */
 

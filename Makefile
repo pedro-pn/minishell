@@ -67,7 +67,7 @@ norma: ${PP_SOURCES}
 aa: ${MY_SOURCES}
 	echo $^
 val: ${NAME}
-	valgrind --suppressions=./local.supp --leak-check=full ./minishell
+	valgrind --track-fds=yes --suppressions=./local.supp --leak-check=full ./minishell
 
 valg: ${NAME}
 	valgrind --leak-check=full --show-leak-kinds=all ./minishell
