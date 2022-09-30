@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:41:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 12:55:53 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/30 17:24:09 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define BUILTIN_H
 
 # include "minishell.h"
+
+# define PATH_MAX 4096
 
 /* builtins.c file */
 

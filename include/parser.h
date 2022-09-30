@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:53:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 17:08:25 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/30 17:23:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 # define PARSER_H
 
 # include "minishell.h"
+
+# define META_C ">< "
+# define VAR_DELIMITER "$\"\'}{|><= "
+# define QUOTES "\"\'"
+# define QUOTE_S 1
+# define QUOTE_D 2
+# define OPEN_BCKT 4
+
+# define ERR_PIPE1 "-minishell: syntax error near unexpected token `|'"
+# define ERR_PIPE2 "-minishell: syntax error near unexpected token `||'"
+# define ERR_NEWL "-minishell: syntax error near unexpected token `newline'"
+# define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted "
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_data	t_data;

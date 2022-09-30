@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 04:02:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 16:38:54 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/30 17:25:43 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
 char	*ft_strrpl(const char *str, int old, int new);
 void	*ft_memrpl(char *s, int old, int new, size_t n);
-int	ft_strrncmp(const char *s1, const char *s2, size_t n);
+int		ft_strrncmp(const char *s1, const char *s2, size_t n);
 
 // ft_printf
 

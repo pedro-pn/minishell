@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 13:49:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/30 17:25:03 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 # include "parser.h"
 # include "executor.h"
 # include "builtin.h"
-# include <unistd.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <dirent.h>
@@ -28,19 +26,6 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-
-# define META_C ">< "
-# define VAR_DELIMITER "$\"\'}{|><= "
-# define QUOTES "\"\'"
-# define QUOTE_S 1
-# define QUOTE_D 2
-# define OPEN_BCKT 4
-# define PATH_MAX 4096
-
-# define ERR_PIPE1 "-minishell: syntax error near unexpected token `|'"
-# define ERR_PIPE2 "-minishell: syntax error near unexpected token `||'"
-# define ERR_NEWL "-minishell: syntax error near unexpected token `newline'"
-# define EOF_DOC "minishell: warning: heredoc delimited by EOF. Wanted "
 
 # define RED "\001\x1b[38;5;88m\002"
 # define BLUE "\001\x1b[38;5;25m\002"
