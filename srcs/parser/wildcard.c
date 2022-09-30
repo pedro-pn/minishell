@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:45:06 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/30 08:03:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/30 13:29:56 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	get_wildcard(t_list **args)
 
 void	add_wildcard(t_wild *info, t_list **args, struct dirent *dirp)
 {
-	if (dirp->d_name[0] == '.')
+	if (dirp->d_name[0] == '.' && info->arg[0] != '.')
 		return ;
 	if (search_pattern(dirp->d_name, *info))
 	{
