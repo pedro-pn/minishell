@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:45:06 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 13:50:39 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/09/30 08:03:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ int	match_pattern(char **arg, char **file)
 	{
 		while (**arg != '*')
 			(*arg)--;
+	}
+	else if ((**arg != **file) && **file && **arg != '*')
+	{
+		(*arg)--;
+		while ((**arg != **file) && **file)
+			(*file)++;
 	}
 	return (1);
 }
