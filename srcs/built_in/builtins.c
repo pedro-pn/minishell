@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/28 12:56:01 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/03 11:41:09 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ int	builtin_executor(t_data *data, char **cmds)
 		data->status = __unset(cmds, data);
 	if (!ft_strcmp(cmds[0], "exit"))
 		exit(0);
-	if (!ft_strcmp(cmds[0], "clear"))
-		system("clear");
 	return (0);
 }
 
-int	is_builtin(t_data *data, t_cmd *exec, int process)
+int	is_builtin(t_cmd *exec)
 {
 	if (!exec->cmd)
 		return (0);
@@ -45,9 +43,6 @@ int	is_builtin(t_data *data, t_cmd *exec, int process)
 		return (1);
 	if (!ft_strcmp(exec->cmd[0], "exit"))
 		exit(0);
-	if (!ft_strcmp(exec->cmd[0], "clear")
-		&& process == data->procs.processes_n - 1)
-		return (1);
 	return (0);
 }
 
@@ -68,6 +63,4 @@ void	builtin_executor_2(t_data *data, t_cmd *exec)
 		__export(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "exit"))
 		exit(0);
-	else if (!ft_strcmp(cmd, "clear"))
-		system("clear");
 }

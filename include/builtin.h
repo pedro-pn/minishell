@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:41:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/30 17:24:09 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/03 11:41:15 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /* builtins.c file */
 
 int		builtin_executor(t_data *data, char **cmds);
-int		is_builtin(t_data *data, t_cmd *exec, int process);
+int		is_builtin(t_cmd *exec);
 void	builtin_executor_2(t_data *data, t_cmd *exec);
 
 /* cd.c file */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 19:37:41 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/03 11:44:06 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	exec_child(t_data *data, t_cmd *exec, int process)
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
 	env = get_array_from_lst(data->lst_env);
-	if (is_builtin(data, exec, process))
+	if (is_builtin(exec))
 		builtin_executor_2(data, exec);
 	else if (exec->path)
 		execve(exec->path, exec->cmd, env);
