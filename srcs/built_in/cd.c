@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/28 05:47:14 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/04 16:42:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int	__cd(char **args, t_data *data)
 		dest = args[1];
 	if (!chdir(dest))
 		return (update_pwd_variables(data, cwd));
-	ft_putstr_fd(args[1], 1);
-	ft_putstr_fd(": ", 1);
-	perror("");
+	ft_putstr_fd(args[1], 2);
+	perror(": ");
 	return (1);
 }
