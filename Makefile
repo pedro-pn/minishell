@@ -5,7 +5,7 @@ SOURCES =	main.c prompt.c parser.c signals.c clean.c init.c utils.c \
 			parser_quotes_2.c utils_2.c parser_utils.c \
 			expansion.c init_2.c utils_3.c exec_wait.c \
 			signals_2.c export_utils.c expansion_utils.c prompt_utils.c \
-			wildcard.c
+			wildcard.c exit.c
 NAME = minishell
 LIBFT = libft/libft.a
 SRCS_PATH = srcs

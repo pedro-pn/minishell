@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:41:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/10/03 11:41:15 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:57:11 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ int		__echo(char **args);
 /* env.c file */
 
 int		__env(t_data *data);
+
+/* exit.c files*/
+
+void	__exit(char **cmds, t_data *data);
 
 /* export.c files */
 
