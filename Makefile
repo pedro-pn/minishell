@@ -33,12 +33,12 @@ bonus: ${BONUS}
 
 ${OBJS_PATH}/%.o: %.c
 	@ mkdir -p ${OBJS_PATH}
-	@ echo "Compiling: $<"
+	@ printf "Compiling: $< %10s\r"
 	@ ${CC} ${FLAGS} -c $< -o $@ -I libft/include/ -I include/
 
 ${NAME}: ${LIBFT} ${OBJS}
 	@ ${CC} ${FLAGS} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
-	@ echo "${GREEN}${NAME} successfully compiled!${NC}"
+	@ echo "\12${GREEN}${NAME} successfully compiled!${NC}"
 
 ${LIBFT}: 
 	@ make -C libft/ --no-print-directory

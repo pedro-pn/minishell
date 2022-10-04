@@ -31,12 +31,12 @@ all: ${NAME}
 
 ${OBJS_PATH}/%.o:	${SRCS_PATH}/%.c
 	@ mkdir -p objs
-	@ echo "Compiling: $<"
+	@ printf "Compiling: $< %50s\r"
 	@ ${CC} ${FLAGS} -I include/ -c -o $@ $<
 
 ${NAME}: ${OBJS}
 	@ ar -rcs ${NAME} ${OBJS}
-	@ echo "${L_GREEN}Libft successfully compiled!${NC}"
+	@ echo "\12${L_GREEN}Libft successfully compiled!${NC}"
 
 clean: 
 	@ rm -rf ${OBJS_PATH}
