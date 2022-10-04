@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:53:02 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/30 17:23:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/04 18:19:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell.h"
 
 # define META_C ">< "
-# define VAR_DELIMITER "$\"\'}{|><= "
+# define VAR_DELIMITER "$\"\'}{|><=? "
 # define QUOTES "\"\'"
 # define QUOTE_S 1
 # define QUOTE_D 2

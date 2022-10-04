@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 18:52:42 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/27 12:49:12 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/04 18:21:42 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	get_variable_node(t_list **lst, char *line, int *start, int *end)
 		(*end)++;
 	while (!ft_strchr(VAR_DELIMITER, line[*end]) && line[*end])
 		(*end)++;
-	if (line[*end] == '}')
+	if (line[*end] == '}' || (line[*end] == '?' && *end - *start == 1))
 		(*end)++;
 	ft_lstadd_back(lst, ft_lstnew(ft_substr(line, *start, *end - *start)));
 	*start = *end;
