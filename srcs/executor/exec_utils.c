@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:55:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/29 17:46:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:26:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	output_exec_error(t_cmd *exec)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(exec->cmd[0], 2);
-		ft_putendl_fd(" Is a directory", 2);
+		ft_putendl_fd(": Is a directory", 2);
 		g_data.status = 126;
 	}
 	else if (ft_strchr(exec->cmd[0], '/'))
