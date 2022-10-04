@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:14:45 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/22 11:15:12 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/04 10:20:16 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	wait_executor(t_data *data)
 	int	status;
 	int	status_code;
 
+	status_code = 0;
+	status = 0;
 	waitpid(data->procs.exec_pid, &status, 0);
 	if (WIFSIGNALED(status))
 		status_code = handle_signals(data, status, 0, 1);
