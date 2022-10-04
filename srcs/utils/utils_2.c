@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 18:19:53 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 11:25:33 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/04 10:17:32 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,12 @@ void	*get_declared_vars(void *content)
 	return (var);
 }
 
-void	raise_error(char *msg, int errn)
+void	throw_pipe_error(int err, t_data *data)
 {
-	ft_putendl_fd(msg, 2);
-	g_data.status = errn;
+	if (err == 1)
+		ft_putendl_fd(ERR_PIPE1, 2);
+	else if (err == 2)
+		ft_putendl_fd(ERR_PIPE2, 2);
+	data->invalid_syntax = 1;
+	data->status = 2;
 }

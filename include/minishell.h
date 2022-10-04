@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/30 17:25:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/04 10:18:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char	*trim_spc(char *str);
 void	clean_empty_nodes(t_list **lst);
 char	*insert_var_quotes(char *str);
 void	*get_declared_vars(void *content);
-void	raise_error(char *msg, int errn);
+void	throw_pipe_error(int err, t_data *data);
 
 /* utils_3.c functions */
 
@@ -150,9 +150,5 @@ char	*get_value(char *str);
 char	*get_key(char *str);
 char	**get_array_from_lst(t_list *lst);
 t_list	*get_lst_from_array(char **arr);
-
-/* utils_4.c functions */
-
-void	throw_pipe_error(int err, t_data *data);
 
 #endif

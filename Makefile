@@ -5,13 +5,7 @@ SOURCES =	main.c prompt.c parser.c signals.c clean.c init.c utils.c \
 			parser_quotes_2.c utils_2.c parser_utils.c \
 			expansion.c init_2.c utils_3.c exec_wait.c \
 			signals_2.c export_utils.c expansion_utils.c prompt_utils.c \
-			utils_4.c wildcard.c
-
-PP_SOURCES := main.c parser.c clean.c init.c utils.c builtins.c executor.c \
-			files.c pipes.c path.c exec_utils.c files_2.c parser_quotes.c export.c \
-			unset.c parser_quotes_2.c utils_2.c parser_utils.c expansion.c init_2.c utils_3.c \
-			exec_wait.c signals_2.c export_utils.c expansion_utils.c prompt_utils.c utils_4.c wildcard.c
-
+			wildcard.c
 NAME = minishell
 LIBFT = libft/libft.a
 SRCS_PATH = srcs
@@ -22,8 +16,8 @@ OBJS = ${addprefix ${OBJS_PATH}/, ${notdir ${SOURCES:.c=.o}}}
 VPATH :=	${SRCS_PATH} ${SRCS_PATH}/built_in ${SRCS_PATH}/clean \
 			${SRCS_PATH}/main ${SRCS_PATH}/parser ${SRCS_PATH}/utils \
 			${SRCS_PATH}/executor
-CC = gcc
-FLAGS =  -Werror -Wextra -Wall -g
+CC = cc
+FLAGS =  -Werror -Wextra -Wall
 
 # Colors
 GREEN = \33[1;32m
@@ -60,14 +54,9 @@ fclean: clean
 	
 re: fclean all
 
-norma: ${PP_SOURCES}
-		norminette $^ include/
-
-
-aa: ${MY_SOURCES}
-	echo $^
 val: ${NAME}
-	valgrind --track-fds=yes --suppressions=./local.supp --leak-check=full ./minishell
+	valgrind --track-fds=yes --suppressions=./local.supp --leak-check=full \
+	./minishell
 
 valg: ${NAME}
 	valgrind --leak-check=full --show-leak-kinds=all ./minishell
