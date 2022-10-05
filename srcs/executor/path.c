@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 14:53:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 12:52:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:45:49 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_path(char **bin_paths, char *cmd, char **path);
 void	get_path(t_data *data, char **cmd, char **path)
 {
 	char	**bin_paths;
-	t_list	*path_node;
+	char	*path_value;
 	int		status;
 
 	status = 1;
@@ -28,8 +28,10 @@ void	get_path(t_data *data, char **cmd, char **path)
 		status = get_given_path(cmd, path);
 	if (!status)
 		return ;
-	path_node = ft_lstfind(data->lst_env, "PATH");
-	bin_paths = ft_split((char *)path_node->content, ':');
+	path_value = ft_lstfind_value(data->lst_env, "PATH");
+	if (!path_value)
+		return ;
+	bin_paths = ft_split(path_value, ':');
 	status = check_path(bin_paths, *cmd, path);
 	clean_array((void **)bin_paths);
 }
