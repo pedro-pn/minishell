@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 14:20:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/10/03 11:44:06 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/10/05 12:20:31 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,14 @@ static void	exec_child(t_data *data, t_cmd *exec, int process)
 	close_child_pipes(data->procs.pipes, process);
 	check_infile(data, exec, process);
 	check_outfile(data, exec, process);
-	env = get_array_from_lst(data->lst_env);
 	if (is_builtin(exec))
 		builtin_executor_2(data, exec);
 	else if (exec->path)
-		execve(exec->path, exec->cmd, env);
+	{
+		env = get_array_from_lst(data->lst_env);
+		execve(exec->path, exec->cmd, get_array_from_lst(data->lst_env));
+		clean_array((void **)env);
+	}
 	else if (exec->cmd)
 		output_exec_error(exec);
 	if (data->procs.pipes[process][0] != -1)
@@ -90,6 +93,5 @@ static void	exec_child(t_data *data, t_cmd *exec, int process)
 	if (data->procs.pipes[process + 1][1] != -1)
 		close(data->procs.pipes[process + 1][1]);
 	clean_executor();
-	clean_array((void **)env);
 	exit(data->status);
 }

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 23:17:41 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/10/04 17:06:40 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/05 12:12:46 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	builtin_executor(t_data *data, char **cmds)
 	if (!ft_strcmp(cmds[0], "unset"))
 		data->status = __unset(cmds, data);
 	if (!ft_strcmp(cmds[0], "exit"))
-		__exit(cmds, data);
+	{
+		ft_putendl_fd("exit", 1);
+		data->status = __exit(cmds, data);
+	}
 	return (0);
 }
 
@@ -61,6 +64,6 @@ void	builtin_executor_2(t_data *data, t_cmd *exec)
 		data->status = __unset(exec->cmd, data);
 	else if (!ft_strcmp(cmd, "export") && exec->cmd[1] == NULL)
 		__export(exec->cmd, data);
-	else if (!ft_strcmp(cmd, "exit"))
-		__exit(exec->cmd, data);
+	else if (!ft_strcmp(cmd, "exit") && ft_lstsize(data->exec_data) > 1)
+		data->status = __exit(exec->cmd, data);
 }

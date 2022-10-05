@@ -31,7 +31,7 @@ all: ${NAME}
 
 ${OBJS_PATH}/%.o:	${SRCS_PATH}/%.c
 	@ mkdir -p objs
-	@ printf "Compiling: $< %50s\r"
+	@ printf "Compiling: $< %30s\r"
 	@ ${CC} ${FLAGS} -I include/ -c -o $@ $<
 
 ${NAME}: ${OBJS}
