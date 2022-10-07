@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 11:12:09 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/10/04 10:18:52 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:17:42 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	exit_minishell(t_data *data);
 void	parse_and_execute(t_data *data);
 void	save_history(char *line);
 char	*get_prompt(void);
-char	*update_prompt_msg(t_data *data);
+char	*update_prompt_msg(void);
 
 /* signals.c functions */
 

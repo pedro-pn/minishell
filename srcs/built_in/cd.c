@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/10/04 16:42:04 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:28:43 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,19 @@ static int	update_pwd_variables(t_data *data, char *old_cwd)
 {
 	t_list	*node;
 	char	cwd[PATH_MAX];
+	char	*pwd;
 
+	pwd = ft_strjoin("PWD=", old_cwd);
+	ft_lstadd_back(&data->lst_env, ft_lstnew(pwd));
 	node = ft_lstfind(data->lst_env, "OLDPWD");
+	if (!node)
+		return (1);
 	free(node->content);
 	node->content = ft_strjoin("OLDPWD=", old_cwd);
 	getcwd(cwd, PATH_MAX);
 	node = ft_lstfind(data->lst_env, "PWD");
+	if (!node)
+		return (1);
 	free(node->content);
 	node->content = ft_strjoin("PWD=", cwd);
 	return (0);
@@ -35,13 +42,20 @@ static int	move_to_oldpwd(t_data *data, char *cwd)
 	t_list	*node;
 	char	*dest;
 
-	dest = get_value((char *)ft_lstfind(data->lst_env, "OLDPWD")->content);
 	node = ft_lstfind(data->lst_env, "OLDPWD");
+	if (!node)
+	{
+		ft_putendl_fd("-minishell: cd: OLDPWD not set", 2);
+		return (1);
+	}
+	dest = get_value((char *)node->content);
 	free(node->content);
 	node->content = ft_strjoin("OLDPWD=", cwd);
 	if (!chdir(dest))
 	{
 		node = ft_lstfind(data->lst_env, "PWD");
+		if (!node)
+			return (1);
 		free(node->content);
 		node->content = ft_strjoin("PWD=", dest);
 		free(dest);

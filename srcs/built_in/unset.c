@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 05:43:46 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/09/06 17:00:19 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:03:48 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	__unset(char **args, t_data *data)
 	while (index++, args[index])
 	{
 		node = ft_lstfind(data->lst_env, args[index]);
+		if (!node)
+			return (1);
 		empty_node = ft_lstfind_2(data->empty_vars, args[index]);
 		if (empty_node)
 			ft_lstremove_2(&data->empty_vars, args[index]);

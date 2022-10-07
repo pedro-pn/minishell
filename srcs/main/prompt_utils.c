@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:00:01 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 12:56:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:29:52 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,20 @@ char	*get_prompt(void)
 	return (prompt);
 }
 
-char	*update_prompt_msg(t_data *data)
+char	*update_prompt_msg(void)
 {
+	char	pwd[PATH_MAX];
 	char	*home;
 	char	*abs_path;
 	char	*prompt;
 	char	*path;
 
 	home = getenv("HOME");
-	abs_path = get_value((char *)ft_lstfind(data->lst_env, "PWD")->content);
+	abs_path = getcwd(pwd, PATH_MAX);
 	if (ft_strnstr(abs_path, home, ft_strlen(abs_path)))
 	{
 		prompt = get_prompt();
 		path = ft_substr(abs_path, ft_strlen(home), ft_strlen(abs_path));
-		free(abs_path);
 		prompt = update_prompt(prompt, path);
 		free(path);
 		return (prompt);

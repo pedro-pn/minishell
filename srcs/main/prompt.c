@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:33:21 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/28 05:39:28 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/07 11:18:06 by frosa-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	show_prompt(t_data *data)
 {
 	while (1)
 	{
-		data->prompt.message = update_prompt_msg(data);
+		data->prompt.message = update_prompt_msg();
 		data->prompt.line = readline(data->prompt.message);
 		if (!data->prompt.line)
 			exit_minishell(data);
