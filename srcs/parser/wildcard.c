@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:45:06 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/09/30 13:29:56 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:26:19 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ void	get_wildcard(t_list **args)
 {
 	DIR				*dp;
 	struct dirent	*dirp;
+	char			dir[PATH_MAX];
 	t_wild			info;
 
 	info.flag = 0;
 	info.arg = ft_strdup((char *)(*args)->content);
-	dp = opendir(ft_lstfind_value(g_data.lst_env, "PWD"));
+	dp = opendir(getcwd(dir, PATH_MAX));
 	dirp = readdir(dp);
 	while (dirp)
 	{
