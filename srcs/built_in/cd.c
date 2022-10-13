@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frosa-ma <frosa-ma@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:05:40 by frosa-ma          #+#    #+#             */
-/*   Updated: 2022/10/07 11:28:43 by frosa-ma         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:37:26 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 
 static int	update_pwd_variables(t_data *data, char *old_cwd);
 static int	move_to_oldpwd(t_data *data, char *cwd);
+static void	check_for_pwd(t_data *data, char *old_cwd);
+
+static void	check_for_pwd(t_data *data, char *old_cwd)
+{
+	char	*pwd;
+
+	if (ft_lstfind(data->lst_env, "PWD"))
+		return ;
+	pwd = ft_strjoin("PWD=", old_cwd);
+	ft_lstadd_back(&data->lst_env, ft_lstnew(pwd));
+}
 
 static int	update_pwd_variables(t_data *data, char *old_cwd)
 {
 	t_list	*node;
 	char	cwd[PATH_MAX];
-	char	*pwd;
 
-	pwd = ft_strjoin("PWD=", old_cwd);
-	ft_lstadd_back(&data->lst_env, ft_lstnew(pwd));
+	check_for_pwd(data, old_cwd);
 	node = ft_lstfind(data->lst_env, "OLDPWD");
 	if (!node)
 		return (1);
